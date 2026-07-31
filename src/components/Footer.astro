@@ -1,5 +1,6 @@
 ---
 const year = new Date().getFullYear();
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 
 <footer class="bg-navy text-white pt-16 pb-8 border-t-4 border-flame">
@@ -9,7 +10,7 @@ const year = new Date().getFullYear();
       <!-- Col 1: About & Logo -->
       <div class="space-y-4">
         <img 
-          src="/wp-content/uploads/2017/11/logo-wh.png" 
+          src={`${base}wp-content/uploads/2017/11/logo-wh.png`} 
           alt="N.I. Engineering Services White Logo" 
           class="h-14 w-auto object-contain"
         />
@@ -34,11 +35,11 @@ const year = new Date().getFullYear();
           Quick Links
         </h3>
         <ul class="space-y-2 text-sm text-gray-300">
-          <li><a href="/" class="hover:text-flame transition-colors">Home</a></li>
-          <li><a href="/about-us/" class="hover:text-flame transition-colors">About Us</a></li>
-          <li><a href="/products/" class="hover:text-flame transition-colors">Products & Solutions</a></li>
-          <li><a href="/contact/" class="hover:text-flame transition-colors">Contact Us</a></li>
-          <li><a href="/company-profile/" class="hover:text-flame transition-colors font-semibold text-white">Download Company Profile PDF</a></li>
+          <li><a href={base} class="hover:text-flame transition-colors">Home</a></li>
+          <li><a href={`${base}about-us/`} class="hover:text-flame transition-colors">About Us</a></li>
+          <li><a href={`${base}products/`} class="hover:text-flame transition-colors">Products & Solutions</a></li>
+          <li><a href={`${base}contact/`} class="hover:text-flame transition-colors">Contact Us</a></li>
+          <li><a href={`${base}company-profile/`} class="hover:text-flame transition-colors font-semibold text-white">Download Company Profile PDF</a></li>
         </ul>
       </div>
 
@@ -88,7 +89,7 @@ const year = new Date().getFullYear();
           Download our complete official company credentials, fire equipment product catalog, and engineering certificates.
         </p>
         <a 
-          href="/wp-content/uploads/2017/11/Company_Profile.pdf" 
+          href={`${base}wp-content/uploads/2017/11/Company_Profile.pdf`} 
           target="_blank"
           download
           class="inline-flex items-center justify-center w-full px-4 py-3 text-xs font-extrabold uppercase tracking-wider text-white bg-flame hover:bg-flame-hover rounded shadow transition-all duration-200"
@@ -106,8 +107,8 @@ const year = new Date().getFullYear();
     <div class="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-gray-400">
       <p>Copyright © {year} | N. I. ENGINEERING SERVICES. All Rights Reserved.</p>
       <div class="mt-4 md:mt-0 flex space-x-6">
-        <a href="/privacy/" class="hover:text-gray-200">Privacy Policy</a>
-        <a href="/terms/" class="hover:text-gray-200">Terms of Service</a>
+        <a href={`${base}privacy/`} class="hover:text-gray-200">Privacy Policy</a>
+        <a href={`${base}terms/`} class="hover:text-gray-200">Terms of Service</a>
       </div>
     </div>
   </div>

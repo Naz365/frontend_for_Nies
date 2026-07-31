@@ -1,13 +1,14 @@
 ---
 const currentPath = Astro.url.pathname;
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 
 const navLinks = [
-  { name: 'Home', href: '/' },
-  { name: 'About Us', href: '/about-us/' },
-  { name: 'Products', href: '/products/' },
-  { name: 'Blog', href: '/blog/' },
-  { name: 'Contact', href: '/contact/' },
-  { name: 'Company Profile', href: '/company-profile/' }
+  { name: 'Home', href: `${base}` },
+  { name: 'About Us', href: `${base}about-us/` },
+  { name: 'Products', href: `${base}products/` },
+  { name: 'Blog', href: `${base}blog/` },
+  { name: 'Contact', href: `${base}contact/` },
+  { name: 'Company Profile', href: `${base}company-profile/` }
 ];
 ---
 
@@ -15,9 +16,9 @@ const navLinks = [
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-20">
       <!-- Logo -->
-      <a href="/" class="flex items-center">
+      <a href={base} class="flex items-center">
         <img 
-          src="/wp-content/uploads/2017/11/ni_logo-1.png" 
+          src={`${base}wp-content/uploads/2017/11/ni_logo-1.png`} 
           alt="N.I. Engineering Services Logo" 
           class="h-14 w-auto object-contain"
         />
@@ -26,7 +27,7 @@ const navLinks = [
       <!-- Desktop Nav -->
       <nav class="hidden md:flex items-center space-x-8">
         {navLinks.map(link => {
-          const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+          const isActive = currentPath === link.href || (link.href !== base && currentPath.startsWith(link.href));
           return (
             <a
               href={link.href}

@@ -3,7 +3,8 @@ import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://niengineeringbd.com',
+  site: 'https://naz365.github.io',
+  base: '/frontend_for_Nies/',
   integrations: [tailwind()],
   output: 'static'
 });
