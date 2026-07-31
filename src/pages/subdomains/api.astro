@@ -1,0 +1,76 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout 
+  title="API Endpoint Portal | N.I. Engineering Services"
+  description="Public and Internal API Portal for api.niengineeringbd.com"
+>
+  <div class="min-h-screen bg-navy text-white flex flex-col justify-center items-center py-16 px-4">
+    <div class="max-w-4xl w-full bg-navy-dark p-8 sm:p-12 rounded-2xl border border-navy-light shadow-2xl">
+      <div class="flex items-center justify-between border-b border-navy-light pb-6 mb-8">
+        <div>
+          <span class="text-xs font-black uppercase text-flame tracking-widest block">api.niengineeringbd.com</span>
+          <h1 class="text-3xl font-extrabold uppercase tracking-tight text-white">Public & Internal REST API</h1>
+        </div>
+        <span class="px-3 py-1 bg-green-500/20 text-green-400 border border-green-500/40 text-xs font-bold uppercase rounded-full">
+          API Status: Healthy
+        </span>
+      </div>
+
+      <div class="space-y-6">
+        <p class="text-sm text-gray-300">
+          Available RESTful JSON API endpoints for static site generation (SSG), dynamic catalog data fetching, and rate-limited public contact submissions.
+        </p>
+
+        <!-- API Endpoint List -->
+        <div class="space-y-4">
+          <div class="p-4 bg-navy rounded-lg border border-navy-light flex items-center justify-between">
+            <div>
+              <span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 font-mono text-xs font-bold rounded mr-2">GET</span>
+              <code class="text-xs font-mono text-white">/api/v1/projects</code>
+              <p class="text-xs text-gray-400 mt-1">Returns array of published engineering portfolio projects.</p>
+            </div>
+            <a href="/api/v1/projects" target="_blank" class="text-xs font-extrabold text-flame hover:underline uppercase">Test Endpoint</a>
+          </div>
+
+          <div class="p-4 bg-navy rounded-lg border border-navy-light flex items-center justify-between">
+            <div>
+              <span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 font-mono text-xs font-bold rounded mr-2">GET</span>
+              <code class="text-xs font-mono text-white">/api/v1/products</code>
+              <p class="text-xs text-gray-400 mt-1">Returns fire safety equipment products grouped by category.</p>
+            </div>
+            <a href="/api/v1/products" target="_blank" class="text-xs font-extrabold text-flame hover:underline uppercase">Test Endpoint</a>
+          </div>
+
+          <div class="p-4 bg-navy rounded-lg border border-navy-light flex items-center justify-between">
+            <div>
+              <span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 font-mono text-xs font-bold rounded mr-2">GET</span>
+              <code class="text-xs font-mono text-white">/api/v1/blog</code>
+              <p class="text-xs text-gray-400 mt-1">Returns array of published safety news articles.</p>
+            </div>
+            <a href="/api/v1/blog" target="_blank" class="text-xs font-extrabold text-flame hover:underline uppercase">Test Endpoint</a>
+          </div>
+
+          <div class="p-4 bg-navy rounded-lg border border-navy-light flex items-center justify-between">
+            <div>
+              <span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 font-mono text-xs font-bold rounded mr-2">GET</span>
+              <code class="text-xs font-mono text-white">/api/v1/settings</code>
+              <p class="text-xs text-gray-400 mt-1">Returns global site settings, address, phone numbers, and PDF link.</p>
+            </div>
+            <a href="/api/v1/settings" target="_blank" class="text-xs font-extrabold text-flame hover:underline uppercase">Test Endpoint</a>
+          </div>
+
+          <div class="p-4 bg-navy rounded-lg border border-navy-light flex items-center justify-between">
+            <div>
+              <span class="px-2 py-0.5 bg-green-500/20 text-green-400 font-mono text-xs font-bold rounded mr-2">POST</span>
+              <code class="text-xs font-mono text-white">/api/v1/contact</code>
+              <p class="text-xs text-gray-400 mt-1">Submits public contact form inquiries (Rate limited: 5 req/min).</p>
+            </div>
+            <span class="text-xs font-mono text-gray-400">Payload: name, email, phone, message</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

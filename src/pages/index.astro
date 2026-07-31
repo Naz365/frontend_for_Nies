@@ -1,0 +1,184 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HeroSlider from '../components/HeroSlider.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import ProductGrid from '../components/ProductGrid.astro';
+import ClientLogos from '../components/ClientLogos.astro';
+import ContactForm from '../components/ContactForm.astro';
+
+const services = [
+  {
+    title: "FIRE SAFETY & EQUIPMENT SUPPLY",
+    description: "We specialize in supplying certified fire equipment including ABC dry powder, CO2, foam extinguishers, and personal protective suits.",
+    icon: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/></svg>`
+  },
+  {
+    title: "MAINTENANCE, INSPECTION & REFILLING",
+    description: "Maintenance, Inspection & Refilling of all types of Fire Extinguishers in Dhaka, using a well equipped workshop and certified engineers.",
+    icon: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a2 2 0 01-2 2H3a2 2 0 01-2-2V5a2 2 0 012-2h8zM15 14H3a2 2 0 01-2-2v-1a2 2 0 012-2h12a2 2 0 012 2v1a2 2 0 01-2 2z"/></svg>`
+  },
+  {
+    title: "CCTV, ACCESS CONTROL & ALARMS",
+    description: "Supply & Installation of CCTV Surveillance, Biometric Access Control Systems & Intruder Alarm bell assemblies.",
+    icon: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>`
+  },
+  {
+    title: "AFTER SALES CARE & SUPPORT",
+    description: "We provide a broad range of supporting services to ensure that our customers receive the best possible after sales care.",
+    icon: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>`
+  }
+];
+
+const workShowcase = [
+  { title: "BTI Building Project", image: "/wp-content/uploads/2017/11/BIT-Building-copy.jpg", category: "Fire Safety Setup" },
+  { title: "BRAC University", image: "/wp-content/uploads/2017/11/brac-university.jpg", category: "CCTV Surveillance" },
+  { title: "BRAC Centre Inn", image: "/wp-content/uploads/2017/11/brac-centre-inn-copy.jpg", category: "Access Control" }
+];
+
+const faqList = [
+  {
+    q: "Where to buy certified fire extinguishers in Dhaka, Bangladesh?",
+    a: "N.I. Engineering Services is the leading certified fire extinguisher supplier in Dhaka, offering ABC Dry Powder, CO2, and Foam fire extinguishers located at GA-85(Gr Floor), Middle Badda, Gulshan, Dhaka."
+  },
+  {
+    q: "How much does fire extinguisher refilling cost in Dhaka?",
+    a: "Fire extinguisher refilling costs vary by chemical type and capacity (2kg, 6kg, 9kg). N.I. Engineering Services provides factory-certified chemical refilling, pressure testing, and nitrogen purging at reasonable rates in Dhaka."
+  },
+  {
+    q: "Which fire safety equipment is required for building compliance in Dhaka?",
+    a: "According to Bangladesh Fire Service and Civil Defence (BFSCD) regulations, commercial and residential buildings require ABC Dry Powder Extinguishers, Hose Reels, Automatic Smoke Detectors, and Fire Hydrant Systems."
+  }
+];
+---
+
+<Layout 
+  title="Fire Extinguisher Supplier & Refilling Service in Dhaka | N.I. Engineering Services"
+  description="#1 Fire Extinguisher Supplier and Refilling Service in Dhaka, Bangladesh. ABC Powder, CO2 Extinguishers, Hydrants, Smoke Detectors & CCTV. Call +880 1711 135 731."
+>
+  <!-- Hero Slider Component -->
+  <HeroSlider />
+
+  <!-- Services Grid -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-xs font-black uppercase text-flame tracking-widest block mb-2">
+          #1 Fire Safety Contractor in Dhaka, Bangladesh
+        </span>
+        <h2 class="text-3xl font-extrabold uppercase text-navy tracking-tight">
+          Fire Safety Equipment & <span class="text-flame">Refilling Services</span>
+        </h2>
+        <div class="w-16 h-1 bg-flame mx-auto mt-3 mb-4 rounded-full"></div>
+        <p class="text-gray-600 text-sm">
+          NIENGINEERING provides certified ABC Dry Powder, CO2, Foam fire extinguishers, refilling, hydrants, and CCTV solutions across Gulshan, Banani, Uttara, Dhanmondi, and Middle Badda in Dhaka.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {services.map(svc => (
+          <ServiceCard title={svc.title} description={svc.description} icon={svc.icon} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us Parallax / Banner Section -->
+  <section class="py-16 bg-navy text-white relative overflow-hidden">
+    <div class="absolute inset-0 opacity-20 bg-cover bg-center" style="background-image: url('/wp-content/uploads/2017/05/DFRS_Generic_Hero_Banner_78_May13.jpg');"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="inline-block px-3 py-1 bg-flame text-white text-xs font-black uppercase tracking-widest rounded mb-3">
+            Why Choose N.I. Engineering Services
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight mb-4">
+            Fire Safety Supplier In Dhaka. <span class="text-flame">We Protect What Matters.</span>
+          </h2>
+          <p class="text-gray-300 text-sm leading-relaxed mb-6">
+            Fire is a serious threat to the physical safety and security of any workplace in Dhaka. We install and service high-quality fire protection systems across Bangladesh at reasonable prices.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+          <div class="p-6 bg-white/10 backdrop-blur rounded-lg border border-white/10">
+            <h3 class="text-lg font-bold text-flame uppercase mb-2">After Sales</h3>
+            <p class="text-xs text-gray-300">Dedicated ongoing after-sales care and refilling support in Dhaka.</p>
+          </div>
+          <div class="p-6 bg-white/10 backdrop-blur rounded-lg border border-white/10">
+            <h3 class="text-lg font-bold text-flame uppercase mb-2">Certified</h3>
+            <p class="text-xs text-gray-300">Civil Defence approved fire protection equipment.</p>
+          </div>
+          <div class="p-6 bg-white/10 backdrop-blur rounded-lg border border-white/10">
+            <h3 class="text-lg font-bold text-flame uppercase mb-2">Best Prices</h3>
+            <p class="text-xs text-gray-300">Finest global brands at the most reasonable prices in Bangladesh.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Grid Component -->
+  <ProductGrid />
+
+  <!-- Our Work Portfolio Section -->
+  <section class="py-16 bg-white border-t border-clean-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <h2 class="text-3xl font-extrabold uppercase text-navy tracking-tight">
+            Our Completed <span class="text-flame">Projects in Dhaka</span>
+          </h2>
+          <div class="w-16 h-1 bg-flame mt-3 mb-2 rounded-full"></div>
+          <p class="text-sm text-gray-600 max-w-xl">
+            We deliver fire safety installations for premier developer clients including BTI, BRAC University, and BRAC Centre Inn.
+          </p>
+        </div>
+        <a href="/contact/" class="mt-4 md:mt-0 inline-flex items-center text-xs font-extrabold uppercase text-flame hover:underline">
+          Work Inquiry & Contact &rarr;
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {workShowcase.map(item => (
+          <div class="group relative rounded-lg overflow-hidden shadow-md border border-clean-border bg-clean">
+            <div class="h-64 overflow-hidden">
+              <img src={item.image} alt={item.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            </div>
+            <div class="p-4 bg-white border-t border-clean-border">
+              <span class="text-[10px] font-extrabold uppercase tracking-widest text-flame block mb-1">{item.category}</span>
+              <h3 class="text-base font-bold uppercase text-navy">{item.title}</h3>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- OpenSEO / AI Search Engine Optimization FAQ Section -->
+  <section class="py-16 bg-clean border-t border-clean-border">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <span class="text-xs font-black uppercase text-flame tracking-widest block mb-1">Frequently Asked Questions</span>
+        <h2 class="text-3xl font-extrabold uppercase text-navy tracking-tight">
+          Fire Extinguisher & Safety Guide <span class="text-flame">Dhaka</span>
+        </h2>
+        <div class="w-16 h-1 bg-flame mx-auto mt-3 rounded-full"></div>
+      </div>
+
+      <div class="space-y-6">
+        {faqList.map(faq => (
+          <div class="p-6 bg-white rounded-xl border border-clean-border shadow-sm">
+            <h3 class="text-base font-bold text-navy mb-2">{faq.q}</h3>
+            <p class="text-xs text-gray-600 leading-relaxed">{faq.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Client Logos Component -->
+  <ClientLogos />
+
+  <!-- Contact Form Component -->
+  <ContactForm />
+</Layout>

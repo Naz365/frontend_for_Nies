@@ -1,0 +1,44 @@
+---
+const clientLogos = [
+  { name: "Radiant", image: "/wp-content/uploads/2017/11/radiant.png" },
+  { name: "BTI", image: "/wp-content/uploads/2017/11/bti.png" },
+  { name: "BRAC", image: "/wp-content/uploads/2017/11/brac.png" },
+  { name: "BRAC University", image: "/wp-content/uploads/2017/11/bracuni.png" },
+  { name: "Global", image: "/wp-content/uploads/2017/11/global.png" },
+  { name: "Envoy", image: "/wp-content/uploads/2017/11/envoy.png" },
+  { name: "Chung Hua", image: "/wp-content/uploads/2017/11/chunghua.png" },
+  { name: "AFL", image: "/wp-content/uploads/2017/11/afl.png" },
+  { name: "SEEK", image: "/wp-content/uploads/2017/11/seek.png" },
+  { name: "GIS", image: "/wp-content/uploads/2017/11/gis.png" },
+  { name: "Markup", image: "/wp-content/uploads/2017/11/markup.png" },
+  { name: "Meek Sweater", image: "/wp-content/uploads/2017/11/mikey.png" },
+  { name: "Excellent", image: "/wp-content/uploads/2017/11/excelent.png" },
+  { name: "Mondol", image: "/wp-content/uploads/2017/11/mondol.png" },
+  { name: "HQ", image: "/wp-content/uploads/2017/11/hq.png" }
+];
+---
+
+<section class="py-16 bg-white border-t border-clean-border">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <h2 class="text-2xl sm:text-3xl font-extrabold uppercase text-navy tracking-tight">
+        Our <span class="text-flame">Customers</span> & Partners
+      </h2>
+      <p class="text-xs sm:text-sm text-gray-500 mt-2">
+        Trusted by Bangladesh's premier institutions, corporate towers, real estate, and industrial leaders.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 items-center justify-items-center">
+      {clientLogos.map(logo => (
+        <div class="w-full p-4 bg-clean rounded-lg border border-clean-border hover:border-flame/40 flex items-center justify-center h-28 grayscale hover:grayscale-0 transition-all duration-300 transform hover:scale-105 shadow-sm">
+          <img 
+            src={logo.image} 
+            alt={`${logo.name} logo`} 
+            class="max-h-16 max-w-full object-contain"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

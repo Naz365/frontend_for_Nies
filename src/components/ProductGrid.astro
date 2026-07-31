@@ -1,0 +1,185 @@
+---
+const categories = [
+  { name: 'All', slug: 'all' },
+  { name: 'ACCESS CONTROL', slug: 'access-control' },
+  { name: 'ALARM SYSTEMS', slug: 'alarm-systems' },
+  { name: 'CCTV', slug: 'cctv' },
+  { name: 'FIRE EXTINGUISHERS', slug: 'fire-extinguishers' },
+  { name: 'FIRE HYDRANT', slug: 'fire-hydrant' },
+  { name: 'FIREFIGHTING EQUIPMENT', slug: 'firefighting-equipment' },
+  { name: 'GENERATOR', slug: 'generator' },
+  { name: 'SUPPRESSION SYSTEM', slug: 'suppression-system' }
+];
+
+const products = [
+  {
+    id: 1,
+    title: "SUPPRESSION SYSTEM",
+    category: "suppression-system",
+    image: "/wp-content/uploads/2017/11/fire-suppression-system.jpg"
+  },
+  {
+    id: 2,
+    title: "FIRE DETECTION ALARM SYSTEM",
+    category: "alarm-systems",
+    image: "/wp-content/uploads/2017/05/fire-detection-alarm-system.jpg"
+  },
+  {
+    id: 3,
+    title: "ALARM BELL & STROBE",
+    category: "alarm-systems",
+    image: "/wp-content/uploads/2017/05/Alarm-Bell.jpg"
+  },
+  {
+    id: 4,
+    title: "HEAVY DUTY GENERATOR",
+    category: "generator",
+    image: "/wp-content/uploads/2017/05/g2.jpg"
+  },
+  {
+    id: 5,
+    title: "CCTV SURVEILLANCE CAMERA",
+    category: "cctv",
+    image: "/wp-content/uploads/2017/11/static1.squarespace.jpg"
+  },
+  {
+    id: 6,
+    title: "ACCESS CONTROL BIOMETRIC SYSTEM",
+    category: "access-control",
+    image: "/wp-content/uploads/2017/11/AccessControlSystems.jpg"
+  },
+  {
+    id: 7,
+    title: "CO2 & ABC FIRE EXTINGUISHERS",
+    category: "fire-extinguishers",
+    image: "/wp-content/uploads/2017/05/fire-extinguishers1.jpg"
+  },
+  {
+    id: 8,
+    title: "FIRE EXTINGUISHERS RACK & CYLINDERS",
+    category: "fire-extinguishers",
+    image: "/wp-content/uploads/2017/05/banner-3.jpg"
+  },
+  {
+    id: 9,
+    title: "SAFETY SUIT & FIREFIGHTING GEAR",
+    category: "firefighting-equipment",
+    image: "/wp-content/uploads/2017/05/f07ad86b1cdc81186961d997363e87a7.jpg"
+  },
+  {
+    id: 10,
+    title: "FIREFIGHTER HELMET & PROTECTIVE SUIT",
+    category: "firefighting-equipment",
+    image: "/wp-content/uploads/2017/05/safty_big.jpg"
+  },
+  {
+    id: 11,
+    title: "FIRE HOSE & NOZZLE ASSEMBLY",
+    category: "fire-hydrant",
+    image: "/wp-content/uploads/2017/05/firehose.png"
+  },
+  {
+    id: 12,
+    title: "FIRE HYDRANT SYSTEM PIPING & VALVES",
+    category: "fire-hydrant",
+    image: "/wp-content/uploads/2017/05/fire-hydrant-system.jpg"
+  }
+];
+---
+
+<section id="products-section" class="py-16 bg-clean">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Title -->
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <h2 class="text-3xl sm:text-4xl font-extrabold uppercase text-navy tracking-tight">
+        Our <span class="text-flame">Products</span> & Solutions
+      </h2>
+      <div class="w-16 h-1 bg-flame mx-auto mt-3 mb-4 rounded-full"></div>
+      <p class="text-gray-600 text-sm sm:text-base">
+        High quality fire protection equipment, access control, surveillance, and industrial safety machinery.
+      </p>
+    </div>
+
+    <!-- Category Filters -->
+    <div class="flex flex-wrap justify-center gap-2 mb-10">
+      {categories.map((cat, idx) => (
+        <button
+          type="button"
+          class={`filter-btn px-4 py-2 text-xs font-bold uppercase rounded-md transition-all duration-200 ${
+            idx === 0
+              ? 'bg-flame text-white shadow'
+              : 'bg-white text-navy hover:bg-flame hover:text-white border border-clean-border'
+          }`}
+          data-category={cat.slug}
+        >
+          {cat.name}
+        </button>
+      ))}
+    </div>
+
+    <!-- Product Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {products.map(prod => (
+        <div 
+          class="product-card bg-white rounded-lg border border-clean-border overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 group"
+          data-category={prod.category}
+        >
+          <div class="relative h-56 overflow-hidden bg-gray-100">
+            <img 
+              src={prod.image} 
+              alt={prod.title} 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div class="absolute inset-0 bg-navy/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <a 
+                href="/contact/" 
+                class="px-4 py-2 bg-flame text-white text-xs font-extrabold uppercase rounded shadow"
+              >
+                Inquire Product
+              </a>
+            </div>
+          </div>
+          <div class="p-4 border-t border-clean-border">
+            <span class="text-[10px] font-extrabold uppercase tracking-widest text-flame block mb-1">
+              {prod.category.replace('-', ' ')}
+            </span>
+            <h3 class="text-sm font-bold uppercase text-navy tracking-tight line-clamp-1">
+              {prod.title}
+            </h3>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const productCards = document.querySelectorAll('.product-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cat = btn.getAttribute('data-category');
+
+      // Update button active state
+      filterBtns.forEach(b => {
+        b.classList.remove('bg-flame', 'text-white', 'shadow');
+        b.classList.add('bg-white', 'text-navy', 'border', 'border-clean-border');
+      });
+      btn.classList.remove('bg-white', 'text-navy', 'border', 'border-clean-border');
+      btn.classList.add('bg-flame', 'text-white', 'shadow');
+
+      // Filter product items
+      productCards.forEach(card => {
+        const cardCat = card.getAttribute('data-category');
+        if (cat === 'all' || cardCat === cat) {
+          (card as HTMLElement).style.display = 'block';
+        } else {
+          (card as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  });
+</script>

@@ -1,0 +1,115 @@
+{
+  "project_name": "N. I. Engineering Services Migration",
+  "source_domain": "https://niengineeringbd.com/",
+  "archived_at": "2026-07-28T14:10:00+06:00",
+  "contact_info": {
+    "address": "GA-85(Gr Floor), Middle Badda, Gulshan, Dhaka",
+    "phone_numbers": [
+      "+880 1711 135 731",
+      "+880 1670 236 785",
+      "+88-02-9882326"
+    ],
+    "fax": "+88-02-9882326",
+    "emails": [
+      "info@niengineeringbd.com",
+      "sales@niengineeringbd.com"
+    ],
+    "social_links": {
+      "facebook": "https://www.facebook.com/n.i.engineeringbd"
+    }
+  },
+  "company_profile_pdf": "/wp-content/uploads/2017/11/Company_Profile.pdf",
+  "routes": [
+    {
+      "path": "/",
+      "title": "N. I. Engineering Services | Fire and Safety, Extinguisher, Security,CC Camera, Fire Eqipment",
+      "meta_description": "Fire and Safety, Extinguisher, Security,CC Camera, Fire Eqipment",
+      "og_title": "N. I. Engineering Services",
+      "og_type": "website",
+      "hero_taglines": [
+        "Prevent before Fighting Against Fire",
+        "Ensure Fire Safety, Save Life, Save Property",
+        "INTEGRATED SOLUTIONS FOR SECURITY & SURVEILLANCE",
+        "convenient access control systems"
+      ]
+    },
+    {
+      "path": "/about-us/",
+      "title": "About Us | N. I. Engineering Services",
+      "meta_description": "N.I. Engineering Services is a leading Fire Protection, Engineering, Import, Supply and service Company offering a one stop solution Provider for client's requirements.",
+      "og_title": "About Us - N. I. Engineering Services"
+    },
+    {
+      "path": "/products/",
+      "title": "Products | N. I. Engineering Services",
+      "meta_description": "Fire Extinguishers, Alarm Systems, CCTV, Access Control, Fire Hydrant, Firefighting Equipment, Suppression Systems, Generators",
+      "og_title": "Products - N. I. Engineering Services"
+    },
+    {
+      "path": "/contact/",
+      "title": "Contact | N. I. Engineering Services",
+      "meta_description": "Contact N. I. Engineering Services at GA-85 Middle Badda, Gulshan, Dhaka or Call +880 1711 135 731",
+      "og_title": "Contact - N. I. Engineering Services"
+    },
+    {
+      "path": "/company-profile/",
+      "title": "Company Profile | N. I. Engineering Services",
+      "meta_description": "Download and view the official Company Profile PDF for N. I. Engineering Services",
+      "og_title": "Company Profile - N. I. Engineering Services"
+    }
+  ],
+  "product_categories": [
+    { "name": "ACCESS CONTROL", "slug": "access-control" },
+    { "name": "ALARM SYSTEMS", "slug": "alarm-systems" },
+    { "name": "CCTV", "slug": "cctv" },
+    { "name": "FIRE EXTINGUISHERS", "slug": "fire-extinguishers" },
+    { "name": "FIRE HYDRANT", "slug": "fire-hydrant" },
+    { "name": "FIREFIGHTING EQUIPMENT", "slug": "firefighting-equipment" },
+    { "name": "GENERATOR", "slug": "generator" },
+    { "name": "SUPPRESSION SYSTEM", "slug": "suppression-system" }
+  ],
+  "customer_logos": [
+    { "name": "Radiant", "url": "/wp-content/uploads/2017/11/radiant.png" },
+    { "name": "BTI", "url": "/wp-content/uploads/2017/11/bti.png" },
+    { "name": "BRAC", "url": "/wp-content/uploads/2017/11/brac.png" },
+    { "name": "BRAC University", "url": "/wp-content/uploads/2017/11/bracuni.png" },
+    { "name": "Global", "url": "/wp-content/uploads/2017/11/global.png" },
+    { "name": "Envoy", "url": "/wp-content/uploads/2017/11/envoy.png" },
+    { "name": "Chung Hua", "url": "/wp-content/uploads/2017/11/chunghua.png" },
+    { "name": "AFL", "url": "/wp-content/uploads/2017/11/afl.png" },
+    { "name": "SEEK", "url": "/wp-content/uploads/2017/11/seek.png" },
+    { "name": "GIS", "url": "/wp-content/uploads/2017/11/gis.png" },
+    { "name": "Markup", "url": "/wp-content/uploads/2017/11/markup.png" },
+    { "name": "Meek Sweater", "url": "/wp-content/uploads/2017/11/mikey.png" },
+    { "name": "Excellent", "url": "/wp-content/uploads/2017/11/excelent.png" },
+    { "name": "Mondol", "url": "/wp-content/uploads/2017/11/mondol.png" },
+    { "name": "HQ", "url": "/wp-content/uploads/2017/11/hq.png" }
+  ],
+  "uploads_inventory": [
+    "/wp-content/uploads/2017/11/Company_Profile.pdf",
+    "/wp-content/uploads/2017/11/ni_logo-1.png",
+    "/wp-content/uploads/2017/11/fav.png",
+    "/wp-content/uploads/2017/11/logo-wh.png",
+    "/wp-content/uploads/2017/11/fire-safty-banner-mod-1.jpg",
+    "/wp-content/uploads/2017/11/mr-fire-safety-limited-fire-safety-training-shrewsbury-banner.jpg",
+    "/wp-content/uploads/2017/11/static1.squarespace.jpg",
+    "/wp-content/uploads/2017/11/Access-Control-Systems-1.jpg",
+    "/wp-content/uploads/2017/05/DFRS_Generic_Hero_Banner_78_May13.jpg",
+    "/wp-content/uploads/2017/11/wfs_banner_5-1-1.jpg",
+    "/wp-content/uploads/2017/11/fire-suppression-system.jpg",
+    "/wp-content/uploads/2017/05/fire-detection-alarm-system.jpg",
+    "/wp-content/uploads/2017/05/Alarm-Bell.jpg",
+    "/wp-content/uploads/2017/05/g2.jpg",
+    "/wp-content/uploads/2017/11/AccessControlSystems.jpg",
+    "/wp-content/uploads/2017/05/fire-extinguishers1.jpg",
+    "/wp-content/uploads/2017/05/banner-3.jpg",
+    "/wp-content/uploads/2017/05/f07ad86b1cdc81186961d997363e87a7.jpg",
+    "/wp-content/uploads/2017/05/safty_big.jpg",
+    "/wp-content/uploads/2017/05/firehose.png",
+    "/wp-content/uploads/2017/05/fire-hydrant-system.jpg",
+    "/wp-content/uploads/2017/11/BIT-Building-copy.jpg",
+    "/wp-content/uploads/2017/11/brac-university.jpg",
+    "/wp-content/uploads/2017/11/brac-centre-inn-copy.jpg",
+    "/wp-content/uploads/2017/05/2-pozharogasiteli.png"
+  ]
+}

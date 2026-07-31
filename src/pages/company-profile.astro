@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Company Profile | N. I. Engineering Services"
+  description="Download and view the official Company Profile PDF for N. I. Engineering Services"
+>
+  <section class="bg-navy text-white py-12 border-b border-flame">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="text-xs font-extrabold uppercase text-flame tracking-widest block mb-2">Official Documentation</span>
+      <h1 class="text-4xl font-extrabold uppercase tracking-tight text-white">Company Profile</h1>
+      <div class="mt-4 flex justify-center space-x-4">
+        <a 
+          href="/wp-content/uploads/2017/11/Company_Profile.pdf" 
+          target="_blank" 
+          download
+          class="inline-flex items-center px-6 py-3 bg-flame hover:bg-flame-hover text-white text-xs font-extrabold uppercase tracking-wider rounded shadow transition-all duration-200"
+        >
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+          </svg>
+          Download PDF Document
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 bg-clean">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white p-4 rounded-xl border border-clean-border shadow-xl">
+        <iframe 
+          src="/wp-content/uploads/2017/11/Company_Profile.pdf" 
+          class="w-full h-[750px] rounded border" 
+          title="Company Profile PDF Viewer"
+        >
+          <p class="p-6 text-center text-gray-600">
+            Your browser does not support embedded PDF viewing. 
+            <a href="/wp-content/uploads/2017/11/Company_Profile.pdf" download class="text-flame font-bold underline">Click here to download the Company Profile PDF</a>.
+          </p>
+        </iframe>
+      </div>
+    </div>
+  </section>
+</Layout>

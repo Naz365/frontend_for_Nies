@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProductGrid from '../components/ProductGrid.astro';
+---
+
+<Layout 
+  title="Products | N. I. Engineering Services"
+  description="Browse our complete catalog of fire extinguishers, fire hydrants, suppression systems, alarm systems, CCTV cameras, access control, and generators."
+>
+  <section class="bg-navy text-white py-16 border-b border-flame">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="text-xs font-extrabold uppercase text-flame tracking-widest block mb-2">Safety Equipment Catalog</span>
+      <h1 class="text-4xl sm:text-5xl font-extrabold uppercase tracking-tight text-white">Our Products</h1>
+      <p class="mt-4 text-sm sm:text-base text-gray-300 max-w-2xl mx-auto">
+        Explore our wide range of high quality fire protection equipment, access control systems, surveillance cameras, and firefighting accessories.
+      </p>
+    </div>
+  </section>
+
+  <ProductGrid />
+</Layout>

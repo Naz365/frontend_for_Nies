@@ -1,0 +1,82 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { fetchBlogPosts } from '../../lib/api';
+
+const posts = await fetchBlogPosts();
+---
+
+<Layout 
+  title="Fire Safety & Engineering News Blog | N.I. Engineering Services Dhaka"
+  description="Stay updated with fire safety compliance rules, fire extinguisher maintenance tips, CCTV security, and building safety guidelines in Dhaka, Bangladesh."
+>
+  <!-- Blog Page Hero Banner -->
+  <section class="bg-navy text-white py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-15 bg-cover bg-center" style="background-image: url('/wp-content/uploads/2017/05/DFRS_Generic_Hero_Banner_78_May13.jpg');"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="inline-block px-3 py-1 bg-flame text-white text-xs font-black uppercase tracking-widest rounded mb-3">
+        Fire Safety Insights & News
+      </span>
+      <h1 class="text-3xl sm:text-5xl font-extrabold uppercase tracking-tight mb-4">
+        Our Official <span class="text-flame">Safety Blog</span>
+      </h1>
+      <div class="w-20 h-1 bg-flame mx-auto rounded-full mb-6"></div>
+      <p class="text-gray-300 text-sm max-w-2xl mx-auto leading-relaxed">
+        Expert articles, industrial fire safety guidelines, Bangladesh Civil Defence compliance rules, and security system maintenance advice.
+      </p>
+    </div>
+  </section>
+
+  <!-- Blog Listing Grid Section -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {posts.map(post => (
+          <article class="bg-clean border border-clean-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group">
+            <div class="h-56 overflow-hidden relative">
+              <img 
+                src={post.thumbnail || '/wp-content/uploads/2017/05/fire-detection-alarm-system.jpg'} 
+                alt={post.title}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+              />
+              <span class="absolute top-4 left-4 bg-navy text-white text-[10px] font-extrabold uppercase px-3 py-1 rounded shadow">
+                Fire Safety
+              </span>
+            </div>
+
+            <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
+              <div class="space-y-2">
+                <div class="flex items-center space-x-3 text-xs text-gray-500 font-semibold">
+                  <span>{post.published_at}</span>
+                  <span>•</span>
+                  <span>By {post.author}</span>
+                </div>
+
+                <h2 class="text-xl font-bold text-navy group-hover:text-flame transition-colors line-clamp-2">
+                  <a href={`/blog/${post.slug}/`}>
+                    {post.title}
+                  </a>
+                </h2>
+
+                <p class="text-xs text-gray-600 leading-relaxed line-clamp-3">
+                  {post.summary}
+                </p>
+              </div>
+
+              <div class="pt-4 border-t border-clean-border flex items-center justify-between">
+                <a 
+                  href={`/blog/${post.slug}/`} 
+                  class="inline-flex items-center text-xs font-extrabold uppercase text-flame hover:underline space-x-1"
+                >
+                  <span>Read Article</span>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+    </div>
+  </section>
+</Layout>

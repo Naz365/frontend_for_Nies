@@ -1,0 +1,149 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: string;
+  canonicalUrl?: string;
+}
+
+const { 
+  title = "Fire Extinguisher Supplier & Refilling Service in Dhaka | N.I. Engineering Services", 
+  description = "Top #1 Fire Extinguisher Supplier & Refilling Service in Dhaka, Bangladesh. ABC Dry Powder, CO2, Foam Extinguishers, Hydrants, CCTV & Fire Safety Equipment. Call +880 1711 135 731.",
+  image = "/wp-content/uploads/2017/11/ni_logo-1.png",
+  type = "website",
+  canonicalUrl = Astro.url.href
+} = Astro.props;
+
+// OpenSEO Schema.org LocalBusiness & EmergencyService JSON-LD
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": ["LocalBusiness", "EmergencyService"],
+  "@id": "https://niengineeringbd.com/#organization",
+  "name": "N.I. Engineering Services & Fire Safety",
+  "alternateName": ["NIES Fire Safety Dhaka", "N.I. Engineering Services"],
+  "url": "https://niengineeringbd.com",
+  "logo": "https://niengineeringbd.com/wp-content/uploads/2017/11/ni_logo-1.png",
+  "image": "https://niengineeringbd.com/wp-content/uploads/2017/11/ni_logo-1.png",
+  "description": "Leading fire safety contractor and #1 fire extinguisher supplier and refilling service in Dhaka, Bangladesh. Providing ABC Powder, CO2 Extinguishers, Fire Hydrant Systems, Smoke Detectors, CCTV, and Civil Defence Compliance.",
+  "telephone": "+8801711135731",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "GA-85(Gr Floor), Middle Badda, Gulshan",
+    "addressLocality": "Dhaka",
+    "addressRegion": "Dhaka Division",
+    "postalCode": "1212",
+    "addressCountry": "BD"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 23.7808875,
+    "longitude": 90.4225333
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Saturday", "Sunday"],
+      "opens": "08:00",
+      "closes": "20:00"
+    }
+  ],
+  "areaServed": [
+    { "@type": "City", "name": "Dhaka" },
+    { "@type": "AdministrativeArea", "name": "Gulshan" },
+    { "@type": "AdministrativeArea", "name": "Banani" },
+    { "@type": "AdministrativeArea", "name": "Uttara" },
+    { "@type": "AdministrativeArea", "name": "Dhanmondi" },
+    { "@type": "AdministrativeArea", "name": "Mirpur" },
+    { "@type": "AdministrativeArea", "name": "Middle Badda" },
+    { "@type": "AdministrativeArea", "name": "Gazipur" },
+    { "@type": "Country", "name": "Bangladesh" }
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Fire Extinguishers & Safety Equipment Dhaka",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "ABC Dry Powder Fire Extinguisher (6kg / 9kg)",
+          "description": "Multi-purpose ABC dry chemical powder fire extinguisher for Class A, B, and C fires in Dhaka."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "CO2 Fire Extinguisher (2kg / 5kg)",
+          "description": "Carbon Dioxide CO2 fire extinguisher for electrical equipment & server room protection in Dhaka."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Fire Extinguisher Refilling & Nitrogen Purging Service Dhaka",
+          "description": "Annual refilling, pressure testing, and chemical refilling service for all types of fire extinguishers in Dhaka."
+        }
+      }
+    ]
+  }
+};
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/wp-content/uploads/2017/11/fav.png" />
+    <link rel="canonical" href={canonicalUrl} />
+    
+    <!-- OpenSEO Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content="fire extinguisher dhaka, fire safety company dhaka, fire extinguisher refilling dhaka, abc dry powder extinguisher price in bangladesh, co2 fire extinguisher dhaka, fire safety equipment supplier middle badda gulshan, fire alarm system installation dhaka, ni engineering services" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="geo.region" content="BD-13" />
+    <meta name="geo.placename" content="Dhaka, Middle Badda, Gulshan" />
+    <meta name="geo.position" content="23.780888;90.422533" />
+    <meta name="ICBM" content="23.780888, 90.422533" />
+
+    <!-- OpenGraph / Facebook -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="N.I. Engineering Services & Fire Safety" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={image} />
+
+    <!-- OpenSEO JSON-LD Schema -->
+    <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-clean text-navy font-sans antialiased flex flex-col min-h-screen">
+    <Header />
+    <main class="flex-grow">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

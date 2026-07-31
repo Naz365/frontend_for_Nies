@@ -1,0 +1,82 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ClientLogos from '../components/ClientLogos.astro';
+---
+
+<Layout 
+  title="About Us | N. I. Engineering Services"
+  description="Learn about N.I. Engineering Services - leading fire protection, safety, engineering import, supply, and maintenance company in Bangladesh."
+>
+  <!-- Page Header -->
+  <section class="bg-navy text-white py-16 border-b border-flame">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="text-xs font-extrabold uppercase text-flame tracking-widest block mb-2">Corporate Overview</span>
+      <h1 class="text-4xl sm:text-5xl font-extrabold uppercase tracking-tight text-white">About Us</h1>
+      <p class="mt-4 text-sm sm:text-base text-gray-300 max-w-2xl mx-auto">
+        N.I. Engineering Services is a leading Fire Protection, Engineering, Import, Supply and service Company offering a "one stop solution Provider" for client's safety requirements.
+      </p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        
+        <div>
+          <h2 class="text-3xl font-extrabold uppercase text-navy tracking-tight mb-4">
+            Who <span class="text-flame">We Are</span>
+          </h2>
+          <p class="text-gray-600 text-sm leading-relaxed mb-4">
+            N.I. ENGINEERING SERVICES is dedicated to providing high-quality fire safety equipment, refilling services, CCTV surveillance cameras, biometric access control systems, and generator installations.
+          </p>
+          <p class="text-gray-600 text-sm leading-relaxed mb-6">
+            We don't just supply and install products, we also provide a broad range of supporting services to ensure that our customers receive the best possible after sales care. Installing and servicing high-quality fire protection systems across Bangladesh at reasonable prices is our commitment.
+          </p>
+
+          <div class="space-y-4">
+            <div class="flex items-start space-x-3">
+              <div class="w-6 h-6 rounded-full bg-flame/10 text-flame flex items-center justify-center flex-shrink-0 mt-0.5">
+                ✓
+              </div>
+              <p class="text-sm font-semibold text-navy">Certified Fire Extinguisher Refilling Workshop</p>
+            </div>
+            <div class="flex items-start space-x-3">
+              <div class="w-6 h-6 rounded-full bg-flame/10 text-flame flex items-center justify-center flex-shrink-0 mt-0.5">
+                ✓
+              </div>
+              <p class="text-sm font-semibold text-navy">Full Range of Firefighting Gear & Hose Reels</p>
+            </div>
+            <div class="flex items-start space-x-3">
+              <div class="w-6 h-6 rounded-full bg-flame/10 text-flame flex items-center justify-center flex-shrink-0 mt-0.5">
+                ✓
+              </div>
+              <p class="text-sm font-semibold text-navy">CCTV & Biometric Access Control Installation</p>
+            </div>
+          </div>
+
+          <div class="mt-8">
+            <a 
+              href="/wp-content/uploads/2017/11/Company_Profile.pdf" 
+              target="_blank"
+              download
+              class="inline-flex items-center px-6 py-3 bg-flame hover:bg-flame-hover text-white text-xs font-extrabold uppercase tracking-wider rounded shadow transition-all duration-200"
+            >
+              Download Full PDF Profile
+            </a>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="rounded-xl overflow-hidden shadow-2xl border-4 border-clean-border">
+            <img src="/wp-content/uploads/2017/11/BIT-Building-copy.jpg" alt="BTI Building Project" class="w-full h-auto object-cover" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Client Logos -->
+  <ClientLogos />
+</Layout>
