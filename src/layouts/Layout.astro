@@ -10,10 +10,12 @@ interface Props {
   canonicalUrl?: string;
 }
 
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+
 const { 
   title = "Fire Extinguisher Supplier & Refilling Service in Dhaka | N.I. Engineering Services", 
   description = "Top #1 Fire Extinguisher Supplier & Refilling Service in Dhaka, Bangladesh. ABC Dry Powder, CO2, Foam Extinguishers, Hydrants, CCTV & Fire Safety Equipment. Call +880 1711 135 731.",
-  image = "/wp-content/uploads/2017/11/ni_logo-1.png",
+  image = `${base}wp-content/uploads/2017/11/ni_logo-1.png`,
   type = "website",
   canonicalUrl = Astro.url.href
 } = Astro.props;
@@ -101,7 +103,7 @@ const localBusinessSchema = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="/wp-content/uploads/2017/11/fav.png" />
+    <link rel="icon" type="image/png" href={`${base}wp-content/uploads/2017/11/fav.png`} />
     <link rel="canonical" href={canonicalUrl} />
     
     <!-- OpenSEO Primary Meta Tags -->
