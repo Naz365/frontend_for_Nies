@@ -39,7 +39,7 @@ export interface SiteSettings {
   company_profile_pdf: string;
 }
 
-const API_BASE_URL = process.env.PUBLIC_API_URL || 'https://api.niengineeringbd.com/api/v1';
+const API_BASE_URL = process.env.PUBLIC_API_URL || 'https://ni-engineering-backend.onrender.com/api/v1';
 
 // Default mock/fallback data extracted from archived WordPress migration manifest
 const FALLBACK_PROJECTS: Project[] = [
@@ -137,7 +137,7 @@ export async function fetchSiteSettings(): Promise<SiteSettings> {
     phone_secondary: "+880 1670 236 785",
     telephone: "+88-02-9882326",
     fax: "+88-02-9882326",
-    emails: ["info@niengineeringbd.com", "sales@niengineeringbd.com"],
+    emails: ["info@niengineering.com", "sales@niengineering.com"],
     company_profile_pdf: "/wp-content/uploads/2017/11/Company_Profile.pdf"
   };
 }

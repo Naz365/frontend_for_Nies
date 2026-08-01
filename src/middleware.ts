@@ -5,23 +5,23 @@ export const onRequest: MiddlewareHandler = async (context, next) => {
   const url = new URL(context.request.url);
 
   // Subdomain Host Routing
-  if (host.includes('manage.niengineeringbd.com')) {
+  if (host.startsWith('manage.')) {
     if (url.pathname === '/' || url.pathname === '/admin') {
       return context.rewrite('/subdomains/manage/');
     }
-  } else if (host.includes('api.niengineeringbd.com')) {
+  } else if (host.startsWith('api.')) {
     if (url.pathname === '/') {
       return context.rewrite('/subdomains/api/');
     }
-  } else if (host.includes('shop.niengineeringbd.com')) {
+  } else if (host.startsWith('shop.')) {
     if (url.pathname === '/') {
       return context.rewrite('/subdomains/shop/');
     }
-  } else if (host.includes('portal.niengineeringbd.com')) {
+  } else if (host.startsWith('portal.')) {
     if (url.pathname === '/') {
       return context.rewrite('/subdomains/portal/');
     }
-  } else if (host.includes('erp.niengineeringbd.com')) {
+  } else if (host.startsWith('erp.')) {
     if (url.pathname === '/') {
       return context.rewrite('/subdomains/erp/');
     }
