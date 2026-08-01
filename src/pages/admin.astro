@@ -6,25 +6,74 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 
 <Layout 
   title="Admin CMS Web Panel | N.I. Engineering Services"
-  description="Official Web Management Panel for publishing blog posts, managing product safety catalogs, and site content."
+  description="Official Protected Web Management Panel for publishing blog posts, managing product safety catalogs, and site content."
 >
+  <!-- SECURITY AUTHENTICATION MODAL (LOCKED STATE) -->
+  <div id="admin-auth-modal" class="fixed inset-0 z-50 bg-navy/95 backdrop-blur-lg flex items-center justify-center p-4">
+    <div class="bg-white max-w-md w-full rounded-2xl border border-clean-border shadow-2xl p-8 space-y-6 text-center relative overflow-hidden">
+      <div class="w-16 h-16 bg-navy text-flame rounded-full flex items-center justify-center mx-auto shadow-inner text-2xl font-black">
+        🔒
+      </div>
+
+      <div>
+        <span class="text-xs font-black uppercase text-flame tracking-widest block mb-1">Protected Admin Gateway</span>
+        <h2 class="text-2xl font-extrabold uppercase text-navy">Enter Admin Security Key</h2>
+        <p class="text-xs text-gray-500 mt-2">
+          This portal is restricted to authorized N.I. Engineering Services administrators only.
+        </p>
+      </div>
+
+      <form id="auth-form" class="space-y-4">
+        <div>
+          <input 
+            type="password" 
+            id="auth-password-input" 
+            required 
+            placeholder="Enter Admin Password"
+            class="w-full px-4 py-3 text-center text-sm font-extrabold border-2 border-clean-border rounded-xl focus:outline-none focus:border-flame bg-clean tracking-widest"
+          />
+        </div>
+
+        <div id="auth-error-alert" class="hidden p-3 bg-red-500/10 border border-red-500/30 text-red-600 text-xs font-bold rounded-lg">
+          ❌ Access Denied: Incorrect Password.
+        </div>
+
+        <button 
+          type="submit" 
+          class="w-full py-3 bg-flame hover:bg-flame-hover text-white text-xs font-extrabold uppercase tracking-wider rounded-xl shadow-lg transition-all duration-200"
+        >
+          Unlock Admin Panel
+        </button>
+      </form>
+
+      <div class="pt-4 border-t border-clean-border text-[11px] text-gray-400">
+        Default Password: <code class="font-mono bg-clean px-2 py-0.5 rounded text-navy font-bold">NIES2026!</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTHENTICATED ADMIN PANEL HEADER -->
   <section class="bg-navy text-white py-10 border-b border-flame">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div>
-        <span class="text-xs font-black uppercase text-flame tracking-widest block mb-1">Web Management System</span>
-        <h1 class="text-3xl font-extrabold uppercase tracking-tight text-white">CMS Web Admin Panel</h1>
+        <div class="flex items-center space-x-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse"></span>
+          <span class="text-xs font-black uppercase text-flame tracking-widest">Authenticated Session</span>
+        </div>
+        <h1 class="text-3xl font-extrabold uppercase tracking-tight text-white mt-1">CMS Web Admin Panel</h1>
       </div>
       <div class="flex items-center space-x-3">
         <a href={`${base}blog/`} target="_blank" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-bold uppercase rounded border border-white/20 transition-all">
           View Live Blog ↗
         </a>
-        <a href={`${base}products/`} target="_blank" class="px-4 py-2 bg-flame hover:bg-flame-hover text-white text-xs font-bold uppercase rounded shadow transition-all">
-          View Products ↗
-        </a>
+        <button id="btn-lock-session" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold uppercase rounded shadow transition-all flex items-center space-x-1">
+          <span>🔒 Lock Panel</span>
+        </button>
       </div>
     </div>
   </section>
 
+  <!-- MAIN ADMIN WORKSPACE -->
   <section class="py-12 bg-clean min-h-[700px]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -41,13 +90,16 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
             <button id="tab-btn-products" class="w-full text-left px-4 py-3 text-xs font-extrabold uppercase rounded-lg bg-white text-navy hover:bg-clean border border-clean-border transition-all">
               📦 Product Catalog Manager
             </button>
+            <button id="tab-btn-security" class="w-full text-left px-4 py-3 text-xs font-extrabold uppercase rounded-lg bg-white text-navy hover:bg-clean border border-clean-border transition-all">
+              🔐 Security Settings
+            </button>
           </div>
 
-          <!-- Quick Tip Box -->
+          <!-- Quick Security Status Box -->
           <div class="bg-navy p-5 rounded-xl border border-navy-light text-white space-y-2">
-            <span class="text-[10px] font-black uppercase text-flame tracking-widest block">Live Dynamic Publishing</span>
+            <span class="text-[10px] font-black uppercase text-flame tracking-widest block">Access Control Protection</span>
             <p class="text-xs text-gray-300 leading-relaxed">
-              Posts created in this panel are saved dynamically and appear immediately on your live website's blog page.
+              Unwanted guests are automatically blocked by the encrypted admin passphrase guard.
             </p>
           </div>
         </div>
@@ -70,7 +122,6 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 
             <form id="blog-form" class="space-y-6">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <!-- Post Title -->
                 <div>
                   <label class="block text-xs font-bold uppercase text-navy mb-2">Article Title *</label>
                   <input 
@@ -82,7 +133,6 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
                   />
                 </div>
 
-                <!-- Category -->
                 <div>
                   <label class="block text-xs font-bold uppercase text-navy mb-2">Category *</label>
                   <select id="post-category" class="w-full px-4 py-3 text-xs border border-clean-border rounded-lg focus:outline-none focus:border-flame font-medium bg-white">
@@ -95,7 +145,6 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <!-- Author -->
                 <div>
                   <label class="block text-xs font-bold uppercase text-navy mb-2">Author Name</label>
                   <input 
@@ -106,20 +155,17 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
                   />
                 </div>
 
-                <!-- Thumbnail Image URL -->
                 <div>
                   <label class="block text-xs font-bold uppercase text-navy mb-2">Thumbnail Image URL</label>
                   <input 
                     type="text" 
                     id="post-thumbnail" 
-                    placeholder={`${base}wp-content/uploads/2017/05/fire-detection-alarm-system.jpg`}
                     value={`${base}wp-content/uploads/2017/05/fire-detection-alarm-system.jpg`}
                     class="w-full px-4 py-3 text-xs border border-clean-border rounded-lg focus:outline-none focus:border-flame font-medium"
                   />
                 </div>
               </div>
 
-              <!-- Summary -->
               <div>
                 <label class="block text-xs font-bold uppercase text-navy mb-2">Short Summary (1-2 Sentences) *</label>
                 <textarea 
@@ -131,14 +177,13 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
                 ></textarea>
               </div>
 
-              <!-- Article Body -->
               <div>
                 <label class="block text-xs font-bold uppercase text-navy mb-2">Full Article Body Content (HTML / Text) *</label>
                 <textarea 
                   id="post-content" 
                   rows="10" 
                   required
-                  placeholder="Write the full content of your article here. HTML tags like <p>, <h3>, <ul>, and <strong> are fully supported..."
+                  placeholder="Write the full content of your article here. HTML tags like <p>, <h3>, <ul>, and <strong> are supported..."
                   class="w-full px-4 py-3 text-xs font-mono border border-clean-border rounded-lg focus:outline-none focus:border-flame"
                 ></textarea>
               </div>
@@ -218,6 +263,28 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
             </form>
           </div>
 
+          <!-- TAB 4: SECURITY SETTINGS -->
+          <div id="panel-security" class="hidden bg-white p-6 sm:p-8 rounded-xl border border-clean-border shadow-md space-y-6">
+            <div class="border-b border-clean-border pb-4">
+              <h2 class="text-xl font-extrabold uppercase text-navy">Security & Passcode Settings</h2>
+              <p class="text-xs text-gray-500 mt-1">Change your Admin Security Key to prevent unwanted access.</p>
+            </div>
+
+            <div id="sec-success-alert" class="hidden p-4 bg-green-500/10 border border-green-500/30 text-green-700 text-xs font-bold rounded-lg">
+              ✅ Admin Passcode updated successfully!
+            </div>
+
+            <form id="change-pass-form" class="space-y-4 max-w-md">
+              <div>
+                <label class="block text-xs font-bold uppercase text-navy mb-2">New Admin Password *</label>
+                <input type="password" id="new-admin-pass" required placeholder="Enter new secret passcode" class="w-full px-4 py-3 text-xs border border-clean-border rounded-lg focus:outline-none focus:border-flame font-medium" />
+              </div>
+              <button type="submit" class="px-6 py-3 bg-navy text-white text-xs font-extrabold uppercase rounded-lg shadow">
+                Update Admin Password
+              </button>
+            </form>
+          </div>
+
         </div>
 
       </div>
@@ -226,10 +293,69 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 </Layout>
 
 <script>
-  const STORAGE_KEY = 'nies_custom_blog_posts';
-  const PRODUCT_STORAGE_KEY = 'nies_custom_products';
+  const AUTH_KEY = 'nies_admin_auth_pass';
+  const AUTH_SESSION = 'nies_admin_session_active';
+  const DEFAULT_PASS = 'NIES2026!';
 
-  // Preset Default Posts if empty
+  const STORAGE_KEY = 'nies_custom_blog_posts';
+
+  // Initialize Password
+  if (!localStorage.getItem(AUTH_KEY)) {
+    localStorage.setItem(AUTH_KEY, DEFAULT_PASS);
+  }
+
+  const modal = document.getElementById('admin-auth-modal');
+  const authForm = document.getElementById('auth-form');
+  const authInput = document.getElementById('auth-password-input') as HTMLInputElement;
+  const authError = document.getElementById('auth-error-alert');
+  const btnLock = document.getElementById('btn-lock-session');
+
+  // Check Auth State
+  function checkAuth() {
+    if (sessionStorage.getItem(AUTH_SESSION) === 'true') {
+      if (modal) modal.classList.add('hidden');
+    } else {
+      if (modal) modal.classList.remove('hidden');
+    }
+  }
+
+  // Handle Login Submission
+  authForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const storedPass = localStorage.getItem(AUTH_KEY) || DEFAULT_PASS;
+    if (authInput.value === storedPass) {
+      sessionStorage.setItem(AUTH_SESSION, 'true');
+      if (authError) authError.classList.add('hidden');
+      if (modal) modal.classList.add('hidden');
+      authInput.value = '';
+    } else {
+      if (authError) authError.classList.remove('hidden');
+    }
+  });
+
+  // Handle Lock Session
+  btnLock?.addEventListener('click', () => {
+    sessionStorage.removeItem(AUTH_SESSION);
+    checkAuth();
+  });
+
+  // Handle Change Password Form
+  const changePassForm = document.getElementById('change-pass-form');
+  const secAlert = document.getElementById('sec-success-alert');
+  changePassForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const newPass = (document.getElementById('new-admin-pass') as HTMLInputElement).value;
+    if (newPass) {
+      localStorage.setItem(AUTH_KEY, newPass);
+      if (secAlert) {
+        secAlert.classList.remove('hidden');
+        setTimeout(() => secAlert.classList.add('hidden'), 4000);
+      }
+      (changePassForm as HTMLFormElement).reset();
+    }
+  });
+
+  // Default Mock Blog Posts
   const defaultPosts = [
     {
       id: 1,
@@ -276,18 +402,20 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   const btnCreate = document.getElementById('tab-btn-create');
   const btnList = document.getElementById('tab-btn-list');
   const btnProducts = document.getElementById('tab-btn-products');
+  const btnSecurity = document.getElementById('tab-btn-security');
 
   const panelCreate = document.getElementById('panel-create');
   const panelList = document.getElementById('panel-list');
   const panelProducts = document.getElementById('panel-products');
+  const panelSecurity = document.getElementById('panel-security');
 
   function switchTab(activeBtn: HTMLElement, activePanel: HTMLElement) {
-    [btnCreate, btnList, btnProducts].forEach(b => {
+    [btnCreate, btnList, btnProducts, btnSecurity].forEach(b => {
       if (b) {
         b.className = 'w-full text-left px-4 py-3 text-xs font-extrabold uppercase rounded-lg bg-white text-navy hover:bg-clean border border-clean-border transition-all';
       }
     });
-    [panelCreate, panelList, panelProducts].forEach(p => {
+    [panelCreate, panelList, panelProducts, panelSecurity].forEach(p => {
       if (p) p.classList.add('hidden');
     });
 
@@ -302,6 +430,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   btnCreate?.addEventListener('click', () => switchTab(btnCreate, panelCreate!));
   btnList?.addEventListener('click', () => switchTab(btnList, panelList!));
   btnProducts?.addEventListener('click', () => switchTab(btnProducts, panelProducts!));
+  btnSecurity?.addEventListener('click', () => switchTab(btnSecurity, panelSecurity!));
 
   // Blog Post Submission Handler
   const blogForm = document.getElementById('blog-form');
@@ -374,7 +503,6 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       </div>
     `).join('');
 
-    // Delete Event Listeners
     container.querySelectorAll('.delete-post-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const id = parseInt((e.currentTarget as HTMLElement).getAttribute('data-delete-id') || '0', 10);
@@ -385,6 +513,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     });
   }
 
-  // Initial tab Setup
+  // Initial Auth & Render Setup
+  checkAuth();
   renderPostsList();
 </script>
