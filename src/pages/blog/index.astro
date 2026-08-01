@@ -212,15 +212,24 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 
   function getStoredPosts() {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultPosts));
-      return defaultPosts;
+    let posts = defaultPosts;
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          defaultPosts.forEach(dp => {
+            if (!parsed.some((p: any) => p.id === dp.id || p.slug === dp.slug)) {
+              parsed.push(dp);
+            }
+          });
+          posts = parsed;
+        }
+      } catch {
+        posts = defaultPosts;
+      }
     }
-    try {
-      return JSON.parse(raw);
-    } catch {
-      return defaultPosts;
-    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+    return posts;
   }
 
   let allPosts = getStoredPosts();
