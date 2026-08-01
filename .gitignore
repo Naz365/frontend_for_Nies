@@ -18,3 +18,11 @@ Thumbs.db
 
 # backend (since backend has its own separate repository or folder)
 backend/
+
+# local dev scripts & temporary migration tools
+download_archive.js
+start_marketing_and_cms.js
+start_separate_servers.js
+archive/
+*.log
+
