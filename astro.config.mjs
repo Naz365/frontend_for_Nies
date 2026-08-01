@@ -5,6 +5,7 @@ import tailwind from '@astrojs/tailwind';
 export default defineConfig({
   site: 'https://naz365.github.io',
   base: '/frontend_for_Nies/',
+  outDir: './docs',
   integrations: [tailwind()],
   output: 'static'
 });
