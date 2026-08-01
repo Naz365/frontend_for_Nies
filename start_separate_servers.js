@@ -69,21 +69,21 @@ console.log(`🚀 LAUNCHING DEDICATED SEPARATE LOCAL SERVERS ON INDIVIDUAL PORTS
 console.log(`=======================================================================\n`);
 
 // 1. Public Marketing Site -> Port 4321
-createServerOnPort(4321, '/index.html', 'Public Marketing Site', 'niengineeringbd.com');
+createServerOnPort(4321, '/index.html', 'Public Marketing Site', 'localhost');
 
 // 2. Material & PO Tracking Portal -> Port 5000
-createServerOnPort(5000, '/subdomains/portal/index.html', 'Material & PO Tracking Portal', 'portal.niengineeringbd.com');
+createServerOnPort(5000, '/subdomains/portal/index.html', 'Material & PO Tracking Portal', 'portal.localhost');
 
 // 3. NIES Enterprise ERP Platform -> Port 5173
-createServerOnPort(5173, '/subdomains/erp/index.html', 'NIES Enterprise ERP Platform', 'erp.niengineeringbd.com');
+createServerOnPort(5173, '/subdomains/erp/index.html', 'NIES Enterprise ERP Platform', 'erp.localhost');
 
 // 4. Private CMS Portal -> Port 8000
-createServerOnPort(8000, '/subdomains/manage/index.html', 'Private CMS Portal (Laravel/Filament)', 'manage.niengineeringbd.com');
+createServerOnPort(8000, '/subdomains/manage/index.html', 'Private CMS Portal (Laravel/Filament)', 'manage.localhost');
 
 // 5. REST API Portal -> Port 8001
-createServerOnPort(8001, '/subdomains/api/index.html', 'REST API Endpoint Portal', 'api.niengineeringbd.com');
+createServerOnPort(8001, '/subdomains/api/index.html', 'REST API Endpoint Portal', 'api.localhost');
 
 // 6. E-Commerce Storefront -> Port 9000
-createServerOnPort(9000, '/subdomains/shop/index.html', 'E-Commerce Storefront', 'shop.niengineeringbd.com');
+createServerOnPort(9000, '/subdomains/shop/index.html', 'E-Commerce Storefront', 'shop.localhost');
 
 console.log(`\n=======================================================================\n`);

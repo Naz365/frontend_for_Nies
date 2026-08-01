@@ -69,9 +69,9 @@ console.log(`🚀 STARTING DEDICATED MARKETING SITE & PRIVATE CMS PORTAL SERVERS
 console.log(`=======================================================================\n`);
 
 // 1. Public Static Marketing Site -> Port 4321
-createServerOnPort(4321, '/index.html', 'Public Static Marketing Site', 'niengineeringbd.com');
+createServerOnPort(4321, '/index.html', 'Public Static Marketing Site', 'localhost');
 
 // 2. Private CMS Portal -> Port 8000
-createServerOnPort(8000, '/subdomains/manage/index.html', 'Private CMS Portal (Laravel/Filament)', 'manage.niengineeringbd.com');
+createServerOnPort(8000, '/subdomains/manage/index.html', 'Private CMS Portal (Laravel/Filament)', 'manage.localhost');
 
 console.log(`\n=======================================================================\n`);
