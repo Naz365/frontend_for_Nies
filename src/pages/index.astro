@@ -6,6 +6,8 @@ import ProductGrid from '../components/ProductGrid.astro';
 import ClientLogos from '../components/ClientLogos.astro';
 import ContactForm from '../components/ContactForm.astro';
 
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+
 const services = [
   {
     title: "FIRE SAFETY & EQUIPMENT SUPPLY",
@@ -30,9 +32,9 @@ const services = [
 ];
 
 const workShowcase = [
-  { title: "BTI Building Project", image: "/wp-content/uploads/2017/11/BIT-Building-copy.jpg", category: "Fire Safety Setup" },
-  { title: "BRAC University", image: "/wp-content/uploads/2017/11/brac-university.jpg", category: "CCTV Surveillance" },
-  { title: "BRAC Centre Inn", image: "/wp-content/uploads/2017/11/brac-centre-inn-copy.jpg", category: "Access Control" }
+  { title: "BTI Building Project", image: `${base}wp-content/uploads/2017/11/BIT-Building-copy.jpg`, category: "Fire Safety Setup" },
+  { title: "BRAC University", image: `${base}wp-content/uploads/2017/11/brac-university.jpg`, category: "CCTV Surveillance" },
+  { title: "BRAC Centre Inn", image: `${base}wp-content/uploads/2017/11/brac-centre-inn-copy.jpg`, category: "Access Control" }
 ];
 
 const faqList = [
@@ -84,7 +86,7 @@ const faqList = [
 
   <!-- Why Choose Us Parallax / Banner Section -->
   <section class="py-16 bg-navy text-white relative overflow-hidden">
-    <div class="absolute inset-0 opacity-20 bg-cover bg-center" style="background-image: url('/wp-content/uploads/2017/05/DFRS_Generic_Hero_Banner_78_May13.jpg');"></div>
+    <div class="absolute inset-0 opacity-20 bg-cover bg-center" style={`background-image: url('${base}wp-content/uploads/2017/05/DFRS_Generic_Hero_Banner_78_May13.jpg');`}></div>
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div>
@@ -133,7 +135,7 @@ const faqList = [
             We deliver fire safety installations for premier developer clients including BTI, BRAC University, and BRAC Centre Inn.
           </p>
         </div>
-        <a href="/contact/" class="mt-4 md:mt-0 inline-flex items-center text-xs font-extrabold uppercase text-flame hover:underline">
+        <a href={`${base}contact/`} class="mt-4 md:mt-0 inline-flex items-center text-xs font-extrabold uppercase text-flame hover:underline">
           Work Inquiry & Contact &rarr;
         </a>
       </div>

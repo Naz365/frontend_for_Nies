@@ -1,20 +1,22 @@
 ---
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+
 const clientLogos = [
-  { name: "Radiant", image: "/wp-content/uploads/2017/11/radiant.png" },
-  { name: "BTI", image: "/wp-content/uploads/2017/11/bti.png" },
-  { name: "BRAC", image: "/wp-content/uploads/2017/11/brac.png" },
-  { name: "BRAC University", image: "/wp-content/uploads/2017/11/bracuni.png" },
-  { name: "Global", image: "/wp-content/uploads/2017/11/global.png" },
-  { name: "Envoy", image: "/wp-content/uploads/2017/11/envoy.png" },
-  { name: "Chung Hua", image: "/wp-content/uploads/2017/11/chunghua.png" },
-  { name: "AFL", image: "/wp-content/uploads/2017/11/afl.png" },
-  { name: "SEEK", image: "/wp-content/uploads/2017/11/seek.png" },
-  { name: "GIS", image: "/wp-content/uploads/2017/11/gis.png" },
-  { name: "Markup", image: "/wp-content/uploads/2017/11/markup.png" },
-  { name: "Meek Sweater", image: "/wp-content/uploads/2017/11/mikey.png" },
-  { name: "Excellent", image: "/wp-content/uploads/2017/11/excelent.png" },
-  { name: "Mondol", image: "/wp-content/uploads/2017/11/mondol.png" },
-  { name: "HQ", image: "/wp-content/uploads/2017/11/hq.png" }
+  { name: "Radiant", image: `${base}wp-content/uploads/2017/11/radiant.png` },
+  { name: "BTI", image: `${base}wp-content/uploads/2017/11/bti.png` },
+  { name: "BRAC", image: `${base}wp-content/uploads/2017/11/brac.png` },
+  { name: "BRAC University", image: `${base}wp-content/uploads/2017/11/bracuni.png` },
+  { name: "Global", image: `${base}wp-content/uploads/2017/11/global.png` },
+  { name: "Envoy", image: `${base}wp-content/uploads/2017/11/envoy.png` },
+  { name: "Chung Hua", image: `${base}wp-content/uploads/2017/11/chunghua.png` },
+  { name: "AFL", image: `${base}wp-content/uploads/2017/11/afl.png` },
+  { name: "SEEK", image: `${base}wp-content/uploads/2017/11/seek.png` },
+  { name: "GIS", image: `${base}wp-content/uploads/2017/11/gis.png` },
+  { name: "Markup", image: `${base}wp-content/uploads/2017/11/markup.png` },
+  { name: "Meek Sweater", image: `${base}wp-content/uploads/2017/11/mikey.png` },
+  { name: "Excellent", image: `${base}wp-content/uploads/2017/11/excelent.png` },
+  { name: "Mondol", image: `${base}wp-content/uploads/2017/11/mondol.png` },
+  { name: "HQ", image: `${base}wp-content/uploads/2017/11/hq.png` }
 ];
 ---
 
