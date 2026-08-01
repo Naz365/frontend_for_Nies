@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ClientLogos from '../components/ClientLogos.astro';
+
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 
 <Layout 
@@ -28,24 +30,24 @@ import ClientLogos from '../components/ClientLogos.astro';
             Who <span class="text-flame">We Are</span>
           </h2>
           <p class="text-gray-600 text-sm leading-relaxed mb-4">
-            N.I. ENGINEERING SERVICES is dedicated to providing high-quality fire safety equipment, refilling services, CCTV surveillance cameras, biometric access control systems, and generator installations.
+            N.I. ENGINEERING SERVICES is an Engineering based Company in Bangladesh dedicated to fire safety engineering, CCTV surveillance, biometric access control, and heavy generator sales and installation.
           </p>
           <p class="text-gray-600 text-sm leading-relaxed mb-6">
-            We don't just supply and install products, we also provide a broad range of supporting services to ensure that our customers receive the best possible after sales care. Installing and servicing high-quality fire protection systems across Bangladesh at reasonable prices is our commitment.
+            We provide full-spectrum engineering support, refilling of all types of fire extinguishers (ABC Powder, CO2, Foam), hose reel systems, automatic smoke detector networks, and gas suppression systems across Dhaka and all divisions of Bangladesh.
           </p>
 
-          <div class="space-y-4">
+          <div class="space-y-3">
             <div class="flex items-start space-x-3">
               <div class="w-6 h-6 rounded-full bg-flame/10 text-flame flex items-center justify-center flex-shrink-0 mt-0.5">
                 ✓
               </div>
-              <p class="text-sm font-semibold text-navy">Certified Fire Extinguisher Refilling Workshop</p>
+              <p class="text-sm font-semibold text-navy">Certified Chemical Refilling & Nitrogen Purging</p>
             </div>
             <div class="flex items-start space-x-3">
               <div class="w-6 h-6 rounded-full bg-flame/10 text-flame flex items-center justify-center flex-shrink-0 mt-0.5">
                 ✓
               </div>
-              <p class="text-sm font-semibold text-navy">Full Range of Firefighting Gear & Hose Reels</p>
+              <p class="text-sm font-semibold text-navy">BFSCD Building Compliance Inspection & Approval</p>
             </div>
             <div class="flex items-start space-x-3">
               <div class="w-6 h-6 rounded-full bg-flame/10 text-flame flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -57,7 +59,7 @@ import ClientLogos from '../components/ClientLogos.astro';
 
           <div class="mt-8">
             <a 
-              href="/wp-content/uploads/2017/11/Company_Profile.pdf" 
+              href={`${base}wp-content/uploads/2017/11/Company_Profile.pdf`} 
               target="_blank"
               download
               class="inline-flex items-center px-6 py-3 bg-flame hover:bg-flame-hover text-white text-xs font-extrabold uppercase tracking-wider rounded shadow transition-all duration-200"
@@ -69,7 +71,7 @@ import ClientLogos from '../components/ClientLogos.astro';
 
         <div class="relative">
           <div class="rounded-xl overflow-hidden shadow-2xl border-4 border-clean-border">
-            <img src="/wp-content/uploads/2017/11/BIT-Building-copy.jpg" alt="BTI Building Project" class="w-full h-auto object-cover" />
+            <img src={`${base}wp-content/uploads/2017/11/BIT-Building-copy.jpg`} alt="BTI Building Project" class="w-full h-auto object-cover" />
           </div>
         </div>
 
