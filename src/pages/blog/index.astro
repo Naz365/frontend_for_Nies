@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import { fetchBlogPosts } from '../../lib/api';
 
 const posts = await fetchBlogPosts();
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 
 <Layout 
@@ -11,31 +12,82 @@ const posts = await fetchBlogPosts();
 >
   <!-- Blog Page Hero Banner -->
   <section class="bg-navy text-white py-16 relative overflow-hidden">
-    <div class="absolute inset-0 opacity-15 bg-cover bg-center" style="background-image: url('/wp-content/uploads/2017/05/DFRS_Generic_Hero_Banner_78_May13.jpg');"></div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <span class="inline-block px-3 py-1 bg-flame text-white text-xs font-black uppercase tracking-widest rounded mb-3">
-        Fire Safety Insights & News
+    <div class="absolute inset-0 opacity-15 bg-cover bg-center" style="background-image: url('/frontend_for_Nies/wp-content/uploads/2017/05/DFRS_Generic_Hero_Banner_78_May13.jpg');"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+      <span class="inline-block px-3 py-1 bg-flame text-white text-xs font-black uppercase tracking-widest rounded shadow">
+        Fire Safety Insights & Knowledge Base
       </span>
-      <h1 class="text-3xl sm:text-5xl font-extrabold uppercase tracking-tight mb-4">
+      <h1 class="text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-white">
         Our Official <span class="text-flame">Safety Blog</span>
       </h1>
-      <div class="w-20 h-1 bg-flame mx-auto rounded-full mb-6"></div>
+      <div class="w-20 h-1 bg-flame mx-auto rounded-full"></div>
       <p class="text-gray-300 text-sm max-w-2xl mx-auto leading-relaxed">
         Expert articles, industrial fire safety guidelines, Bangladesh Civil Defence compliance rules, and security system maintenance advice.
       </p>
+
+      <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <!-- Search Input -->
+        <div class="relative w-full max-w-md">
+          <input 
+            type="text" 
+            id="blog-search-input" 
+            placeholder="Search articles by title or keyword..."
+            class="w-full px-5 py-3 text-xs bg-white text-navy font-medium rounded-full shadow-lg border-2 border-clean-border focus:outline-none focus:border-flame pl-10"
+          />
+          <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </div>
+
+        <a 
+          href={`${base}admin/`} 
+          class="px-5 py-3 bg-white/10 hover:bg-white/20 text-white border border-white/30 text-xs font-extrabold uppercase tracking-wider rounded-full transition-all duration-200"
+        >
+          🔐 Admin CMS Login
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Category Filter Buttons -->
+  <section class="bg-clean border-b border-clean-border py-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap justify-center gap-2" id="category-filters">
+        <button type="button" data-cat="all" class="blog-cat-btn px-4 py-2 text-xs font-bold uppercase rounded-lg bg-flame text-white shadow transition-all">All Articles</button>
+        <button type="button" data-cat="Fire Safety" class="blog-cat-btn px-4 py-2 text-xs font-bold uppercase rounded-lg bg-white text-navy border border-clean-border hover:bg-flame hover:text-white transition-all">Fire Safety</button>
+        <button type="button" data-cat="Maintenance" class="blog-cat-btn px-4 py-2 text-xs font-bold uppercase rounded-lg bg-white text-navy border border-clean-border hover:bg-flame hover:text-white transition-all">Maintenance & Refilling</button>
+        <button type="button" data-cat="CCTV & Access Control" class="blog-cat-btn px-4 py-2 text-xs font-bold uppercase rounded-lg bg-white text-navy border border-clean-border hover:bg-flame hover:text-white transition-all">CCTV & Access Control</button>
+        <button type="button" data-cat="Civil Defence Guidelines" class="blog-cat-btn px-4 py-2 text-xs font-bold uppercase rounded-lg bg-white text-navy border border-clean-border hover:bg-flame hover:text-white transition-all">Civil Defence Guidelines</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Featured Article Hero Card -->
+  <section class="py-10 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div id="featured-article-container">
+        <!-- Dynamically prefilled via JS -->
+      </div>
     </div>
   </section>
 
   <!-- Blog Listing Grid Section -->
-  <section class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section class="py-10 bg-white min-h-[500px]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
       
+      <div class="flex items-center justify-between border-b border-clean-border pb-4">
+        <h2 class="text-xl font-extrabold uppercase text-navy">All Published Articles</h2>
+        <span id="articles-count-badge" class="text-xs font-bold text-gray-500 uppercase">
+          Showing 2 Articles
+        </span>
+      </div>
+
       <div id="blog-posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {posts.map(post => (
-          <article class="bg-clean border border-clean-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group">
+          <article class="blog-card bg-clean border border-clean-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group" data-category="Fire Safety" data-title={post.title.toLowerCase()}>
             <div class="h-56 overflow-hidden relative">
               <img 
-                src={post.thumbnail || '/frontend_for_Nies/wp-content/uploads/2017/05/fire-detection-alarm-system.jpg'} 
+                src={post.thumbnail || `${base}wp-content/uploads/2017/05/fire-detection-alarm-system.jpg`} 
                 alt={post.title}
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
               />
@@ -53,7 +105,7 @@ const posts = await fetchBlogPosts();
                 </div>
 
                 <h2 class="text-xl font-bold text-navy group-hover:text-flame transition-colors line-clamp-2">
-                  <a href={`/frontend_for_Nies/blog/${post.slug}/`}>
+                  <a href={`${base}blog/${post.slug}/`}>
                     {post.title}
                   </a>
                 </h2>
@@ -65,7 +117,7 @@ const posts = await fetchBlogPosts();
 
               <div class="pt-4 border-t border-clean-border flex items-center justify-between">
                 <a 
-                  href={`/frontend_for_Nies/blog/${post.slug}/`} 
+                  href={`${base}blog/${post.slug}/`} 
                   class="inline-flex items-center text-xs font-extrabold uppercase text-flame hover:underline space-x-1"
                 >
                   <span>Read Article</span>
@@ -79,66 +131,265 @@ const posts = await fetchBlogPosts();
 
     </div>
   </section>
+
+  <!-- ARTICLE READER MODAL (FOR DYNAMICALLY CREATED POSTS) -->
+  <div id="reader-modal" class="fixed inset-0 z-50 bg-navy/90 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="bg-white max-w-3xl w-full max-h-[90vh] rounded-2xl overflow-y-auto border border-clean-border shadow-2xl p-6 sm:p-10 space-y-6 relative">
+      <button id="reader-close-btn" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-clean hover:bg-flame hover:text-white text-navy flex items-center justify-center font-bold text-lg transition-colors">
+        ✕
+      </button>
+
+      <span id="reader-cat-badge" class="px-3 py-1 bg-flame text-white text-xs font-black uppercase rounded">
+        Category
+      </span>
+
+      <h1 id="reader-title" class="text-2xl sm:text-4xl font-extrabold text-navy leading-tight">
+        Article Title
+      </h1>
+
+      <div id="reader-meta" class="flex items-center space-x-3 text-xs text-gray-500 border-b border-clean-border pb-4 font-semibold">
+        <!-- Filled via JS -->
+      </div>
+
+      <div id="reader-img-container" class="rounded-xl overflow-hidden shadow border border-clean-border max-h-80">
+        <img id="reader-img" src="" alt="Thumbnail" class="w-full h-full object-cover" />
+      </div>
+
+      <div id="reader-content" class="prose max-w-none text-navy text-sm sm:text-base leading-relaxed space-y-4">
+        <!-- Content inserted dynamically -->
+      </div>
+
+      <div class="pt-6 border-t border-clean-border flex justify-between items-center">
+        <button id="reader-close-bottom" class="px-6 py-2.5 bg-navy text-white text-xs font-bold uppercase rounded-lg hover:bg-navy-dark">
+          Close Reader
+        </button>
+      </div>
+    </div>
+  </div>
 </Layout>
 
 <script>
   const STORAGE_KEY = 'nies_custom_blog_posts';
-  const grid = document.getElementById('blog-posts-grid');
-  
-  if (grid) {
-    const storedRaw = localStorage.getItem(STORAGE_KEY);
-    if (storedRaw) {
-      try {
-        const storedPosts = JSON.parse(storedRaw);
-        if (Array.isArray(storedPosts) && storedPosts.length > 0) {
-          grid.innerHTML = storedPosts.map(p => `
-            <article class="bg-clean border border-clean-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group">
-              <div class="h-56 overflow-hidden relative">
-                <img 
-                  src="${p.thumbnail || '/frontend_for_Nies/wp-content/uploads/2017/05/fire-detection-alarm-system.jpg'}" 
-                  alt="${p.title}"
-                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                />
-                <span class="absolute top-4 left-4 bg-navy text-white text-[10px] font-extrabold uppercase px-3 py-1 rounded shadow">
-                  ${p.category || 'Fire Safety'}
-                </span>
-              </div>
+  const BASE_PATH = '/frontend_for_Nies/';
 
-              <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
-                <div class="space-y-2">
-                  <div class="flex items-center space-x-3 text-xs text-gray-500 font-semibold">
-                    <span>${p.published_at}</span>
-                    <span>•</span>
-                    <span>By ${p.author || 'N.I. Safety Team'}</span>
-                  </div>
+  // Preset Default Articles
+  const defaultPosts = [
+    {
+      id: 1,
+      title: "Essential Fire Safety Maintenance Rules for Industrial Facilities",
+      slug: "essential-fire-safety-maintenance",
+      category: "Fire Safety",
+      summary: "Regular maintenance and annual refilling of fire extinguishers are critical line-of-defense measures.",
+      content: "<p>Fire is a serious threat to the physical safety and security of any workplace. Regular inspection and servicing using well-equipped workshops guarantee optimal operational readiness in emergency scenarios.</p><h3>1. Annual Extinguisher Servicing & Chemical Purging</h3><p>ABC Powder and CO2 cylinders require hydrostatic pressure checks and chemical quality inspection annually according to Bangladesh Fire Service & Civil Defence norms.</p>",
+      thumbnail: "/frontend_for_Nies/wp-content/uploads/2017/05/fire-detection-alarm-system.jpg",
+      published_at: "2026-07-01",
+      author: "N.I. Safety Team"
+    },
+    {
+      id: 2,
+      title: "Why Modern Facilities Need Integrated CCTV & Access Control",
+      slug: "integrated-cctv-and-access-control",
+      category: "CCTV & Access Control",
+      summary: "Learn how combining surveillance cameras with smart door access boosts facility protection.",
+      content: "<p>INTEGRATED SOLUTIONS FOR SECURITY & SURVEILLANCE bring together real-time tracking, intruder detection, and central control room management.</p><h3>Biometric Security Integration</h3><p>Pairing HD IP surveillance cameras with fingerprint and RFID door locks ensures full audit trail compliance for commercial buildings in Dhaka.</p>",
+      thumbnail: "/frontend_for_Nies/wp-content/uploads/2017/11/AccessControlSystems.jpg",
+      published_at: "2026-07-15",
+      author: "N.I. Safety Team"
+    }
+  ];
 
-                  <h2 class="text-xl font-bold text-navy group-hover:text-flame transition-colors line-clamp-2">
-                    <a href="/frontend_for_Nies/blog/${p.slug}/">
-                      ${p.title}
-                    </a>
-                  </h2>
-
-                  <p class="text-xs text-gray-600 leading-relaxed line-clamp-3">
-                    ${p.summary}
-                  </p>
-                </div>
-
-                <div class="pt-4 border-t border-clean-border flex items-center justify-between">
-                  <a 
-                    href="/frontend_for_Nies/blog/${p.slug}/" 
-                    class="inline-flex items-center text-xs font-extrabold uppercase text-flame hover:underline space-x-1"
-                  >
-                    <span>Read Article</span>
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                  </a>
-                </div>
-              </div>
-            </article>
-          `).join('');
-        }
-      } catch (e) {
-        console.error('Failed to parse custom blog posts:', e);
-      }
+  function getStoredPosts() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultPosts));
+      return defaultPosts;
+    }
+    try {
+      return JSON.parse(raw);
+    } catch {
+      return defaultPosts;
     }
   }
+
+  let allPosts = getStoredPosts();
+
+  const featuredContainer = document.getElementById('featured-article-container');
+  const grid = document.getElementById('blog-posts-grid');
+  const countBadge = document.getElementById('articles-count-badge');
+  const searchInput = document.getElementById('blog-search-input') as HTMLInputElement;
+
+  // Reader Modal Elements
+  const modal = document.getElementById('reader-modal');
+  const readerClose = document.getElementById('reader-close-btn');
+  const readerCloseBottom = document.getElementById('reader-close-bottom');
+  const readerBadge = document.getElementById('reader-cat-badge');
+  const readerTitle = document.getElementById('reader-title');
+  const readerMeta = document.getElementById('reader-meta');
+  const readerImg = document.getElementById('reader-img') as HTMLImageElement;
+  const readerContent = document.getElementById('reader-content');
+
+  function openReader(post: any) {
+    if (readerBadge) readerBadge.textContent = post.category || 'Fire Safety';
+    if (readerTitle) readerTitle.textContent = post.title;
+    if (readerMeta) readerMeta.textContent = `${post.published_at} • By ${post.author || 'N.I. Safety Team'}`;
+    if (readerImg) readerImg.src = post.thumbnail || '/frontend_for_Nies/wp-content/uploads/2017/05/fire-detection-alarm-system.jpg';
+    if (readerContent) readerContent.innerHTML = post.content || `<p>${post.summary}</p>`;
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+  }
+
+  function closeReader() {
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+  }
+
+  readerClose?.addEventListener('click', closeReader);
+  readerCloseBottom?.addEventListener('click', closeReader);
+
+  // Render Hero Featured Article
+  function renderFeatured(post: any) {
+    if (!featuredContainer || !post) return;
+    featuredContainer.innerHTML = `
+      <div class="bg-navy text-white rounded-2xl overflow-hidden shadow-2xl border border-navy-light grid grid-cols-1 lg:grid-cols-12">
+        <div class="lg:col-span-7 p-8 sm:p-12 flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <span class="inline-block px-3 py-1 bg-flame text-white text-[10px] font-black uppercase tracking-widest rounded shadow">
+              🔥 Featured Safety Insights
+            </span>
+            <h2 class="text-2xl sm:text-4xl font-extrabold uppercase tracking-tight text-white leading-tight">
+              ${post.title}
+            </h2>
+            <div class="flex items-center space-x-3 text-xs text-gray-400 font-semibold">
+              <span>${post.published_at}</span>
+              <span>•</span>
+              <span>By ${post.author || 'N.I. Safety Team'}</span>
+            </div>
+            <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+              ${post.summary}
+            </p>
+          </div>
+
+          <div>
+            <button data-read-id="${post.id}" class="read-post-trigger inline-flex items-center px-6 py-3 bg-flame hover:bg-flame-hover text-white text-xs font-extrabold uppercase tracking-wider rounded-lg shadow-md transition-all">
+              <span>Read Full Featured Article</span>
+              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 relative h-64 lg:h-auto overflow-hidden">
+          <img src="${post.thumbnail}" alt="${post.title}" class="w-full h-full object-cover" />
+        </div>
+      </div>
+    `;
+  }
+
+  // Render Articles Grid
+  function renderGrid(postsToRender: any[]) {
+    if (countBadge) countBadge.textContent = `Showing ${postsToRender.length} Articles`;
+    if (!grid) return;
+
+    if (postsToRender.length === 0) {
+      grid.innerHTML = `<div class="col-span-full py-12 text-center text-gray-500 text-xs uppercase font-bold">No articles match your search or filter.</div>`;
+      return;
+    }
+
+    grid.innerHTML = postsToRender.map(p => `
+      <article class="blog-card bg-clean border border-clean-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group">
+        <div class="h-56 overflow-hidden relative">
+          <img 
+            src="${p.thumbnail || '/frontend_for_Nies/wp-content/uploads/2017/05/fire-detection-alarm-system.jpg'}" 
+            alt="${p.title}"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+          />
+          <span class="absolute top-4 left-4 bg-navy text-white text-[10px] font-extrabold uppercase px-3 py-1 rounded shadow">
+            ${p.category || 'Fire Safety'}
+          </span>
+        </div>
+
+        <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <div class="flex items-center space-x-3 text-xs text-gray-500 font-semibold">
+              <span>${p.published_at}</span>
+              <span>•</span>
+              <span>By ${p.author || 'N.I. Safety Team'}</span>
+            </div>
+
+            <h2 class="text-xl font-bold text-navy group-hover:text-flame transition-colors line-clamp-2">
+              <button data-read-id="${p.id}" class="read-post-trigger text-left hover:underline">
+                ${p.title}
+              </button>
+            </h2>
+
+            <p class="text-xs text-gray-600 leading-relaxed line-clamp-3">
+              ${p.summary}
+            </p>
+          </div>
+
+          <div class="pt-4 border-t border-clean-border flex items-center justify-between">
+            <button 
+              data-read-id="${p.id}"
+              class="read-post-trigger inline-flex items-center text-xs font-extrabold uppercase text-flame hover:underline space-x-1"
+            >
+              <span>Read Article</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+    `).join('');
+
+    // Attach click triggers to open Reader Modal
+    document.querySelectorAll('.read-post-trigger').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = parseInt((e.currentTarget as HTMLElement).getAttribute('data-read-id') || '0', 10);
+        const found = allPosts.find((p: any) => p.id === id);
+        if (found) {
+          openReader(found);
+        }
+      });
+    });
+  }
+
+  // Initial Render
+  if (allPosts.length > 0) {
+    renderFeatured(allPosts[0]);
+    renderGrid(allPosts);
+  }
+
+  // Search Filter Handler
+  searchInput?.addEventListener('input', () => {
+    const q = searchInput.value.toLowerCase().trim();
+    const filtered = allPosts.filter((p: any) => 
+      p.title.toLowerCase().includes(q) || 
+      p.summary.toLowerCase().includes(q) || 
+      (p.category && p.category.toLowerCase().includes(q))
+    );
+    renderGrid(filtered);
+  });
+
+  // Category Filter Handlers
+  const catBtns = document.querySelectorAll('.blog-cat-btn');
+  catBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const target = e.currentTarget as HTMLElement;
+      const cat = target.getAttribute('data-cat');
+
+      catBtns.forEach(b => {
+        b.className = 'blog-cat-btn px-4 py-2 text-xs font-bold uppercase rounded-lg bg-white text-navy border border-clean-border hover:bg-flame hover:text-white transition-all';
+      });
+      target.className = 'blog-cat-btn px-4 py-2 text-xs font-bold uppercase rounded-lg bg-flame text-white shadow transition-all';
+
+      if (cat === 'all') {
+        renderGrid(allPosts);
+      } else {
+        const filtered = allPosts.filter((p: any) => p.category === cat);
+        renderGrid(filtered);
+      }
+    });
+  });
 </script>
