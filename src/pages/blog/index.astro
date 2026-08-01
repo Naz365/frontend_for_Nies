@@ -30,12 +30,12 @@ const posts = await fetchBlogPosts();
   <section class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div id="blog-posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {posts.map(post => (
           <article class="bg-clean border border-clean-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group">
             <div class="h-56 overflow-hidden relative">
               <img 
-                src={post.thumbnail || '/wp-content/uploads/2017/05/fire-detection-alarm-system.jpg'} 
+                src={post.thumbnail || '/frontend_for_Nies/wp-content/uploads/2017/05/fire-detection-alarm-system.jpg'} 
                 alt={post.title}
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
               />
@@ -53,7 +53,7 @@ const posts = await fetchBlogPosts();
                 </div>
 
                 <h2 class="text-xl font-bold text-navy group-hover:text-flame transition-colors line-clamp-2">
-                  <a href={`/blog/${post.slug}/`}>
+                  <a href={`/frontend_for_Nies/blog/${post.slug}/`}>
                     {post.title}
                   </a>
                 </h2>
@@ -65,7 +65,7 @@ const posts = await fetchBlogPosts();
 
               <div class="pt-4 border-t border-clean-border flex items-center justify-between">
                 <a 
-                  href={`/blog/${post.slug}/`} 
+                  href={`/frontend_for_Nies/blog/${post.slug}/`} 
                   class="inline-flex items-center text-xs font-extrabold uppercase text-flame hover:underline space-x-1"
                 >
                   <span>Read Article</span>
@@ -80,3 +80,65 @@ const posts = await fetchBlogPosts();
     </div>
   </section>
 </Layout>
+
+<script>
+  const STORAGE_KEY = 'nies_custom_blog_posts';
+  const grid = document.getElementById('blog-posts-grid');
+  
+  if (grid) {
+    const storedRaw = localStorage.getItem(STORAGE_KEY);
+    if (storedRaw) {
+      try {
+        const storedPosts = JSON.parse(storedRaw);
+        if (Array.isArray(storedPosts) && storedPosts.length > 0) {
+          grid.innerHTML = storedPosts.map(p => `
+            <article class="bg-clean border border-clean-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group">
+              <div class="h-56 overflow-hidden relative">
+                <img 
+                  src="${p.thumbnail || '/frontend_for_Nies/wp-content/uploads/2017/05/fire-detection-alarm-system.jpg'}" 
+                  alt="${p.title}"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                />
+                <span class="absolute top-4 left-4 bg-navy text-white text-[10px] font-extrabold uppercase px-3 py-1 rounded shadow">
+                  ${p.category || 'Fire Safety'}
+                </span>
+              </div>
+
+              <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
+                <div class="space-y-2">
+                  <div class="flex items-center space-x-3 text-xs text-gray-500 font-semibold">
+                    <span>${p.published_at}</span>
+                    <span>•</span>
+                    <span>By ${p.author || 'N.I. Safety Team'}</span>
+                  </div>
+
+                  <h2 class="text-xl font-bold text-navy group-hover:text-flame transition-colors line-clamp-2">
+                    <a href="/frontend_for_Nies/blog/${p.slug}/">
+                      ${p.title}
+                    </a>
+                  </h2>
+
+                  <p class="text-xs text-gray-600 leading-relaxed line-clamp-3">
+                    ${p.summary}
+                  </p>
+                </div>
+
+                <div class="pt-4 border-t border-clean-border flex items-center justify-between">
+                  <a 
+                    href="/frontend_for_Nies/blog/${p.slug}/" 
+                    class="inline-flex items-center text-xs font-extrabold uppercase text-flame hover:underline space-x-1"
+                  >
+                    <span>Read Article</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                  </a>
+                </div>
+              </div>
+            </article>
+          `).join('');
+        }
+      } catch (e) {
+        console.error('Failed to parse custom blog posts:', e);
+      }
+    }
+  }
+</script>
