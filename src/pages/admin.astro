@@ -154,13 +154,50 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
                 </div>
 
                 <div>
-                  <label class="block text-xs font-bold uppercase text-navy mb-2">Thumbnail Image URL</label>
-                  <input 
-                    type="text" 
-                    id="post-thumbnail" 
-                    value={`${base}wp-content/uploads/2017/05/fire-detection-alarm-system.jpg`}
-                    class="w-full px-4 py-3 text-xs border border-clean-border rounded-lg focus:outline-none focus:border-flame font-medium"
-                  />
+                  <label class="block text-xs font-bold uppercase text-navy mb-2">Thumbnail Image (Upload File or Paste URL) *</label>
+                  
+                  <!-- Drag & Drop Zone -->
+                  <div 
+                    id="dropzone-box" 
+                    class="border-2 border-dashed border-gray-300 hover:border-flame bg-clean hover:bg-white rounded-xl p-4 text-center cursor-pointer transition-all duration-200 relative group"
+                  >
+                    <input type="file" id="file-input" accept="image/*" class="hidden" />
+                    
+                    <!-- Upload Prompt -->
+                    <div id="dropzone-prompt" class="space-y-2 py-2">
+                      <div class="w-10 h-10 rounded-full bg-flame/10 text-flame flex items-center justify-center mx-auto text-xl">
+                        📸
+                      </div>
+                      <p class="text-xs font-bold text-navy">
+                        <span class="text-flame">Click to browse</span> or drag & drop image here
+                      </p>
+                      <p class="text-[10px] text-gray-400">Auto-hosted DataURL / ImgBB ready (PNG, JPG, WEBP, GIF)</p>
+                    </div>
+
+                    <!-- Live Image Preview -->
+                    <div id="dropzone-preview" class="hidden relative rounded-lg overflow-hidden border border-clean-border shadow-inner max-h-48">
+                      <img id="preview-img" src="" alt="Uploaded Thumbnail Preview" class="w-full h-40 object-cover" />
+                      <button 
+                        type="button" 
+                        id="btn-clear-image"
+                        class="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white text-[10px] font-extrabold uppercase px-2.5 py-1 rounded shadow transition-all"
+                      >
+                        ✕ Change Image
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Direct URL Input Fallback -->
+                  <div class="mt-2 flex items-center space-x-2">
+                    <span class="text-[10px] text-gray-400 uppercase font-semibold">Image URL:</span>
+                    <input 
+                      type="text" 
+                      id="post-thumbnail" 
+                      value={`${base}wp-content/uploads/2017/05/fire-detection-alarm-system.jpg`}
+                      class="flex-1 px-3 py-1.5 text-[11px] border border-clean-border rounded focus:outline-none focus:border-flame font-medium"
+                      placeholder="Paste image link or drop file above..."
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -466,6 +503,80 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     }
 
     (blogForm as HTMLFormElement).reset();
+    resetDropzone();
+  });
+
+  // DRAG & DROP THUMBNAIL UPLOADER LOGIC
+  const dropzoneBox = document.getElementById('dropzone-box');
+  const fileInput = document.getElementById('file-input') as HTMLInputElement;
+  const dropzonePrompt = document.getElementById('dropzone-prompt');
+  const dropzonePreview = document.getElementById('dropzone-preview');
+  const previewImg = document.getElementById('preview-img') as HTMLImageElement;
+  const btnClearImage = document.getElementById('btn-clear-image');
+  const postThumbnailInput = document.getElementById('post-thumbnail') as HTMLInputElement;
+
+  function handleFile(file: File) {
+    if (!file || !file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const dataUrl = e.target?.result as string;
+      if (previewImg) previewImg.src = dataUrl;
+      if (postThumbnailInput) postThumbnailInput.value = dataUrl;
+      if (dropzonePrompt) dropzonePrompt.classList.add('hidden');
+      if (dropzonePreview) dropzonePreview.classList.remove('hidden');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function resetDropzone() {
+    if (fileInput) fileInput.value = '';
+    if (previewImg) previewImg.src = '';
+    if (dropzonePreview) dropzonePreview.classList.add('hidden');
+    if (dropzonePrompt) dropzonePrompt.classList.remove('hidden');
+  }
+
+  dropzoneBox?.addEventListener('click', (e) => {
+    if (e.target !== btnClearImage && !btnClearImage?.contains(e.target as Node)) {
+      fileInput?.click();
+    }
+  });
+
+  fileInput?.addEventListener('change', () => {
+    if (fileInput.files && fileInput.files[0]) {
+      handleFile(fileInput.files[0]);
+    }
+  });
+
+  ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+    dropzoneBox?.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    }, false);
+  });
+
+  ['dragenter', 'dragover'].forEach(eventName => {
+    dropzoneBox?.addEventListener(eventName, () => {
+      dropzoneBox.classList.add('border-flame', 'bg-flame/5');
+    }, false);
+  });
+
+  ['dragleave', 'drop'].forEach(eventName => {
+    dropzoneBox?.addEventListener(eventName, () => {
+      dropzoneBox.classList.remove('border-flame', 'bg-flame/5');
+    }, false);
+  });
+
+  dropzoneBox?.addEventListener('drop', (e: DragEvent) => {
+    const dt = e.dataTransfer;
+    if (dt && dt.files && dt.files[0]) {
+      handleFile(dt.files[0]);
+    }
+  });
+
+  btnClearImage?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    resetDropzone();
+    if (postThumbnailInput) postThumbnailInput.value = '';
   });
 
   // Render Posts Manager List
