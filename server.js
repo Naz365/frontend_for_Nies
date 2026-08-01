@@ -28,23 +28,23 @@ const server = http.createServer((req, res) => {
   let urlPath = req.url || '/';
 
   // Subdomain Host Routing
-  if (host === 'manage.niengineeringbd.com') {
+  if (host.startsWith('manage.')) {
     if (urlPath === '/' || urlPath === '') {
       urlPath = '/subdomains/manage/index.html';
     }
-  } else if (host === 'api.niengineeringbd.com') {
+  } else if (host.startsWith('api.')) {
     if (urlPath === '/' || urlPath === '') {
       urlPath = '/subdomains/api/index.html';
     }
-  } else if (host === 'shop.niengineeringbd.com') {
+  } else if (host.startsWith('shop.')) {
     if (urlPath === '/' || urlPath === '') {
       urlPath = '/subdomains/shop/index.html';
     }
-  } else if (host === 'portal.niengineeringbd.com') {
+  } else if (host.startsWith('portal.')) {
     if (urlPath === '/' || urlPath === '') {
       urlPath = '/subdomains/portal/index.html';
     }
-  } else if (host === 'erp.niengineeringbd.com') {
+  } else if (host.startsWith('erp.')) {
     if (urlPath === '/' || urlPath === '') {
       urlPath = '/subdomains/erp/index.html';
     }
@@ -81,12 +81,5 @@ const server = http.createServer((req, res) => {
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`\n==================================================`);
   console.log(`🚀 N.I. Engineering Services Ecosystem Active on Port ${PORT}`);
-  console.log(`==================================================`);
-  console.log(`1. http://niengineeringbd.com:${PORT}        --> Public Marketing Site`);
-  console.log(`2. http://manage.niengineeringbd.com:${PORT} --> Private CMS Portal`);
-  console.log(`3. http://api.niengineeringbd.com:${PORT}    --> REST API Portal`);
-  console.log(`4. http://shop.niengineeringbd.com:${PORT}   --> E-Commerce Storefront`);
-  console.log(`5. http://portal.niengineeringbd.com:${PORT} --> Material & PO Tracking Portal`);
-  console.log(`6. http://erp.niengineeringbd.com:${PORT}    --> NIES Fire Protection ERP`);
   console.log(`==================================================\n`);
 });
