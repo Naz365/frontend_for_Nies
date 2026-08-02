@@ -14,10 +14,10 @@ const navLinks = [
 ---
 
 <header class="sticky top-0 z-50 bg-white/95 dark:bg-navy-dark/95 backdrop-blur-md border-b border-clean-border dark:border-navy-light shadow-sm transition-colors duration-300">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-20">
+  <div class="max-w-[1536px] w-full mx-auto px-4 sm:px-6 lg:px-10">
+    <div class="flex items-center justify-between h-20 sm:h-22">
       <!-- Dynamic Logo (Switches to white logo variant in Dark Mode) -->
-      <a href={base} class="flex items-center group">
+      <a href={base} class="flex items-center group flex-shrink-0">
         <img 
           src={`${base}wp-content/uploads/2017/11/ni_logo-1.png`} 
           alt="N.I. Engineering Services Logo" 
@@ -31,13 +31,13 @@ const navLinks = [
       </a>
 
       <!-- Desktop Nav -->
-      <nav class="hidden md:flex items-center space-x-6 lg:space-x-8">
+      <nav class="hidden md:flex items-center space-x-4 lg:space-x-7 xl:space-x-9">
         {navLinks.map(link => {
           const isActive = currentPath === link.href || (link.href !== base && currentPath.startsWith(link.href));
           return (
             <a
               href={link.href}
-              class={`text-xs lg:text-sm font-bold tracking-wide uppercase transition-colors duration-200 ${
+              class={`text-xs lg:text-sm font-bold tracking-wide uppercase transition-colors duration-200 whitespace-nowrap ${
                 isActive 
                   ? 'text-flame border-b-2 border-flame pb-1' 
                   : 'text-navy dark:text-gray-200 hover:text-flame dark:hover:text-flame'
