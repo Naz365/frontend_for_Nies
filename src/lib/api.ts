@@ -14,6 +14,9 @@ export interface Product {
   slug: string;
   category_slug: string;
   category_name: string;
+  price: number;
+  original_price?: number;
+  in_stock: boolean;
   image: string;
   description: string;
 }
@@ -160,4 +163,116 @@ export async function fetchSiteSettings(): Promise<SiteSettings> {
     emails: ["info@example.com", "sales@example.com"],
     company_profile_pdf: "/wp-content/uploads/2017/11/Company_Profile.pdf"
   };
+}
+
+export const FALLBACK_PRODUCTS: Product[] = [
+  {
+    id: 1,
+    title: "ABC Dry Chemical Powder Extinguisher (6kg)",
+    slug: "abc-dry-powder-extinguisher-6kg",
+    category_slug: "fire-extinguishers",
+    category_name: "Fire Extinguishers",
+    price: 1450,
+    original_price: 1800,
+    in_stock: true,
+    image: "/wp-content/uploads/2017/05/fire-extinguishers1.jpg",
+    description: "Multipurpose Class A, B, C fire extinguisher filled with 90% MAP powder. Dry nitrogen pressurized at 14 bar."
+  },
+  {
+    id: 2,
+    title: "Carbon Dioxide CO2 Extinguisher (3kg)",
+    slug: "co2-fire-extinguisher-3kg",
+    category_slug: "fire-extinguishers",
+    category_name: "Fire Extinguishers",
+    price: 2800,
+    original_price: 3200,
+    in_stock: true,
+    image: "/wp-content/uploads/2017/11/co2.png",
+    description: "Residue-free CO2 gas cylinder designed specifically for electrical server rooms and sensitive electronic equipment."
+  },
+  {
+    id: 3,
+    title: "AFFF Mechanical Foam Extinguisher (9L)",
+    slug: "afff-foam-fire-extinguisher-9l",
+    category_slug: "fire-extinguishers",
+    category_name: "Fire Extinguishers",
+    price: 2200,
+    original_price: 2600,
+    in_stock: true,
+    image: "/wp-content/uploads/2017/05/fire-extinguishers1.jpg",
+    description: "Aqueous Film Forming Foam ideal for flammable fuel and oil hazards in industrial factories and gas stations."
+  },
+  {
+    id: 4,
+    title: "Clean Agent HFC-227ea Extinguisher (3kg)",
+    slug: "clean-agent-hfc227ea-3kg",
+    category_slug: "suppression-system",
+    category_name: "Suppression System",
+    price: 4500,
+    original_price: 5200,
+    in_stock: true,
+    image: "/wp-content/uploads/2017/11/fire-suppression-system.jpg",
+    description: "Zero ozone depletion clean agent for computer rooms, telecommunication hubs, and medical laboratory rooms."
+  },
+  {
+    id: 5,
+    title: "Automatic Optical Smoke & Heat Detector",
+    slug: "automatic-optical-smoke-detector",
+    category_slug: "alarm-systems",
+    category_name: "Alarm Systems",
+    price: 850,
+    original_price: 1100,
+    in_stock: true,
+    image: "/wp-content/uploads/2017/05/fire-detection-alarm-system.jpg",
+    description: "High-sensitivity photoelectric smoke detector unit compatible with central addressable fire alarm control panels."
+  },
+  {
+    id: 6,
+    title: "Commercial Heavy Duty Fire Hose Reel (30m)",
+    slug: "commercial-fire-hose-reel-30m",
+    category_slug: "firefighting-equipment",
+    category_name: "Firefighting Equipment",
+    price: 8500,
+    original_price: 9800,
+    in_stock: true,
+    image: "/wp-content/uploads/2017/05/DFRS_Generic_Hero_Banner_78_May13.jpg",
+    description: "High-pressure swinging wall mounted hose reel with solid brass jet/spray nozzle for commercial towers."
+  },
+  {
+    id: 7,
+    title: "4K HD Outdoor IR Surveillance CCTV Camera",
+    slug: "4k-hd-surveillance-cctv-camera",
+    category_slug: "cctv",
+    category_name: "CCTV",
+    price: 3200,
+    original_price: 3900,
+    in_stock: true,
+    image: "/wp-content/uploads/2017/11/brac-university.jpg",
+    description: "Weatherproof IP67 dome camera with night vision infrared LED up to 30m distance."
+  },
+  {
+    id: 8,
+    title: "Biometric Fingerprint & RFID Access Control",
+    slug: "biometric-fingerprint-rfid-access-control",
+    category_slug: "access-control",
+    category_name: "Access Control",
+    price: 6500,
+    original_price: 7800,
+    in_stock: true,
+    image: "/wp-content/uploads/2017/11/AccessControlSystems.jpg",
+    description: "Time attendance and door lock access control terminal supporting fingerprint, passcode, and IC card authentication."
+  }
+];
+
+export async function fetchProducts(): Promise<Product[]> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/products`);
+    if (res.ok) {
+      const data = await res.json();
+      return data.data || data;
+    }
+  } catch (err) {
+    console.warn("API fetch failed for products, using fallback manifest data.");
+  }
+  return FALLBACK_PRODUCTS;
 }
