@@ -24,5 +24,7 @@ download_archive.js
 start_marketing_and_cms.js
 start_separate_servers.js
 archive/
+open-seo/
+.agents/
 *.log
 
