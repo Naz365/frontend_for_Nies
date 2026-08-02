@@ -71,29 +71,29 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   </section>
 
   <!-- MAIN ADMIN WORKSPACE -->
-  <section class="py-12 bg-clean min-h-[700px]">
+  <section class="py-12 bg-clean dark:bg-navy-dark min-h-[700px] transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         <!-- Sidebar Navigation -->
         <div class="lg:col-span-3 space-y-3">
-          <div class="bg-white p-4 rounded-xl border border-clean-border shadow-sm space-y-2">
+          <div class="bg-white dark:bg-navy-light p-4 rounded-xl border border-clean-border dark:border-navy-light shadow-sm space-y-2">
             <button id="tab-btn-create" class="w-full text-left px-4 py-3 text-xs font-extrabold uppercase rounded-lg bg-flame text-white shadow transition-all">
               ✍️ Publish New Blog Post
             </button>
-            <button id="tab-btn-list" class="w-full text-left px-4 py-3 text-xs font-extrabold uppercase rounded-lg bg-white text-navy hover:bg-clean border border-clean-border transition-all">
+            <button id="tab-btn-list" class="w-full text-left px-4 py-3 text-xs font-extrabold uppercase rounded-lg bg-white dark:bg-navy text-navy dark:text-gray-200 hover:bg-clean dark:hover:bg-navy-light border border-clean-border dark:border-navy-light transition-all">
               📚 Manage Published Posts
             </button>
-            <button id="tab-btn-products" class="w-full text-left px-4 py-3 text-xs font-extrabold uppercase rounded-lg bg-white text-navy hover:bg-clean border border-clean-border transition-all">
+            <button id="tab-btn-products" class="w-full text-left px-4 py-3 text-xs font-extrabold uppercase rounded-lg bg-white dark:bg-navy text-navy dark:text-gray-200 hover:bg-clean dark:hover:bg-navy-light border border-clean-border dark:border-navy-light transition-all">
               📦 Product Catalog Manager
             </button>
-            <button id="tab-btn-security" class="w-full text-left px-4 py-3 text-xs font-extrabold uppercase rounded-lg bg-white text-navy hover:bg-clean border border-clean-border transition-all">
+            <button id="tab-btn-security" class="w-full text-left px-4 py-3 text-xs font-extrabold uppercase rounded-lg bg-white dark:bg-navy text-navy dark:text-gray-200 hover:bg-clean dark:hover:bg-navy-light border border-clean-border dark:border-navy-light transition-all">
               🔐 Security Settings
             </button>
           </div>
 
           <!-- Quick Security Status Box -->
-          <div class="bg-navy p-5 rounded-xl border border-navy-light text-white space-y-2">
+          <div class="bg-navy dark:bg-navy-light p-5 rounded-xl border border-navy-light text-white space-y-2">
             <span class="text-[10px] font-black uppercase text-flame tracking-widest block">Access Control Protection</span>
             <p class="text-xs text-gray-300 leading-relaxed">
               Unwanted guests are automatically blocked by the encrypted admin passphrase guard.
@@ -105,9 +105,9 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
         <div class="lg:col-span-9">
           
           <!-- TAB 1: CREATE NEW BLOG POST -->
-          <div id="panel-create" class="bg-white p-6 sm:p-8 rounded-xl border border-clean-border shadow-md space-y-6">
-            <div class="border-b border-clean-border pb-4">
-              <h2 class="text-xl font-extrabold uppercase text-navy">Publish New Article</h2>
+          <div id="panel-create" class="bg-white dark:bg-navy p-6 sm:p-8 rounded-xl border border-clean-border dark:border-navy-light shadow-md space-y-6 text-navy dark:text-gray-100">
+            <div class="border-b border-clean-border dark:border-navy-light pb-4">
+              <h2 class="text-xl font-extrabold uppercase text-navy dark:text-white">Publish New Article</h2>
               <p class="text-xs text-gray-500 mt-1">Fill out the fields below to publish a new post to your website.</p>
             </div>
 
