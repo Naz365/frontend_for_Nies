@@ -15,15 +15,18 @@ const navLinks = [
 <header class="sticky top-0 z-50 bg-white/95 dark:bg-navy-dark/95 backdrop-blur-md border-b border-clean-border dark:border-navy-light shadow-sm transition-colors duration-300">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-20">
-      <!-- Logo -->
+      <!-- Dynamic Logo (Switches to white logo variant in Dark Mode) -->
       <a href={base} class="flex items-center group">
-        <div class="p-1 rounded-lg transition-all duration-300 bg-transparent dark:bg-white/95 dark:shadow-md">
-          <img 
-            src={`${base}wp-content/uploads/2017/11/ni_logo-1.png`} 
-            alt="N.I. Engineering Services Logo" 
-            class="h-12 sm:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-          />
-        </div>
+        <img 
+          src={`${base}wp-content/uploads/2017/11/ni_logo-1.png`} 
+          alt="N.I. Engineering Services Logo" 
+          class="h-12 sm:h-14 w-auto object-contain block dark:hidden transition-transform duration-300 group-hover:scale-105"
+        />
+        <img 
+          src={`${base}wp-content/uploads/2017/11/logo-wh.png`} 
+          alt="N.I. Engineering Services White Logo" 
+          class="h-12 sm:h-14 w-auto object-contain hidden dark:block transition-transform duration-300 group-hover:scale-105"
+        />
       </a>
 
       <!-- Desktop Nav -->
