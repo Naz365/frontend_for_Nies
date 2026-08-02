@@ -1,4 +1,6 @@
 ---
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+
 const categories = [
   { name: 'All', slug: 'all' },
   { name: 'ACCESS CONTROL', slug: 'access-control' },
@@ -133,7 +135,7 @@ const products = [
             />
             <div class="absolute inset-0 bg-navy/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
               <a 
-                href="/contact/" 
+                href={`${base}contact/`} 
                 class="px-4 py-2 bg-flame text-white text-xs font-extrabold uppercase rounded shadow"
               >
                 Inquire Product
