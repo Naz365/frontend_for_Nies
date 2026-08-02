@@ -424,16 +424,65 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     checkoutModal?.classList.add('hidden');
   });
 
-  // Checkout Form Submission
+  // Checkout Form Submission & Order Recording
+  const ORDERS_STORAGE_KEY = 'nies_customer_orders';
+
   document.getElementById('checkout-form')?.addEventListener('submit', (e) => {
     e.preventDefault();
+    const name = (document.getElementById('cust-name') as HTMLInputElement).value;
+    const phone = (document.getElementById('cust-phone') as HTMLInputElement).value;
+    const address = (document.getElementById('cust-address') as HTMLInputElement).value;
+    const cart = getCart();
+
+    if (cart.length === 0) {
+      alert("Your cart is empty.");
+      return;
+    }
+
+    const orderId = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
+    const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+    const orderDate = new Date().toLocaleString();
+
+    const newOrder = {
+      orderId,
+      name,
+      phone,
+      address,
+      items: cart,
+      totalPrice,
+      orderDate,
+      status: 'PENDING (Cash on Delivery)'
+    };
+
+    // Save to LocalStorage for Admin Panel
+    let orders = [];
+    try {
+      const stored = localStorage.getItem(ORDERS_STORAGE_KEY);
+      orders = stored ? JSON.parse(stored) : [];
+    } catch (e) { orders = []; }
+    orders.unshift(newOrder);
+    localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(orders));
+
+    // Formatted WhatsApp Message
+    const itemSummary = cart.map(i => `${i.title} (x${i.qty}) - ৳${i.price * i.qty}`).join('%0A');
+    const waText = `*NEW FIRE SAFETY ORDER%20#${orderId}*%0A%0A*Name:* ${encodeURIComponent(name)}%0A*Phone:* ${encodeURIComponent(phone)}%0A*Address:* ${encodeURIComponent(address)}%0A%0A*Items Ordered:*%0A${itemSummary}%0A%0A*Total Payable:* ৳ ${totalPrice.toLocaleString()} BDT (Cash on Delivery)`;
+    const waUrl = `https://wa.me/8801700000000?text=${waText}`;
+
     const alertBox = document.getElementById('checkout-alert');
-    if (alertBox) alertBox.classList.remove('hidden');
+    if (alertBox) {
+      alertBox.innerHTML = `
+        <div class="space-y-3">
+          <p>🎉 <strong>Order #${orderId} Received!</strong> Total: ৳ ${totalPrice.toLocaleString()} BDT</p>
+          <a href="${waUrl}" target="_blank" class="inline-flex items-center justify-center w-full py-2.5 bg-green-600 hover:bg-green-700 text-white font-extrabold text-xs uppercase rounded shadow transition-all">
+            💬 Send Order Confirmation via WhatsApp →
+          </a>
+        </div>
+      `;
+      alertBox.classList.remove('hidden');
+    }
+
     saveCart([]);
-    setTimeout(() => {
-      alertBox?.classList.add('hidden');
-      checkoutModal?.classList.add('hidden');
-    }, 2500);
+    (document.getElementById('checkout-form') as HTMLFormElement).reset();
   });
 
   // Render Product Grid with Filters and Search

@@ -84,6 +84,10 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
             <button id="tab-btn-list" class="w-full text-left px-4 py-3 text-xs font-extrabold uppercase rounded-lg bg-white dark:bg-navy text-navy dark:text-gray-200 hover:bg-clean dark:hover:bg-navy-light border border-clean-border dark:border-navy-light transition-all">
               📚 Manage Published Posts
             </button>
+            <button id="tab-btn-orders" class="w-full text-left px-4 py-3 text-xs font-extrabold uppercase rounded-lg bg-white dark:bg-navy text-navy dark:text-gray-200 hover:bg-clean dark:hover:bg-navy-light border border-clean-border dark:border-navy-light transition-all flex items-center justify-between">
+              <span>🛒 Customer Orders</span>
+              <span id="orders-count-badge" class="px-2 py-0.5 bg-flame text-white text-[10px] rounded-full font-black">0</span>
+            </button>
             <button id="tab-btn-products" class="w-full text-left px-4 py-3 text-xs font-extrabold uppercase rounded-lg bg-white dark:bg-navy text-navy dark:text-gray-200 hover:bg-clean dark:hover:bg-navy-light border border-clean-border dark:border-navy-light transition-all">
               📦 Product Catalog Manager
             </button>
@@ -318,6 +322,23 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
             </form>
           </div>
 
+          <!-- TAB 5: CUSTOMER ORDERS MANAGER -->
+          <div id="panel-orders" class="hidden bg-white dark:bg-navy p-6 sm:p-8 rounded-xl border border-clean-border dark:border-navy-light shadow-md space-y-6 text-navy dark:text-gray-100">
+            <div class="flex items-center justify-between border-b border-clean-border dark:border-navy-light pb-4">
+              <div>
+                <h2 class="text-xl font-extrabold uppercase text-navy dark:text-white">Customer E-Commerce Orders</h2>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Real-time incoming orders, cash-on-delivery requests, and customer contact details.</p>
+              </div>
+              <button id="btn-refresh-orders" type="button" class="px-3 py-1.5 bg-navy dark:bg-navy-light text-white text-xs font-extrabold uppercase rounded border border-navy-light hover:bg-flame transition-all">
+                🔄 Refresh Orders
+              </button>
+            </div>
+
+            <div id="admin-orders-container" class="space-y-4">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+
           <!-- TAB 4: SECURITY SETTINGS -->
           <div id="panel-security" class="hidden bg-white dark:bg-navy p-6 sm:p-8 rounded-xl border border-clean-border dark:border-navy-light shadow-md space-y-6 text-navy dark:text-gray-100">
             <div class="border-b border-clean-border dark:border-navy-light pb-4">
@@ -487,36 +508,42 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   // Tab switching logic
   const btnCreate = document.getElementById('tab-btn-create');
   const btnList = document.getElementById('tab-btn-list');
+  const btnOrders = document.getElementById('tab-btn-orders');
   const btnProducts = document.getElementById('tab-btn-products');
   const btnSecurity = document.getElementById('tab-btn-security');
 
   const panelCreate = document.getElementById('panel-create');
   const panelList = document.getElementById('panel-list');
+  const panelOrders = document.getElementById('panel-orders');
   const panelProducts = document.getElementById('panel-products');
   const panelSecurity = document.getElementById('panel-security');
 
   function switchTab(activeBtn: HTMLElement, activePanel: HTMLElement) {
-    [btnCreate, btnList, btnProducts, btnSecurity].forEach(b => {
+    [btnCreate, btnList, btnOrders, btnProducts, btnSecurity].forEach(b => {
       if (b) {
-        b.className = 'w-full text-left px-4 py-3 text-xs font-extrabold uppercase rounded-lg bg-white dark:bg-navy text-navy dark:text-gray-200 hover:bg-clean dark:hover:bg-navy-light border border-clean-border dark:border-navy-light transition-all';
+        b.className = 'w-full text-left px-4 py-3 text-xs font-extrabold uppercase rounded-lg bg-white dark:bg-navy text-navy dark:text-gray-200 hover:bg-clean dark:hover:bg-navy-light border border-clean-border dark:border-navy-light transition-all flex items-center justify-between';
       }
     });
-    [panelCreate, panelList, panelProducts, panelSecurity].forEach(p => {
+    [panelCreate, panelList, panelOrders, panelProducts, panelSecurity].forEach(p => {
       if (p) p.classList.add('hidden');
     });
 
-    activeBtn.className = 'w-full text-left px-4 py-3 text-xs font-extrabold uppercase rounded-lg bg-flame text-white shadow transition-all';
+    activeBtn.className = 'w-full text-left px-4 py-3 text-xs font-extrabold uppercase rounded-lg bg-flame text-white shadow transition-all flex items-center justify-between';
     activePanel.classList.remove('hidden');
 
     if (activePanel === panelList) {
       renderPostsList();
+    } else if (activePanel === panelOrders) {
+      renderOrdersList();
     }
   }
 
   btnCreate?.addEventListener('click', () => switchTab(btnCreate, panelCreate!));
   btnList?.addEventListener('click', () => switchTab(btnList, panelList!));
+  btnOrders?.addEventListener('click', () => switchTab(btnOrders, panelOrders!));
   btnProducts?.addEventListener('click', () => switchTab(btnProducts, panelProducts!));
   btnSecurity?.addEventListener('click', () => switchTab(btnSecurity, panelSecurity!));
+  document.getElementById('btn-refresh-orders')?.addEventListener('click', renderOrdersList);
 
   // Blog Post Submission Handler
   const blogForm = document.getElementById('blog-form');
@@ -722,7 +749,114 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     });
   }
 
+  // Render Customer E-Commerce Orders
+  const ORDERS_STORAGE_KEY = 'nies_customer_orders';
+
+  function getStoredOrders() {
+    try {
+      const stored = localStorage.getItem(ORDERS_STORAGE_KEY);
+      return stored ? JSON.parse(stored) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function saveOrders(orders: any[]) {
+    localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(orders));
+  }
+
+  function renderOrdersList() {
+    const container = document.getElementById('admin-orders-container');
+    const badge = document.getElementById('orders-count-badge');
+    const orders = getStoredOrders();
+
+    if (badge) badge.textContent = String(orders.length);
+    if (!container) return;
+
+    if (orders.length === 0) {
+      container.innerHTML = `
+        <div class="text-center py-12 space-y-2">
+          <div class="text-3xl">🛒</div>
+          <p class="text-xs font-bold text-gray-500 dark:text-gray-400">No customer orders received yet.</p>
+          <p class="text-[10px] text-gray-400">When visitors add products to cart and checkout on /shop/, their orders will appear here live!</p>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = orders.map((o: any) => `
+      <div class="p-5 border border-clean-border dark:border-navy-light rounded-xl bg-clean dark:bg-navy-light space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-clean-border dark:border-navy pb-3">
+          <div>
+            <span class="text-[10px] font-black uppercase text-flame tracking-widest block">${o.orderId} • ${o.orderDate}</span>
+            <h3 class="text-base font-extrabold text-navy dark:text-white">${o.name}</h3>
+            <p class="text-xs font-semibold text-gray-600 dark:text-gray-300">📞 ${o.phone} | 📍 ${o.address}</p>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="px-3 py-1 text-[10px] font-black uppercase rounded shadow ${o.status.includes('DELIVERED') ? 'bg-green-600 text-white' : 'bg-amber-500 text-navy'}">
+              ${o.status}
+            </span>
+          </div>
+        </div>
+
+        <!-- Itemized Products List -->
+        <div class="space-y-1.5 pl-2 border-l-2 border-flame">
+          ${o.items.map((i: any) => `
+            <div class="flex items-center justify-between text-xs text-navy dark:text-gray-200">
+              <span>• ${i.title} (x${i.qty})</span>
+              <span class="font-bold">৳ ${(i.price * i.qty).toLocaleString()} BDT</span>
+            </div>
+          `).join('')}
+        </div>
+
+        <!-- Total & Action Buttons -->
+        <div class="pt-3 border-t border-clean-border dark:border-navy flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="text-xs">
+            <span class="text-gray-500 dark:text-gray-400 uppercase font-bold">Total Payable Amount:</span>
+            <span class="text-base font-black text-flame ml-2">৳ ${o.totalPrice.toLocaleString()} BDT</span>
+          </div>
+
+          <div class="flex items-center space-x-2">
+            <a href="tel:${o.phone}" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-extrabold uppercase rounded shadow">
+              📞 Call Customer
+            </a>
+            <button data-mark-delivered="${o.orderId}" class="px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-[10px] font-extrabold uppercase rounded shadow">
+              ✓ Mark Delivered
+            </button>
+            <button data-delete-order="${o.orderId}" class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-[10px] font-extrabold uppercase rounded shadow">
+              🗑️ Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    // Attach Event Listeners to Order Actions
+    container.querySelectorAll('[data-mark-delivered]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = (e.currentTarget as HTMLElement).getAttribute('data-mark-delivered');
+        let orders = getStoredOrders();
+        const target = orders.find((o: any) => o.orderId === id);
+        if (target) {
+          target.status = 'DELIVERED ✅';
+          saveOrders(orders);
+          renderOrdersList();
+        }
+      });
+    });
+
+    container.querySelectorAll('[data-delete-order]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = (e.currentTarget as HTMLElement).getAttribute('data-delete-order');
+        let orders = getStoredOrders().filter((o: any) => o.orderId !== id);
+        saveOrders(orders);
+        renderOrdersList();
+      });
+    });
+  }
+
   // Initial Auth & Render Setup
   checkAuth();
   renderPostsList();
+  renderOrdersList();
 </script>
