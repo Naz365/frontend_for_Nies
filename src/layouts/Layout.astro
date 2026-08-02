@@ -142,8 +142,11 @@ const localBusinessSchema = {
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
   </head>
   <body class="bg-clean text-navy font-sans antialiased flex flex-col min-h-screen overflow-x-hidden">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-flame focus:text-white focus:font-extrabold focus:rounded shadow-lg">
+      Skip to main content
+    </a>
     <Header />
-    <main class="flex-grow">
+    <main id="main-content" class="flex-grow">
       <slot />
     </main>
     <Footer />
