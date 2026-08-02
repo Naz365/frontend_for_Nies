@@ -20,20 +20,20 @@ const clientLogos = [
 ];
 ---
 
-<section class="py-16 bg-white border-t border-clean-border">
+<section class="py-16 bg-white dark:bg-navy-dark border-t border-clean-border dark:border-navy-light transition-colors duration-300">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center max-w-2xl mx-auto mb-10">
-      <h2 class="text-2xl sm:text-3xl font-extrabold uppercase text-navy tracking-tight">
+      <h2 class="text-2xl sm:text-3xl font-extrabold uppercase text-navy dark:text-white tracking-tight">
         Our <span class="text-flame">Customers</span> & Partners
       </h2>
-      <p class="text-xs sm:text-sm text-gray-500 mt-2">
+      <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-2">
         Trusted by Bangladesh's premier institutions, corporate towers, real estate, and industrial leaders.
       </p>
     </div>
 
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 items-center justify-items-center">
       {clientLogos.map(logo => (
-        <div class="w-full p-4 bg-clean rounded-lg border border-clean-border hover:border-flame/40 flex items-center justify-center h-28 grayscale hover:grayscale-0 transition-all duration-300 transform hover:scale-105 shadow-sm">
+        <div class="w-full p-4 bg-clean dark:bg-white/95 rounded-lg border border-clean-border dark:border-navy-light hover:border-flame/40 flex items-center justify-center h-28 grayscale hover:grayscale-0 transition-all duration-300 transform hover:scale-105 shadow-sm">
           <img 
             src={logo.image} 
             alt={`${logo.name} logo`} 

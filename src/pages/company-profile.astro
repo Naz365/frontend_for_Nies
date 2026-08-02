@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 
 <Layout 
@@ -12,7 +14,7 @@ import Layout from '../layouts/Layout.astro';
       <h1 class="text-4xl font-extrabold uppercase tracking-tight text-white">Company Profile</h1>
       <div class="mt-4 flex justify-center space-x-4">
         <a 
-          href="/wp-content/uploads/2017/11/Company_Profile.pdf" 
+          href={`${base}wp-content/uploads/2017/11/Company_Profile.pdf`} 
           target="_blank" 
           download
           class="inline-flex items-center px-6 py-3 bg-flame hover:bg-flame-hover text-white text-xs font-extrabold uppercase tracking-wider rounded shadow transition-all duration-200"
@@ -26,17 +28,17 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <section class="py-12 bg-clean">
+  <section class="py-12 bg-clean dark:bg-navy-dark transition-colors duration-300">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bg-white p-4 rounded-xl border border-clean-border shadow-xl">
+      <div class="bg-white dark:bg-navy-light p-4 rounded-xl border border-clean-border dark:border-navy-light shadow-xl">
         <iframe 
-          src="/wp-content/uploads/2017/11/Company_Profile.pdf" 
-          class="w-full h-[750px] rounded border" 
+          src={`${base}wp-content/uploads/2017/11/Company_Profile.pdf`} 
+          class="w-full h-[750px] rounded border dark:border-navy-light bg-white" 
           title="Company Profile PDF Viewer"
         >
-          <p class="p-6 text-center text-gray-600">
+          <p class="p-6 text-center text-gray-600 dark:text-gray-300">
             Your browser does not support embedded PDF viewing. 
-            <a href="/wp-content/uploads/2017/11/Company_Profile.pdf" download class="text-flame font-bold underline">Click here to download the Company Profile PDF</a>.
+            <a href={`${base}wp-content/uploads/2017/11/Company_Profile.pdf`} download class="text-flame font-bold underline">Click here to download the Company Profile PDF</a>.
           </p>
         </iframe>
       </div>

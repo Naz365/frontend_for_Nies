@@ -10,15 +10,15 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 >
   <!-- SECURITY AUTHENTICATION MODAL (LOCKED STATE) -->
   <div id="admin-auth-modal" class="fixed inset-0 z-50 bg-navy/95 backdrop-blur-lg flex items-center justify-center p-4">
-    <div class="bg-white max-w-md w-full rounded-2xl border border-clean-border shadow-2xl p-8 space-y-6 text-center relative overflow-hidden">
+    <div class="bg-white dark:bg-navy-dark max-w-md w-full rounded-2xl border border-clean-border dark:border-navy-light shadow-2xl p-8 space-y-6 text-center relative overflow-hidden transition-colors duration-300">
       <div class="w-16 h-16 bg-navy text-flame rounded-full flex items-center justify-center mx-auto shadow-inner text-2xl font-black">
         🔒
       </div>
 
       <div>
         <span class="text-xs font-black uppercase text-flame tracking-widest block mb-1">Protected Admin Gateway</span>
-        <h2 class="text-2xl font-extrabold uppercase text-navy">Enter Admin Security Key</h2>
-        <p class="text-xs text-gray-500 mt-2">
+        <h2 class="text-2xl font-extrabold uppercase text-navy dark:text-white">Enter Admin Security Key</h2>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
           This portal is restricted to authorized N.I. Engineering Services administrators only.
         </p>
       </div>
@@ -30,11 +30,11 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
             id="auth-password-input" 
             required 
             placeholder="Enter Admin Password"
-            class="w-full px-4 py-3 text-center text-sm font-extrabold border-2 border-clean-border rounded-xl focus:outline-none focus:border-flame bg-clean tracking-widest"
+            class="w-full px-4 py-3 text-center text-sm font-extrabold border-2 border-clean-border dark:border-navy-light rounded-xl focus:outline-none focus:border-flame bg-clean dark:bg-navy-light text-navy dark:text-white tracking-widest"
           />
         </div>
 
-        <div id="auth-error-alert" class="hidden p-3 bg-red-500/10 border border-red-500/30 text-red-600 text-xs font-bold rounded-lg">
+        <div id="auth-error-alert" class="hidden p-3 bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 text-xs font-bold rounded-lg">
           ❌ Access Denied: Incorrect Password.
         </div>
 
@@ -120,19 +120,19 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
             <form id="blog-form" class="space-y-6">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label class="block text-xs font-bold uppercase text-navy mb-2">Article Title *</label>
+                  <label class="block text-xs font-bold uppercase text-navy dark:text-gray-200 mb-2">Article Title *</label>
                   <input 
                     type="text" 
                     id="post-title" 
                     required 
                     placeholder="e.g., Annual Fire Extinguisher Refilling Compliance Guide 2026"
-                    class="w-full px-4 py-3 text-xs border border-clean-border rounded-lg focus:outline-none focus:border-flame font-medium"
+                    class="w-full px-4 py-3 text-xs border border-clean-border dark:border-navy-light bg-white dark:bg-navy-light text-navy dark:text-gray-100 rounded-lg focus:outline-none focus:border-flame font-medium"
                   />
                 </div>
 
                 <div>
-                  <label class="block text-xs font-bold uppercase text-navy mb-2">Category *</label>
-                  <select id="post-category" class="w-full px-4 py-3 text-xs border border-clean-border rounded-lg focus:outline-none focus:border-flame font-medium bg-white">
+                  <label class="block text-xs font-bold uppercase text-navy dark:text-gray-200 mb-2">Category *</label>
+                  <select id="post-category" class="w-full px-4 py-3 text-xs border border-clean-border dark:border-navy-light rounded-lg focus:outline-none focus:border-flame font-medium bg-white dark:bg-navy-light text-navy dark:text-gray-100">
                     <option value="Fire Safety">Fire Safety & Equipment</option>
                     <option value="Maintenance">Maintenance & Refilling</option>
                     <option value="CCTV & Access Control">CCTV & Access Control</option>
@@ -144,22 +144,22 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label class="block text-xs font-bold uppercase text-navy mb-2">Author Name</label>
+                  <label class="block text-xs font-bold uppercase text-navy dark:text-gray-200 mb-2">Author Name</label>
                   <input 
                     type="text" 
                     id="post-author" 
                     value="N.I. Safety Team" 
-                    class="w-full px-4 py-3 text-xs border border-clean-border rounded-lg focus:outline-none focus:border-flame font-medium"
+                    class="w-full px-4 py-3 text-xs border border-clean-border dark:border-navy-light bg-white dark:bg-navy-light text-navy dark:text-gray-100 rounded-lg focus:outline-none focus:border-flame font-medium"
                   />
                 </div>
 
                 <div>
-                  <label class="block text-xs font-bold uppercase text-navy mb-2">Thumbnail Image (Upload File or Paste URL) *</label>
+                  <label class="block text-xs font-bold uppercase text-navy dark:text-gray-200 mb-2">Thumbnail Image (Upload File or Paste URL) *</label>
                   
                   <!-- Drag & Drop Zone -->
                   <div 
                     id="dropzone-box" 
-                    class="border-2 border-dashed border-gray-300 hover:border-flame bg-clean hover:bg-white rounded-xl p-4 text-center cursor-pointer transition-all duration-200 relative group"
+                    class="border-2 border-dashed border-gray-300 dark:border-navy-light hover:border-flame bg-clean dark:bg-navy-light hover:bg-white dark:hover:bg-navy rounded-xl p-4 text-center cursor-pointer transition-all duration-200 relative group"
                   >
                     <input type="file" id="file-input" accept="image/*" class="hidden" />
                     
@@ -168,14 +168,14 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
                       <div class="w-10 h-10 rounded-full bg-flame/10 text-flame flex items-center justify-center mx-auto text-xl">
                         📸
                       </div>
-                      <p class="text-xs font-bold text-navy">
+                      <p class="text-xs font-bold text-navy dark:text-gray-200">
                         <span class="text-flame">Click to browse</span> or drag & drop image here
                       </p>
                       <p class="text-[10px] text-gray-400">Auto-hosted DataURL / ImgBB ready (PNG, JPG, WEBP, GIF)</p>
                     </div>
 
                     <!-- Live Image Preview -->
-                    <div id="dropzone-preview" class="hidden relative rounded-lg overflow-hidden border border-clean-border shadow-inner max-h-48">
+                    <div id="dropzone-preview" class="hidden relative rounded-lg overflow-hidden border border-clean-border dark:border-navy-light shadow-inner max-h-48">
                       <img id="preview-img" src="" alt="Uploaded Thumbnail Preview" class="w-full h-40 object-cover" />
                       <button 
                         type="button" 
@@ -194,7 +194,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
                       type="text" 
                       id="post-thumbnail" 
                       value={`${base}wp-content/uploads/2017/05/fire-detection-alarm-system.jpg`}
-                      class="flex-1 px-3 py-1.5 text-[11px] border border-clean-border rounded focus:outline-none focus:border-flame font-medium"
+                      class="flex-1 px-3 py-1.5 text-[11px] border border-clean-border dark:border-navy-light bg-white dark:bg-navy-light text-navy dark:text-gray-100 rounded focus:outline-none focus:border-flame font-medium"
                       placeholder="Paste image link or drop file above..."
                     />
                   </div>
@@ -202,24 +202,24 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
               </div>
 
               <div>
-                <label class="block text-xs font-bold uppercase text-navy mb-2">Short Summary (1-2 Sentences) *</label>
+                <label class="block text-xs font-bold uppercase text-navy dark:text-gray-200 mb-2">Short Summary (1-2 Sentences) *</label>
                 <textarea 
                   id="post-summary" 
                   rows="2" 
                   required
                   placeholder="Provide a concise description that will appear on the blog listing card..."
-                  class="w-full px-4 py-3 text-xs border border-clean-border rounded-lg focus:outline-none focus:border-flame font-medium"
+                  class="w-full px-4 py-3 text-xs border border-clean-border dark:border-navy-light bg-white dark:bg-navy-light text-navy dark:text-gray-100 rounded-lg focus:outline-none focus:border-flame font-medium"
                 ></textarea>
               </div>
 
               <div>
-                <label class="block text-xs font-bold uppercase text-navy mb-2">Full Article Body Content (HTML / Text) *</label>
+                <label class="block text-xs font-bold uppercase text-navy dark:text-gray-200 mb-2">Full Article Body Content (HTML / Text) *</label>
                 <textarea 
                   id="post-content" 
                   rows="10" 
                   required
                   placeholder="Write the full content of your article here. HTML tags like <p>, <h3>, <ul>, and <strong> are supported..."
-                  class="w-full px-4 py-3 text-xs font-mono border border-clean-border rounded-lg focus:outline-none focus:border-flame"
+                  class="w-full px-4 py-3 text-xs font-mono border border-clean-border dark:border-navy-light bg-white dark:bg-navy-light text-navy dark:text-gray-100 rounded-lg focus:outline-none focus:border-flame"
                 ></textarea>
               </div>
 
@@ -241,13 +241,13 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
           </div>
 
           <!-- TAB 2: MANAGE POSTS LIST -->
-          <div id="panel-list" class="hidden bg-white p-6 sm:p-8 rounded-xl border border-clean-border shadow-md space-y-6">
-            <div class="flex items-center justify-between border-b border-clean-border pb-4">
+          <div id="panel-list" class="hidden bg-white dark:bg-navy p-6 sm:p-8 rounded-xl border border-clean-border dark:border-navy-light shadow-md space-y-6 text-navy dark:text-gray-100">
+            <div class="flex items-center justify-between border-b border-clean-border dark:border-navy-light pb-4">
               <div>
-                <h2 class="text-xl font-extrabold uppercase text-navy">Published Articles</h2>
-                <p class="text-xs text-gray-500 mt-1">Manage, edit, or remove published articles from your website.</p>
+                <h2 class="text-xl font-extrabold uppercase text-navy dark:text-white">Published Articles</h2>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Manage, edit, or remove published articles from your website.</p>
               </div>
-              <span id="posts-count-badge" class="px-3 py-1 bg-navy text-white text-xs font-extrabold rounded-full">
+              <span id="posts-count-badge" class="px-3 py-1 bg-navy dark:bg-flame text-white text-xs font-extrabold rounded-full">
                 0 Posts
               </span>
             </div>
@@ -258,21 +258,21 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
           </div>
 
           <!-- TAB 3: PRODUCT CATALOG MANAGER -->
-          <div id="panel-products" class="hidden bg-white p-6 sm:p-8 rounded-xl border border-clean-border shadow-md space-y-6">
-            <div class="border-b border-clean-border pb-4">
-              <h2 class="text-xl font-extrabold uppercase text-navy">Product Catalog Manager</h2>
-              <p class="text-xs text-gray-500 mt-1">Add custom safety equipment and industrial items to your website product list.</p>
+          <div id="panel-products" class="hidden bg-white dark:bg-navy p-6 sm:p-8 rounded-xl border border-clean-border dark:border-navy-light shadow-md space-y-6 text-navy dark:text-gray-100">
+            <div class="border-b border-clean-border dark:border-navy-light pb-4">
+              <h2 class="text-xl font-extrabold uppercase text-navy dark:text-white">Product Catalog Manager</h2>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Add custom safety equipment and industrial items to your website product list.</p>
             </div>
 
             <form id="product-form" class="space-y-6">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label class="block text-xs font-bold uppercase text-navy mb-2">Product Title *</label>
-                  <input type="text" id="prod-title" required placeholder="e.g., FM-200 Fire Suppression Gas System" class="w-full px-4 py-3 text-xs border border-clean-border rounded-lg focus:outline-none focus:border-flame" />
+                  <label class="block text-xs font-bold uppercase text-navy dark:text-gray-200 mb-2">Product Title *</label>
+                  <input type="text" id="prod-title" required placeholder="e.g., FM-200 Fire Suppression Gas System" class="w-full px-4 py-3 text-xs border border-clean-border dark:border-navy-light bg-white dark:bg-navy-light text-navy dark:text-gray-100 rounded-lg focus:outline-none focus:border-flame" />
                 </div>
                 <div>
-                  <label class="block text-xs font-bold uppercase text-navy mb-2">Category *</label>
-                  <select id="prod-category" class="w-full px-4 py-3 text-xs border border-clean-border rounded-lg focus:outline-none focus:border-flame bg-white">
+                  <label class="block text-xs font-bold uppercase text-navy dark:text-gray-200 mb-2">Category *</label>
+                  <select id="prod-category" class="w-full px-4 py-3 text-xs border border-clean-border dark:border-navy-light rounded-lg focus:outline-none focus:border-flame bg-white dark:bg-navy-light text-navy dark:text-gray-100">
                     <option value="fire-extinguishers">FIRE EXTINGUISHERS</option>
                     <option value="suppression-system">SUPPRESSION SYSTEM</option>
                     <option value="alarm-systems">ALARM SYSTEMS</option>
@@ -286,12 +286,12 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
               </div>
 
               <div>
-                <label class="block text-xs font-bold uppercase text-navy mb-2">Product Image Path *</label>
-                <input type="text" id="prod-image" required value={`${base}wp-content/uploads/2017/11/fire-suppression-system.jpg`} class="w-full px-4 py-3 text-xs border border-clean-border rounded-lg focus:outline-none focus:border-flame" />
+                <label class="block text-xs font-bold uppercase text-navy dark:text-gray-200 mb-2">Product Image Path *</label>
+                <input type="text" id="prod-image" required value={`${base}wp-content/uploads/2017/11/fire-suppression-system.jpg`} class="w-full px-4 py-3 text-xs border border-clean-border dark:border-navy-light bg-white dark:bg-navy-light text-navy dark:text-gray-100 rounded-lg focus:outline-none focus:border-flame" />
               </div>
 
               <div class="flex justify-end pt-2">
-                <button type="submit" class="px-8 py-3 bg-navy hover:bg-navy-dark text-white text-xs font-extrabold uppercase rounded-lg shadow">
+                <button type="submit" class="px-8 py-3 bg-navy dark:bg-flame hover:bg-navy-dark text-white text-xs font-extrabold uppercase rounded-lg shadow">
                   + Add Product To Catalog
                 </button>
               </div>
@@ -299,22 +299,22 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
           </div>
 
           <!-- TAB 4: SECURITY SETTINGS -->
-          <div id="panel-security" class="hidden bg-white p-6 sm:p-8 rounded-xl border border-clean-border shadow-md space-y-6">
-            <div class="border-b border-clean-border pb-4">
-              <h2 class="text-xl font-extrabold uppercase text-navy">Security & Passcode Settings</h2>
-              <p class="text-xs text-gray-500 mt-1">Change your Admin Security Key to prevent unwanted access.</p>
+          <div id="panel-security" class="hidden bg-white dark:bg-navy p-6 sm:p-8 rounded-xl border border-clean-border dark:border-navy-light shadow-md space-y-6 text-navy dark:text-gray-100">
+            <div class="border-b border-clean-border dark:border-navy-light pb-4">
+              <h2 class="text-xl font-extrabold uppercase text-navy dark:text-white">Security & Passcode Settings</h2>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Change your Admin Security Key to prevent unwanted access.</p>
             </div>
 
-            <div id="sec-success-alert" class="hidden p-4 bg-green-500/10 border border-green-500/30 text-green-700 text-xs font-bold rounded-lg">
+            <div id="sec-success-alert" class="hidden p-4 bg-green-500/10 border border-green-500/30 text-green-700 dark:text-green-400 text-xs font-bold rounded-lg">
               ✅ Admin Passcode updated successfully!
             </div>
 
             <form id="change-pass-form" class="space-y-4 max-w-md">
               <div>
-                <label class="block text-xs font-bold uppercase text-navy mb-2">New Admin Password *</label>
-                <input type="password" id="new-admin-pass" required placeholder="Enter new secret passcode" class="w-full px-4 py-3 text-xs border border-clean-border rounded-lg focus:outline-none focus:border-flame font-medium" />
+                <label class="block text-xs font-bold uppercase text-navy dark:text-gray-200 mb-2">New Admin Password *</label>
+                <input type="password" id="new-admin-pass" required placeholder="Enter new secret passcode" class="w-full px-4 py-3 text-xs border border-clean-border dark:border-navy-light bg-white dark:bg-navy-light text-navy dark:text-gray-100 rounded-lg focus:outline-none focus:border-flame font-medium" />
               </div>
-              <button type="submit" class="px-6 py-3 bg-navy text-white text-xs font-extrabold uppercase rounded-lg shadow">
+              <button type="submit" class="px-6 py-3 bg-navy dark:bg-flame text-white text-xs font-extrabold uppercase rounded-lg shadow">
                 Update Admin Password
               </button>
             </form>
@@ -478,7 +478,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   function switchTab(activeBtn: HTMLElement, activePanel: HTMLElement) {
     [btnCreate, btnList, btnProducts, btnSecurity].forEach(b => {
       if (b) {
-        b.className = 'w-full text-left px-4 py-3 text-xs font-extrabold uppercase rounded-lg bg-white text-navy hover:bg-clean border border-clean-border transition-all';
+        b.className = 'w-full text-left px-4 py-3 text-xs font-extrabold uppercase rounded-lg bg-white dark:bg-navy text-navy dark:text-gray-200 hover:bg-clean dark:hover:bg-navy-light border border-clean-border dark:border-navy-light transition-all';
       }
     });
     [panelCreate, panelList, panelProducts, panelSecurity].forEach(p => {
@@ -620,18 +620,18 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     if (!container) return;
 
     if (posts.length === 0) {
-      container.innerHTML = `<p class="text-xs text-gray-500 py-8 text-center">No articles found. Create your first post using the editor!</p>`;
+      container.innerHTML = `<p class="text-xs text-gray-500 dark:text-gray-400 py-8 text-center">No articles found. Create your first post using the editor!</p>`;
       return;
     }
 
     container.innerHTML = posts.map((p: any) => `
-      <div class="p-4 border border-clean-border rounded-lg bg-clean flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="p-4 border border-clean-border dark:border-navy-light rounded-lg bg-clean dark:bg-navy-light flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div class="flex items-center space-x-4">
-          <img src="${p.thumbnail}" alt="${p.title}" class="w-16 h-16 object-cover rounded border" />
+          <img src="${p.thumbnail}" alt="${p.title}" class="w-16 h-16 object-cover rounded border border-clean-border dark:border-navy" />
           <div>
             <span class="text-[10px] font-bold uppercase text-flame block">${p.category} • ${p.published_at}</span>
-            <h3 class="text-sm font-bold text-navy line-clamp-1">${p.title}</h3>
-            <p class="text-xs text-gray-500 line-clamp-1">${p.summary}</p>
+            <h3 class="text-sm font-bold text-navy dark:text-white line-clamp-1">${p.title}</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-300 line-clamp-1">${p.summary}</p>
           </div>
         </div>
 

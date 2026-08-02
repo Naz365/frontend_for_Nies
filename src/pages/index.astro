@@ -137,15 +137,15 @@ const faqSchema = {
   <ProductGrid />
 
   <!-- Our Work Portfolio Section -->
-  <section class="py-16 bg-white border-t border-clean-border">
+  <section class="py-16 bg-white dark:bg-navy border-t border-clean-border dark:border-navy-light transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
         <div>
-          <h2 class="text-3xl font-extrabold uppercase text-navy tracking-tight">
+          <h2 class="text-3xl font-extrabold uppercase text-navy dark:text-white tracking-tight">
             Our Completed <span class="text-flame">Projects in Dhaka</span>
           </h2>
           <div class="w-16 h-1 bg-flame mt-3 mb-2 rounded-full"></div>
-          <p class="text-sm text-gray-600 max-w-xl">
+          <p class="text-sm text-gray-600 dark:text-gray-300 max-w-xl">
             We deliver fire safety installations for premier developer clients including BTI, BRAC University, and BRAC Centre Inn.
           </p>
         </div>
@@ -156,13 +156,13 @@ const faqSchema = {
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         {workShowcase.map(item => (
-          <div class="group relative rounded-lg overflow-hidden shadow-md border border-clean-border bg-clean">
+          <div class="group relative rounded-lg overflow-hidden shadow-md border border-clean-border dark:border-navy-light bg-clean dark:bg-navy-light">
             <div class="h-64 overflow-hidden">
               <img src={item.image} alt={item.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
             </div>
-            <div class="p-4 bg-white border-t border-clean-border">
+            <div class="p-4 bg-white dark:bg-navy border-t border-clean-border dark:border-navy-light">
               <span class="text-[10px] font-extrabold uppercase tracking-widest text-flame block mb-1">{item.category}</span>
-              <h3 class="text-base font-bold uppercase text-navy">{item.title}</h3>
+              <h3 class="text-base font-bold uppercase text-navy dark:text-white">{item.title}</h3>
             </div>
           </div>
         ))}
@@ -171,11 +171,11 @@ const faqSchema = {
   </section>
 
   <!-- OpenSEO / AI Search Engine Optimization FAQ Section -->
-  <section class="py-16 bg-clean border-t border-clean-border">
+  <section class="py-16 bg-clean dark:bg-navy-dark border-t border-clean-border dark:border-navy-light transition-colors duration-300">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
         <span class="text-xs font-black uppercase text-flame tracking-widest block mb-1">Frequently Asked Questions</span>
-        <h2 class="text-3xl font-extrabold uppercase text-navy tracking-tight">
+        <h2 class="text-3xl font-extrabold uppercase text-navy dark:text-white tracking-tight">
           Fire Extinguisher & Safety Guide <span class="text-flame">Dhaka</span>
         </h2>
         <div class="w-16 h-1 bg-flame mx-auto mt-3 rounded-full"></div>
@@ -183,9 +183,9 @@ const faqSchema = {
 
       <div class="space-y-6">
         {faqList.map(faq => (
-          <div class="p-6 bg-white rounded-xl border border-clean-border shadow-sm">
-            <h3 class="text-base font-bold text-navy mb-2">{faq.q}</h3>
-            <p class="text-xs text-gray-600 leading-relaxed">{faq.a}</p>
+          <div class="p-6 bg-white dark:bg-navy-light rounded-xl border border-clean-border dark:border-navy-light shadow-sm">
+            <h3 class="text-base font-bold text-navy dark:text-white mb-2">{faq.q}</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">{faq.a}</p>
           </div>
         ))}
       </div>
