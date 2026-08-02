@@ -51,12 +51,26 @@ const faqList = [
     a: "According to Bangladesh Fire Service and Civil Defence (BFSCD) regulations, commercial and residential buildings require ABC Dry Powder Extinguishers, Hose Reels, Automatic Smoke Detectors, and Fire Hydrant Systems."
   }
 ];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqList.map(item => ({
+    "@type": "Question",
+    "name": item.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.a
+    }
+  }))
+};
 ---
 
 <Layout 
   title="Fire Extinguisher Supplier & Refilling Service in Dhaka | N.I. Engineering Services"
   description="#1 Fire Extinguisher Supplier and Refilling Service in Dhaka, Bangladesh. ABC Powder, CO2 Extinguishers, Hydrants, Smoke Detectors & CCTV. Call +880 1700-000000."
 >
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <!-- Hero Slider Component -->
   <HeroSlider />
 
