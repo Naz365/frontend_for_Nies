@@ -10,15 +10,22 @@ export interface Project {
 
 export interface Product {
   id: number;
+  category_id?: number;
+  sku?: string;
   title: string;
   slug: string;
   category_slug: string;
   category_name: string;
   price: number;
   original_price?: number;
-  in_stock: boolean;
+  compare_at_price?: number;
+  stock_quantity?: number;
+  track_inventory?: boolean;
+  is_featured?: boolean;
+  in_stock?: boolean;
   image: string;
   description: string;
+  specifications?: string;
 }
 
 export interface BlogPost {
