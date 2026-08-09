@@ -427,8 +427,9 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   // Checkout Form Submission & Order Recording
   const ORDERS_STORAGE_KEY = 'nies_customer_orders';
 
-  document.getElementById('checkout-form')?.addEventListener('submit', (e) => {
+  document.getElementById('checkout-form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const submitBtn = document.getElementById('btn-submit-order') as HTMLButtonElement;
     const name = (document.getElementById('cust-name') as HTMLInputElement).value;
     const phone = (document.getElementById('cust-phone') as HTMLInputElement).value;
     const address = (document.getElementById('cust-address') as HTMLInputElement).value;
@@ -439,9 +440,50 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       return;
     }
 
-    const orderId = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerText = 'Processing Order...';
+    }
+
+    let orderId = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
     const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
     const orderDate = new Date().toLocaleString();
+
+    // Call backend API
+    try {
+      const apiPayload = {
+        customer_name: name,
+        customer_phone: phone,
+        shipping_address: address,
+        payment_method: 'cod',
+        items: cart.map(item => ({
+          product_id: item.id,
+          quantity: item.qty,
+        })),
+      };
+
+      const apiBase = (typeof process !== 'undefined' && process.env?.PUBLIC_API_URL) || 'https://ni-engineering-backend.onrender.com/api/v1';
+      const sessionToken = localStorage.getItem('nies_cart_session_token') || '';
+
+      const res = await fetch(`${apiBase}/orders`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-Cart-Session': sessionToken,
+        },
+        body: JSON.stringify(apiPayload),
+      });
+
+      if (res.ok) {
+        const json = await res.json();
+        if (json.success && json.data?.order_number) {
+          orderId = json.data.order_number;
+        }
+      }
+    } catch (err) {
+      console.warn('[ShopCheckout] Backend API unreachable, falling back to direct dispatch:', err);
+    }
 
     const newOrder = {
       orderId,
@@ -454,7 +496,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       status: 'PENDING (Cash on Delivery)'
     };
 
-    // Save to LocalStorage for Admin Panel
+    // Store in local backup
     let orders = [];
     try {
       const stored = localStorage.getItem(ORDERS_STORAGE_KEY);
@@ -472,9 +514,10 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     if (alertBox) {
       alertBox.innerHTML = `
         <div class="space-y-3">
-          <p>🎉 <strong>Order #${orderId} Received!</strong> Total: ৳ ${totalPrice.toLocaleString()} BDT</p>
+          <p class="text-sm font-bold text-green-600">🎉 Order #${orderId} Received! Total: ৳ ${totalPrice.toLocaleString()} BDT</p>
+          <p class="text-xs text-gray-600 dark:text-gray-300">Your order has been recorded into our system. For instant confirmation, you can notify our dispatch team on WhatsApp:</p>
           <a href="${waUrl}" target="_blank" class="inline-flex items-center justify-center w-full py-2.5 bg-green-600 hover:bg-green-700 text-white font-extrabold text-xs uppercase rounded shadow transition-all">
-            💬 Send Order Confirmation via WhatsApp →
+            💬 Send Order Details via WhatsApp →
           </a>
         </div>
       `;
@@ -483,6 +526,10 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 
     saveCart([]);
     (document.getElementById('checkout-form') as HTMLFormElement).reset();
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerText = 'Confirm Order';
+    }
   });
 
   // Render Product Grid with Filters and Search
