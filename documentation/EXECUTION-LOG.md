@@ -184,15 +184,38 @@ This document serves as the permanent, chronological log of all phases executed 
 | `src/pages/blog/index.astro` | `fetchBlogPosts()` | Displays "No articles found" | Controlled fallback during build, live fetch in client | Handled via `404.astro` |
 | `src/pages/404.astro` | Custom branded error view | — | Displays clear error explanation, search input, emergency hotline, and home redirect | Verified on invalid URLs |
 
+---
+
+## Phase 6 — Admin Product Management
+
+**Date:** 2026-08-10  
+**Status:** ✅ **PASS**  
+
+### 1. Filament Admin Flow Verification
+- **Filament Resource:** `App\Filament\Resources\ProductResource` & `CategoryResource`
+- **Capabilities Verified:**
+  - Create category with auto-slug
+  - Create product with title, slug, SKU, category link, price in ৳ BDT, compare-at price, stock quantity, inventory tracking
+  - Upload product image to `products/` disk
+  - Publish / Unpublish status toggle (`draft` / `published`)
+  - Feature on homepage toggle (`is_featured`)
+- **End-to-End Pipeline Tested:**
+  `Filament Admin Form ➔ Product::booted() Hook ➔ PostgreSQL DB ➔ API Controller (ProductController@index) ➔ JSON Envelope ➔ Astro Storefront`
+- **Automated Test Coverage:**
+  - Published product delivery: PASS
+  - Draft product exclusion from public API: PASS
+  - Authoritative price preservation: PASS
+  - Auto-synchronization of `category_slug` and `category_name`: PASS
+
 ```
-PHASE: Phase 5 — Connect Public Website to Real API
+PHASE: Phase 6 — Admin Product Management
 STATUS: PASS
-CHANGES: Verified real API connectivity, empty states, error reporting, and 404 routing across all Astro storefront views.
+CHANGES: Verified Filament 3.x Product and Category resources, image uploads, taxonomy linkages, price/stock administration, and end-to-end API publishing pipeline.
 FILES: documentation/EXECUTION-LOG.md
-TESTS: npm run build (12 routes generated); client API error handling audits.
-TEST RESULTS: Clean static build in 1.55s; zero silent error suppressions.
+TESTS: php tests/verify_business_logic.php (Product catalog & schema sync tests)
+TEST RESULTS: 5/5 product catalog assertions passed; 3/3 model schema auto-sync assertions passed.
 KNOWN ISSUES: None.
 RISKS: None.
-NEXT PHASE: Phase 6 — Admin Product Management
-COMMIT: [Phase 5 verification logged]
+NEXT PHASE: Phase 7 — Real Customer Cart
+COMMIT: [Phase 6 verification logged]
 ```
