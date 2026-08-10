@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Page Not Found (404) | N.I. Engineering Services" 
+  description="The requested page could not be found. Explore fire safety equipment, extinguisher refilling, or contact N.I. Engineering Services Dhaka."
+>
+  <section class="min-h-[70vh] flex items-center justify-center bg-clean dark:bg-navy py-20 px-4 transition-colors duration-300">
+    <div class="max-w-xl w-full text-center space-y-6">
+      <div class="text-7xl sm:text-8xl font-black text-flame animate-bounce">
+        404
+      </div>
+      <div class="space-y-2">
+        <h1 class="text-2xl sm:text-3xl font-extrabold uppercase text-navy dark:text-white tracking-tight">
+          Page Not Found
+        </h1>
+        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 max-w-md mx-auto leading-relaxed">
+          The link you followed may be broken, or the page may have been moved during our website upgrade.
+        </p>
+      </div>
+
+      <div class="p-6 bg-white dark:bg-navy-light rounded-xl border border-clean-border dark:border-navy-light shadow-sm space-y-4">
+        <p class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+          Where would you like to go?
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <a 
+            href="/" 
+            class="py-3 px-4 bg-flame hover:bg-flame-hover text-white text-xs font-extrabold uppercase rounded-lg shadow transition-all"
+          >
+            🏠 Back To Home
+          </a>
+          <a 
+            href="/products/" 
+            class="py-3 px-4 bg-navy dark:bg-navy-dark hover:bg-navy-light text-white text-xs font-extrabold uppercase rounded-lg shadow transition-all"
+          >
+            🧯 Equipment Catalog
+          </a>
+          <a 
+            href="/shop/" 
+            class="py-3 px-4 bg-white dark:bg-navy text-navy dark:text-white border border-clean-border dark:border-navy-light hover:border-flame text-xs font-extrabold uppercase rounded-lg shadow-sm transition-all"
+          >
+            🛒 Online Shop
+          </a>
+          <a 
+            href="/contact/" 
+            class="py-3 px-4 bg-white dark:bg-navy text-navy dark:text-white border border-clean-border dark:border-navy-light hover:border-flame text-xs font-extrabold uppercase rounded-lg shadow-sm transition-all"
+          >
+            📞 Contact Us
+          </a>
+        </div>
+      </div>
+
+      <p class="text-[11px] text-gray-400">
+        Emergency Inquiries: Call <a href="tel:+8801711135731" class="text-flame font-bold hover:underline">+880 1711 135 731</a>
+      </p>
+    </div>
+  </section>
+</Layout>

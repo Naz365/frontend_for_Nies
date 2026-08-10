@@ -94,3 +94,4 @@ export class ApiClient {
 }
 
 export const defaultApiClient = new ApiClient();
+export const apiClient = defaultApiClient;

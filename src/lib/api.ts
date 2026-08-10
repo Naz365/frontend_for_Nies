@@ -163,11 +163,11 @@ export async function fetchSiteSettings(): Promise<SiteSettings> {
   }
   return {
     address: "GA-85(Gr Floor), Middle Badda, Gulshan, Dhaka",
-    phone_primary: "+880 1700-000000",
-    phone_secondary: "+880 1800-000000",
+    phone_primary: "+880 1711 135 731",
+    phone_secondary: "+880 1670 236 785",
     telephone: "+88-02-9882326",
     fax: "+88-02-9882326",
-    emails: ["info@example.com", "sales@example.com"],
+    emails: ["info@niengineeringbd.com", "support@niengineeringbd.com"],
     company_profile_pdf: "/wp-content/uploads/2017/11/Company_Profile.pdf"
   };
 }

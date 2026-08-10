@@ -1,0 +1,17 @@
+# N.I. Engineering Services - WordPress to Astro 301 Permanent Redirects
+/project/suppression-system/          /products/                                301
+/project/alarm-systems/               /products/                                301
+/project/alarm-systems-2/             /products/                                301
+/project/generator/                   /products/                                301
+/project/fire-hydrant/                /products/                                301
+/project/fire-hydrant-3/              /products/                                301
+/project/cctv/                        /projects/brac-university-cctv/           301
+/project/access-control/              /projects/brac-centre-inn-access-control/ 301
+/project/fire-extinguishers/          /projects/bti-tower-fire-safety/          301
+/project/fire-extinguishers-2/        /projects/bti-tower-fire-safety/          301
+/project/*                            /products/                                301
+/about-us                             /about-us/                                301
+/products                             /products/                                301
+/contact                              /contact/                                 301
+/shop                                 /shop/                                    301
+/blog                                 /blog/                                    301

@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { FALLBACK_PRODUCTS, type Product } from '../lib/api';
+import { FALLBACK_PRODUCTS, type Product } from '../lib/api/products';
+import { FALLBACK_CATEGORIES } from '../lib/api/categories';
 
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
@@ -112,7 +113,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 
         <!-- Cart Items List -->
         <div id="cart-items-container" class="flex-grow p-6 overflow-y-auto space-y-4">
-          <!-- Populated via JS -->
+          <!-- Populated via Server Cart API -->
         </div>
 
         <!-- Drawer Footer Checkout -->
@@ -148,9 +149,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
         <h2 class="text-2xl font-extrabold uppercase text-navy dark:text-white">Order Checkout</h2>
       </div>
 
-      <div id="checkout-alert" class="hidden p-3 rounded text-xs font-bold bg-green-500/10 border border-green-500/30 text-green-700 dark:text-green-400">
-        🎉 Order placed successfully! Our team will call you shortly to confirm delivery.
-      </div>
+      <div id="checkout-alert" class="hidden p-3 rounded text-xs font-bold"></div>
 
       <form id="checkout-form" class="space-y-4">
         <div>
@@ -160,7 +159,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 
         <div>
           <label class="block text-xs font-bold uppercase mb-1">Phone Number (Dhaka Delivery) *</label>
-          <input type="tel" id="cust-phone" required placeholder="+880 1700 000000" class="w-full px-4 py-2.5 text-xs border border-clean-border dark:border-navy-light bg-white dark:bg-navy-light rounded-lg focus:outline-none focus:border-flame font-medium" />
+          <input type="tel" id="cust-phone" required placeholder="+880 1711 000 000" class="w-full px-4 py-2.5 text-xs border border-clean-border dark:border-navy-light bg-white dark:bg-navy-light rounded-lg focus:outline-none focus:border-flame font-medium" />
         </div>
 
         <div>
@@ -173,7 +172,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
           <span id="checkout-payable-total" class="font-extrabold text-flame text-sm">৳ 0 BDT</span>
         </div>
 
-        <button type="submit" class="w-full py-3.5 bg-flame hover:bg-flame-hover text-white text-xs font-extrabold uppercase tracking-wider rounded-lg shadow">
+        <button type="submit" id="btn-submit-order" class="w-full py-3.5 bg-flame hover:bg-flame-hover text-white text-xs font-extrabold uppercase tracking-wider rounded-lg shadow">
           Confirm Order (Cash on Delivery)
         </button>
       </form>
@@ -181,172 +180,51 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   </div>
 </Layout>
 
-<script is:inline>
-  const PRODUCTS_STORAGE_KEY = 'nies_custom_products';
-  const CART_STORAGE_KEY = 'nies_shopping_cart';
+<script>
+  import { fetchProducts } from '../lib/api/products';
+  import { 
+    fetchServerCart, 
+    addServerCartItem, 
+    updateServerCartItem, 
+    removeServerCartItem, 
+    clearServerCart,
+    type CartData 
+  } from '../lib/api/cart';
+  import { placeServerOrder } from '../lib/api/orders';
 
-  // Default Fallback Catalog
-  const DEFAULT_CATALOG = [
-    {
-      id: 1,
-      title: "ABC Dry Chemical Powder Extinguisher (6kg)",
-      slug: "abc-dry-powder-extinguisher-6kg",
-      category_slug: "fire-extinguishers",
-      category_name: "Fire Extinguishers",
-      price: 1450,
-      original_price: 1800,
-      in_stock: true,
-      image: "/frontend_for_Nies/wp-content/uploads/2017/05/fire-extinguishers1.jpg",
-      description: "Multipurpose Class A, B, C fire extinguisher filled with 90% MAP powder."
-    },
-    {
-      id: 2,
-      title: "Carbon Dioxide CO2 Extinguisher (3kg)",
-      slug: "co2-fire-extinguisher-3kg",
-      category_slug: "fire-extinguishers",
-      category_name: "Fire Extinguishers",
-      price: 2800,
-      original_price: 3200,
-      in_stock: true,
-      image: "/frontend_for_Nies/wp-content/uploads/2017/11/co2.png",
-      description: "Residue-free CO2 gas cylinder designed specifically for electrical server rooms."
-    },
-    {
-      id: 3,
-      title: "AFFF Mechanical Foam Extinguisher (9L)",
-      slug: "afff-foam-fire-extinguisher-9l",
-      category_slug: "fire-extinguishers",
-      category_name: "Fire Extinguishers",
-      price: 2200,
-      original_price: 2600,
-      in_stock: true,
-      image: "/frontend_for_Nies/wp-content/uploads/2017/05/fire-extinguishers1.jpg",
-      description: "Aqueous Film Forming Foam ideal for flammable fuel and oil hazards."
-    },
-    {
-      id: 4,
-      title: "Clean Agent HFC-227ea Extinguisher (3kg)",
-      slug: "clean-agent-hfc227ea-3kg",
-      category_slug: "suppression-system",
-      category_name: "Suppression System",
-      price: 4500,
-      original_price: 5200,
-      in_stock: true,
-      image: "/frontend_for_Nies/wp-content/uploads/2017/11/fire-suppression-system.jpg",
-      description: "Zero ozone depletion clean agent for computer rooms and telecommunication hubs."
-    },
-    {
-      id: 5,
-      title: "Automatic Optical Smoke & Heat Detector",
-      slug: "automatic-optical-smoke-detector",
-      category_slug: "alarm-systems",
-      category_name: "Alarm Systems",
-      price: 850,
-      original_price: 1100,
-      in_stock: true,
-      image: "/frontend_for_Nies/wp-content/uploads/2017/05/fire-detection-alarm-system.jpg",
-      description: "High-sensitivity photoelectric smoke detector unit compatible with central alarm panels."
-    },
-    {
-      id: 6,
-      title: "Commercial Heavy Duty Fire Hose Reel (30m)",
-      slug: "commercial-fire-hose-reel-30m",
-      category_slug: "firefighting-equipment",
-      category_name: "Firefighting Equipment",
-      price: 8500,
-      original_price: 9800,
-      in_stock: true,
-      image: "/frontend_for_Nies/wp-content/uploads/2017/05/DFRS_Generic_Hero_Banner_78_May13.jpg",
-      description: "High-pressure swinging wall mounted hose reel with solid brass jet nozzle."
-    },
-    {
-      id: 7,
-      title: "4K HD Outdoor IR Surveillance CCTV Camera",
-      slug: "4k-hd-surveillance-cctv-camera",
-      category_slug: "cctv",
-      category_name: "CCTV",
-      price: 3200,
-      original_price: 3900,
-      in_stock: true,
-      image: "/frontend_for_Nies/wp-content/uploads/2017/11/brac-university.jpg",
-      description: "Weatherproof IP67 dome camera with night vision infrared LED up to 30m."
-    },
-    {
-      id: 8,
-      title: "Biometric Fingerprint & RFID Access Control",
-      slug: "biometric-fingerprint-rfid-access-control",
-      category_slug: "access-control",
-      category_name: "Access Control",
-      price: 6500,
-      original_price: 7800,
-      in_stock: true,
-      image: "/frontend_for_Nies/wp-content/uploads/2017/11/AccessControlSystems.jpg",
-      description: "Time attendance and door lock access control terminal."
-    }
-  ];
+  let currentCart: CartData = {
+    cart_id: 0,
+    session_token: '',
+    items: [],
+    item_count: 0,
+    subtotal: 0,
+    currency: 'BDT'
+  };
 
-  // Get Store Products Merged with Admin Custom Additions
-  function getShopProducts() {
-    try {
-      const stored = localStorage.getItem(PRODUCTS_STORAGE_KEY);
-      if (!stored) return DEFAULT_CATALOG;
-      const parsed = JSON.parse(stored);
-      // Merge defaults
-      DEFAULT_CATALOG.forEach(dp => {
-        if (!parsed.some(p => p.id === dp.id || p.slug === dp.slug)) {
-          parsed.push(dp);
-        }
-      });
-      return parsed;
-    } catch (e) {
-      return DEFAULT_CATALOG;
-    }
-  }
+  let allProducts: any[] = [];
+  let currentCategory = 'all';
+  let searchQuery = '';
+  let sortBy = 'featured';
 
-  // Shopping Cart Management
-  function getCart() {
-    try {
-      const c = localStorage.getItem(CART_STORAGE_KEY);
-      return c ? JSON.parse(c) : [];
-    } catch (e) {
-      return [];
-    }
-  }
-
-  function saveCart(cart) {
-    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+  // 1. Synchronize Server-Backed Shopping Cart
+  async function refreshCart() {
+    currentCart = await fetchServerCart();
     updateCartUI();
   }
 
-  function addToCart(product) {
-    const cart = getCart();
-    const existing = cart.find(item => item.id === product.id);
-    if (existing) {
-      existing.qty += 1;
-    } else {
-      cart.push({ ...product, qty: 1 });
-    }
-    saveCart(cart);
-    openCart();
-  }
-
   function updateCartUI() {
-    const cart = getCart();
     const countBadge = document.getElementById('cart-count-badge');
     const totalDisplay = document.getElementById('cart-total-price');
     const checkoutTotalDisplay = document.getElementById('checkout-payable-total');
     const container = document.getElementById('cart-items-container');
 
-    const totalCount = cart.reduce((acc, item) => acc + item.qty, 0);
-    const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
-
-    if (countBadge) countBadge.textContent = String(totalCount);
-    if (totalDisplay) totalDisplay.textContent = `৳ ${totalPrice.toLocaleString()} BDT`;
-    if (checkoutTotalDisplay) checkoutTotalDisplay.textContent = `৳ ${totalPrice.toLocaleString()} BDT`;
+    if (countBadge) countBadge.textContent = String(currentCart.item_count || 0);
+    if (totalDisplay) totalDisplay.textContent = `৳ ${(currentCart.subtotal || 0).toLocaleString()} BDT`;
+    if (checkoutTotalDisplay) checkoutTotalDisplay.textContent = `৳ ${(currentCart.subtotal || 0).toLocaleString()} BDT`;
 
     if (!container) return;
 
-    if (cart.length === 0) {
+    if (!currentCart.items || currentCart.items.length === 0) {
       container.innerHTML = `
         <div class="text-center py-12 space-y-3">
           <div class="text-4xl">🛒</div>
@@ -356,17 +234,17 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       return;
     }
 
-    container.innerHTML = cart.map(item => `
+    container.innerHTML = currentCart.items.map(item => `
       <div class="p-3 bg-clean dark:bg-navy-light rounded-xl border border-clean-border dark:border-navy-light flex items-center justify-between gap-3">
-        <img src="${item.image}" alt="${item.title}" class="w-14 h-14 object-cover rounded border" />
+        <img src="${item.image || '/wp-content/uploads/2017/05/fire-extinguishers1.jpg'}" alt="${item.title}" class="w-14 h-14 object-cover rounded border" />
         <div class="flex-grow min-w-0">
           <h4 class="text-xs font-bold text-navy dark:text-white line-clamp-1">${item.title}</h4>
-          <p class="text-xs font-black text-flame mt-0.5">৳ ${(item.price * item.qty).toLocaleString()} BDT</p>
-          <p class="text-[10px] text-gray-400">৳ ${item.price.toLocaleString()} each</p>
+          <p class="text-xs font-black text-flame mt-0.5">৳ ${(item.line_total).toLocaleString()} BDT</p>
+          <p class="text-[10px] text-gray-400">৳ ${(item.unit_price).toLocaleString()} each</p>
         </div>
         <div class="flex items-center space-x-1.5 flex-shrink-0">
           <button data-cart-minus="${item.id}" class="w-6 h-6 rounded bg-gray-200 dark:bg-navy text-navy dark:text-white font-black text-xs hover:bg-flame hover:text-white transition-colors">-</button>
-          <span class="text-xs font-bold px-1">${item.qty}</span>
+          <span class="text-xs font-bold px-1">${item.quantity}</span>
           <button data-cart-plus="${item.id}" class="w-6 h-6 rounded bg-gray-200 dark:bg-navy text-navy dark:text-white font-black text-xs hover:bg-flame hover:text-white transition-colors">+</button>
         </div>
       </div>
@@ -374,26 +252,30 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 
     // Quantity Plus & Minus Listeners
     container.querySelectorAll('[data-cart-minus]').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const id = parseInt(e.currentTarget.getAttribute('data-cart-minus'), 10);
-        let cart = getCart();
-        const item = cart.find(i => i.id === id);
+      btn.addEventListener('click', async (e) => {
+        const id = parseInt((e.currentTarget as HTMLElement).getAttribute('data-cart-minus') || '0', 10);
+        const item = currentCart.items.find(i => i.id === id);
         if (item) {
-          item.qty -= 1;
-          if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
-          saveCart(cart);
+          if (item.quantity <= 1) {
+            await removeServerCartItem(id);
+          } else {
+            await updateServerCartItem(id, item.quantity - 1);
+          }
+          await refreshCart();
         }
       });
     });
 
     container.querySelectorAll('[data-cart-plus]').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const id = parseInt(e.currentTarget.getAttribute('data-cart-plus'), 10);
-        let cart = getCart();
-        const item = cart.find(i => i.id === id);
+      btn.addEventListener('click', async (e) => {
+        const id = parseInt((e.currentTarget as HTMLElement).getAttribute('data-cart-plus') || '0', 10);
+        const item = currentCart.items.find(i => i.id === id);
         if (item) {
-          item.qty += 1;
-          saveCart(cart);
+          const res = await updateServerCartItem(id, item.quantity + 1);
+          if (res.success === false && res.message) {
+            alert(res.message);
+          }
+          await refreshCart();
         }
       });
     });
@@ -406,13 +288,15 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 
   document.getElementById('btn-open-cart')?.addEventListener('click', openCart);
   document.getElementById('btn-close-cart')?.addEventListener('click', closeCart);
-  document.getElementById('btn-clear-cart')?.addEventListener('click', () => saveCart([]));
+  document.getElementById('btn-clear-cart')?.addEventListener('click', async () => {
+    await clearServerCart();
+    await refreshCart();
+  });
 
   // Checkout Modal Toggles
   const checkoutModal = document.getElementById('checkout-modal');
   document.getElementById('btn-proceed-checkout')?.addEventListener('click', () => {
-    const cart = getCart();
-    if (cart.length === 0) {
+    if (!currentCart.items || currentCart.items.length === 0) {
       alert("Your cart is empty. Add products before checking out!");
       return;
     }
@@ -424,18 +308,16 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     checkoutModal?.classList.add('hidden');
   });
 
-  // Checkout Form Submission & Order Recording
-  const ORDERS_STORAGE_KEY = 'nies_customer_orders';
-
+  // 2. Real Server Order Placement
   document.getElementById('checkout-form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const submitBtn = document.getElementById('btn-submit-order') as HTMLButtonElement;
     const name = (document.getElementById('cust-name') as HTMLInputElement).value;
     const phone = (document.getElementById('cust-phone') as HTMLInputElement).value;
     const address = (document.getElementById('cust-address') as HTMLInputElement).value;
-    const cart = getCart();
+    const alertBox = document.getElementById('checkout-alert');
 
-    if (cart.length === 0) {
+    if (!currentCart.items || currentCart.items.length === 0) {
       alert("Your cart is empty.");
       return;
     }
@@ -445,124 +327,84 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       submitBtn.innerText = 'Processing Order...';
     }
 
-    let orderId = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
-    const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
-    const orderDate = new Date().toLocaleString();
+    const res = await placeServerOrder({
+      customer_name: name,
+      customer_phone: phone,
+      shipping_address: address,
+      payment_method: 'cod',
+      items: currentCart.items.map(i => ({
+        product_id: i.product_id,
+        quantity: i.quantity,
+      })),
+    });
 
-    // Call backend API
-    try {
-      const apiPayload = {
-        customer_name: name,
-        customer_phone: phone,
-        shipping_address: address,
-        payment_method: 'cod',
-        items: cart.map(item => ({
-          product_id: item.id,
-          quantity: item.qty,
-        })),
-      };
+    if (res.success && res.data) {
+      const order = res.data;
+      const waText = `*NEW FIRE SAFETY ORDER%20#${order.order_number}*%0A%0A*Name:* ${encodeURIComponent(name)}%0A*Phone:* ${encodeURIComponent(phone)}%0A*Address:* ${encodeURIComponent(address)}%0A%0A*Total Payable:* ৳ ${order.total_amount.toLocaleString()} BDT (Cash on Delivery)`;
+      const waUrl = `https://wa.me/8801711135731?text=${waText}`;
 
-      const apiBase = (typeof process !== 'undefined' && process.env?.PUBLIC_API_URL) || 'https://ni-engineering-backend.onrender.com/api/v1';
-      const sessionToken = localStorage.getItem('nies_cart_session_token') || '';
-
-      const res = await fetch(`${apiBase}/orders`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'X-Cart-Session': sessionToken,
-        },
-        body: JSON.stringify(apiPayload),
-      });
-
-      if (res.ok) {
-        const json = await res.json();
-        if (json.success && json.data?.order_number) {
-          orderId = json.data.order_number;
-        }
+      if (alertBox) {
+        alertBox.className = "p-4 rounded-lg text-xs font-bold bg-green-500/15 border border-green-500/30 text-green-800 dark:text-green-300 space-y-2 block";
+        alertBox.innerHTML = `
+          <p class="text-sm font-extrabold text-green-700 dark:text-green-400">🎉 Order #${order.order_number} Placed Successfully!</p>
+          <p>Total: ৳ ${order.total_amount.toLocaleString()} BDT (Cash on Delivery)</p>
+          <p class="font-normal">Our dispatch team has received your order and will contact you at ${phone} to confirm delivery.</p>
+          <div class="pt-2">
+            <a href="${waUrl}" target="_blank" class="inline-flex items-center justify-center w-full py-2.5 bg-green-600 hover:bg-green-700 text-white font-extrabold text-xs uppercase rounded shadow transition-all">
+              💬 Notify Dispatch Team via WhatsApp →
+            </a>
+          </div>
+        `;
       }
-    } catch (err) {
-      console.warn('[ShopCheckout] Backend API unreachable, falling back to direct dispatch:', err);
+
+      await refreshCart();
+      (document.getElementById('checkout-form') as HTMLFormElement).reset();
+    } else {
+      if (alertBox) {
+        alertBox.className = "p-4 rounded-lg text-xs font-bold bg-red-500/15 border border-red-500/30 text-red-800 dark:text-red-300 block";
+        alertBox.textContent = `❌ ${res.message || 'Failed to place order. Please try again or call support.'}`;
+      }
     }
 
-    const newOrder = {
-      orderId,
-      name,
-      phone,
-      address,
-      items: cart,
-      totalPrice,
-      orderDate,
-      status: 'PENDING (Cash on Delivery)'
-    };
-
-    // Store in local backup
-    let orders = [];
-    try {
-      const stored = localStorage.getItem(ORDERS_STORAGE_KEY);
-      orders = stored ? JSON.parse(stored) : [];
-    } catch (e) { orders = []; }
-    orders.unshift(newOrder);
-    localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(orders));
-
-    // Formatted WhatsApp Message
-    const itemSummary = cart.map(i => `${i.title} (x${i.qty}) - ৳${i.price * i.qty}`).join('%0A');
-    const waText = `*NEW FIRE SAFETY ORDER%20#${orderId}*%0A%0A*Name:* ${encodeURIComponent(name)}%0A*Phone:* ${encodeURIComponent(phone)}%0A*Address:* ${encodeURIComponent(address)}%0A%0A*Items Ordered:*%0A${itemSummary}%0A%0A*Total Payable:* ৳ ${totalPrice.toLocaleString()} BDT (Cash on Delivery)`;
-    const waUrl = `https://wa.me/8801700000000?text=${waText}`;
-
-    const alertBox = document.getElementById('checkout-alert');
-    if (alertBox) {
-      alertBox.innerHTML = `
-        <div class="space-y-3">
-          <p class="text-sm font-bold text-green-600">🎉 Order #${orderId} Received! Total: ৳ ${totalPrice.toLocaleString()} BDT</p>
-          <p class="text-xs text-gray-600 dark:text-gray-300">Your order has been recorded into our system. For instant confirmation, you can notify our dispatch team on WhatsApp:</p>
-          <a href="${waUrl}" target="_blank" class="inline-flex items-center justify-center w-full py-2.5 bg-green-600 hover:bg-green-700 text-white font-extrabold text-xs uppercase rounded shadow transition-all">
-            💬 Send Order Details via WhatsApp →
-          </a>
-        </div>
-      `;
-      alertBox.classList.remove('hidden');
-    }
-
-    saveCart([]);
-    (document.getElementById('checkout-form') as HTMLFormElement).reset();
     if (submitBtn) {
       submitBtn.disabled = false;
-      submitBtn.innerText = 'Confirm Order';
+      submitBtn.innerText = 'Confirm Order (Cash on Delivery)';
     }
   });
 
-  // Render Product Grid with Filters and Search
-  let currentCategory = 'all';
-  let searchQuery = '';
-  let sortBy = 'featured';
-
-  function renderGrid() {
+  // 3. Render Product Catalog Grid
+  async function loadAndRenderProducts() {
     const grid = document.getElementById('shop-grid');
     const itemsBadge = document.getElementById('shop-items-badge');
-    let products = getShopProducts();
+
+    allProducts = await fetchProducts();
+
+    let filtered = [...allProducts];
 
     // Search filter
     if (searchQuery) {
-      products = products.filter(p => p.title.toLowerCase().includes(searchQuery) || p.description.toLowerCase().includes(searchQuery));
+      filtered = filtered.filter(p => 
+        (p.title || '').toLowerCase().includes(searchQuery) || 
+        (p.description || '').toLowerCase().includes(searchQuery)
+      );
     }
 
     // Category filter
     if (currentCategory !== 'all') {
-      products = products.filter(p => p.category_slug === currentCategory);
+      filtered = filtered.filter(p => p.category_slug === currentCategory);
     }
 
     // Sorting
     if (sortBy === 'price-low') {
-      products.sort((a, b) => a.price - b.price);
+      filtered.sort((a, b) => a.price - b.price);
     } else if (sortBy === 'price-high') {
-      products.sort((a, b) => b.price - a.price);
+      filtered.sort((a, b) => b.price - a.price);
     }
 
-    if (itemsBadge) itemsBadge.textContent = `Showing ${products.length} Products`;
+    if (itemsBadge) itemsBadge.textContent = `Showing ${filtered.length} Products`;
     if (!grid) return;
 
-    if (products.length === 0) {
+    if (filtered.length === 0) {
       grid.innerHTML = `
         <div class="col-span-full py-16 text-center space-y-3">
           <p class="text-sm font-bold text-navy dark:text-white">No equipment items found matching your filter.</p>
@@ -572,14 +414,14 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       return;
     }
 
-    grid.innerHTML = products.map(p => `
+    grid.innerHTML = filtered.map(p => `
       <div class="bg-white dark:bg-navy-light border border-clean-border dark:border-navy-light rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
         <div>
           <!-- Thumbnail & Stock Tag -->
           <div class="h-48 overflow-hidden relative bg-gray-100 dark:bg-navy">
-            <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <img src="${p.image || '/wp-content/uploads/2017/05/fire-extinguishers1.jpg'}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
             <span class="absolute top-3 left-3 bg-navy dark:bg-flame text-white text-[9px] font-extrabold uppercase px-2.5 py-0.5 rounded shadow">
-              ${p.category_name || p.category_slug.replace('-', ' ')}
+              ${p.category_name || (p.category_slug || '').replace('-', ' ')}
             </span>
             <span class="absolute top-3 right-3 bg-green-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded shadow flex items-center space-x-1">
               <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
@@ -590,12 +432,12 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
           <!-- Product Details -->
           <div class="p-5 space-y-2">
             <h3 class="text-sm font-bold text-navy dark:text-white line-clamp-1 uppercase tracking-tight">${p.title}</h3>
-            <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed line-clamp-2">${p.description}</p>
+            <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed line-clamp-2">${p.description || ''}</p>
             
             <!-- Price Display -->
             <div class="pt-2 flex items-baseline space-x-2">
-              <span class="text-lg font-black text-flame">৳ ${p.price.toLocaleString()} BDT</span>
-              ${p.original_price ? `<span class="text-xs text-gray-400 line-through">৳ ${p.original_price.toLocaleString()}</span>` : ''}
+              <span class="text-lg font-black text-flame">৳ ${Number(p.price).toLocaleString()} BDT</span>
+              ${p.compare_at_price ? `<span class="text-xs text-gray-400 line-through">৳ ${Number(p.compare_at_price).toLocaleString()}</span>` : ''}
             </div>
           </div>
         </div>
@@ -612,36 +454,38 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       </div>
     `).join('');
 
-    // Attach Event Listeners to Buttons
+    // Attach Event Listeners
     grid.querySelectorAll('[data-add-cart]').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const id = parseInt(e.currentTarget.getAttribute('data-add-cart'), 10);
-        const prod = getShopProducts().find(item => item.id === id);
-        if (prod) addToCart(prod);
+      btn.addEventListener('click', async (e) => {
+        const id = parseInt((e.currentTarget as HTMLElement).getAttribute('data-add-cart') || '0', 10);
+        const res = await addServerCartItem(id, 1);
+        if (res.success === false && res.message) {
+          alert(res.message);
+        }
+        await refreshCart();
+        openCart();
       });
     });
 
     grid.querySelectorAll('[data-buy-now]').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const id = parseInt(e.currentTarget.getAttribute('data-buy-now'), 10);
-        const prod = getShopProducts().find(item => item.id === id);
-        if (prod) {
-          addToCart(prod);
-          openCart();
-        }
+      btn.addEventListener('click', async (e) => {
+        const id = parseInt((e.currentTarget as HTMLElement).getAttribute('data-buy-now') || '0', 10);
+        await addServerCartItem(id, 1);
+        await refreshCart();
+        openCart();
       });
     });
   }
 
   // Filter Listeners
   document.getElementById('shop-search-input')?.addEventListener('input', (e) => {
-    searchQuery = e.target.value.toLowerCase().trim();
-    renderGrid();
+    searchQuery = ((e.target as HTMLInputElement).value || '').toLowerCase().trim();
+    loadAndRenderProducts();
   });
 
   document.getElementById('shop-sort-select')?.addEventListener('change', (e) => {
-    sortBy = e.target.value;
-    renderGrid();
+    sortBy = (e.target as HTMLSelectElement).value;
+    loadAndRenderProducts();
   });
 
   document.querySelectorAll('.shop-cat-btn').forEach(btn => {
@@ -649,13 +493,13 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       document.querySelectorAll('.shop-cat-btn').forEach(b => {
         b.className = 'shop-cat-btn px-4 py-2 text-xs font-bold uppercase rounded-lg bg-white dark:bg-navy-light text-navy dark:text-gray-200 border border-clean-border dark:border-navy-light hover:bg-flame hover:text-white transition-all';
       });
-      e.currentTarget.className = 'shop-cat-btn px-4 py-2 text-xs font-bold uppercase rounded-lg bg-flame text-white shadow';
-      currentCategory = e.currentTarget.getAttribute('data-cat') || 'all';
-      renderGrid();
+      (e.currentTarget as HTMLElement).className = 'shop-cat-btn px-4 py-2 text-xs font-bold uppercase rounded-lg bg-flame text-white shadow';
+      currentCategory = (e.currentTarget as HTMLElement).getAttribute('data-cat') || 'all';
+      loadAndRenderProducts();
     });
   });
 
-  // Initial Load
-  updateCartUI();
-  renderGrid();
+  // Initial Boot
+  refreshCart();
+  loadAndRenderProducts();
 </script>
