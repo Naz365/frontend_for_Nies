@@ -108,15 +108,50 @@ This document serves as the permanent, chronological log of all phases executed 
 | `browser CMS` | 0 | Single Source of Truth in Filament/PostgreSQL | ✅ **CLEAN** |
 | Hardcoded Prices/Orders | 0 | Server-authoritative calculations enforced in `CheckoutService` | ✅ **CLEAN** |
 
+---
+
+## Phase 3 — Verify Database Architecture
+
+**Date:** 2026-08-10  
+**Status:** ✅ **PASS**  
+
+### 1. Database Table Schema & Model Map (19 Tables)
+
+| Table Name | Primary Key | Key Columns & Indexes | Unique Constraints | Foreign Keys / Relations | Nullable Fields |
+|---|---|---|---|---|---|
+| `users` | `id` (bigint) | `name`, `email` (idx), `password` | `email` | Used by Filament Auth | `email_verified_at`, `remember_token` |
+| `categories` | `id` (bigint) | `name`, `slug` (idx), `sort_order`, `is_active` | `slug` | HasMany `Product` | `description`, `icon` |
+| `products` | `id` (bigint) | `category_id`, `category_slug`, `slug` (idx), `price`, `sku` (idx), `stock_quantity`, `status` | `slug`, `sku` | BelongsTo `Category`, HasMany `OrderItem` | `compare_at_price`, `image`, `description`, `features`, `specifications` |
+| `customers` | `id` (bigint) | `name`, `email`, `phone` (idx), `company_name` | `phone` | HasMany `Order`, `Address`, `FireSafetyAsset` | `email`, `company_name` |
+| `addresses` | `id` (bigint) | `customer_id`, `type`, `address_line_1`, `city` | — | BelongsTo `Customer` | `address_line_2`, `postal_code` |
+| `carts` | `id` (bigint) | `session_token` (idx), `customer_id` | `session_token` | HasMany `CartItem` | `customer_id` |
+| `cart_items` | `id` (bigint) | `cart_id`, `product_id`, `quantity` | `cart_id + product_id` | BelongsTo `Cart`, BelongsTo `Product` | — |
+| `orders` | `id` (bigint) | `order_number` (idx), `customer_id`, `status`, `payment_status`, `total` | `order_number` | BelongsTo `Customer`, HasMany `OrderItem`, HasMany `Payment` | `notes`, `whatsapp_message`, `discount`, `tax` |
+| `order_items` | `id` (bigint) | `order_id`, `product_id`, `product_name`, `product_sku`, `unit_price`, `quantity`, `line_total` | — | BelongsTo `Order`, BelongsTo `Product` | `product_id` (on delete cascade/set null) |
+| `payments` | `id` (bigint) | `order_id`, `transaction_id`, `amount`, `status` | `transaction_id` | BelongsTo `Order` | `payload` |
+| `quote_requests` | `id` (bigint) | `quote_number` (idx), `name`, `phone`, `service_type`, `status` | `quote_number` | Standalone B2B lead | `email`, `company_name`, `requirements` |
+| `service_requests`| `id` (bigint) | `request_number` (idx), `customer_name`, `phone`, `service_type`, `urgency`, `status` | `request_number` | Standalone field maintenance lead | `email`, `assigned_engineer`, `scheduled_at`, `completed_at` |
+| `fire_safety_assets`| `id` (bigint)| `asset_tag` (idx), `customer_id`, `asset_type`, `next_refill_due`, `status` | `asset_tag` | BelongsTo `Customer` | `brand`, `capacity`, `location_zone`, `serial_number`, `last_refill_date` |
+| `inventory_transactions`| `id` (bigint)| `product_id`, `transaction_type`, `quantity_change`, `quantity_after`, `reference_type`, `reference_id` | — | BelongsTo `Product` | `reference_id`, `notes`, `performed_by` |
+| `client_logos` | `id` (bigint) | `name`, `logo_path`, `sort_order`, `is_active` | — | Trust carousel | — |
+| `blog_posts` | `id` (bigint) | `slug` (idx), `title`, `author`, `published_at`, `status` | `slug` | CMS articles | `published_at`, `excerpt` |
+| `projects` | `id` (bigint) | `slug` (idx), `title`, `client_name`, `category`, `status` | `slug` | Portfolio case studies | `featured_image` |
+| `site_settings` | `id` (bigint) | `key` (idx), `value`, `group` | `key` | System settings | `value`, `group` |
+| `contact_submissions`| `id` (bigint)| `name`, `email`, `phone`, `message`, `status` | — | General contacts | `email`, `phone` |
+
+### 2. Duplicate Concepts Audit
+- **Customer vs Client:** Single unified entity in `customers` table. No redundant Client table.
+- **Product Categorization:** Linked via `category_id` foreign key with automatic denormalization `category_slug`/`category_name` handled in `Product::booted()` for fast catalog filtering.
+
 ```
-PHASE: Phase 2 — Remove / Isolate Legacy Architecture
+PHASE: Phase 3 — Verify Database Architecture
 STATUS: PASS
-CHANGES: Completed comprehensive dependency analysis of legacy scripts, confirmed zero business authority in browser storage, verified pure UI usage of localStorage (theme/cart token).
+CHANGES: Mapped and verified 19 database tables, columns, indexes, foreign keys, and unique constraints. Confirmed clean normalized relationships and zero duplicate entity models.
 FILES: documentation/EXECUTION-LOG.md
-TESTS: grep_search across src/ for localStorage, sessionStorage, ImgBB, mock, dummy, placeholder, fake, browser CMS.
-TEST RESULTS: 100% compliant with Absolute Rules 6 & 18.
+TESTS: php artisan migrate:status, inspection of database/migrations/ and app/Models/.
+TEST RESULTS: 19 migrations active, 20 Eloquent models verified with correct relationships.
 KNOWN ISSUES: None.
 RISKS: None.
-NEXT PHASE: Phase 3 — Verify Database Architecture
-COMMIT: [Phase 2 verification logged]
+NEXT PHASE: Phase 4 — Verify API Contract
+COMMIT: [Phase 3 verification logged]
 ```
