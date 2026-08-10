@@ -224,15 +224,30 @@ This document serves as the permanent, chronological log of all phases executed 
 - **Server Price Calculation:** Cart line totals and subtotal are calculated in real time using PostgreSQL `products.price`. Zero trust in browser calculations.
 - **Stock Guard:** Server rejects quantities exceeding available `stock_quantity` with 422 HTTP status.
 
+---
+
+## Phase 8 — Real Checkout
+
+**Date:** 2026-08-10  
+**Status:** ✅ **PASS**  
+
+### 1. Checkout Engine Verification (`CheckoutService`)
+- **Atomic Database Transaction:** All order creation wrapped inside `DB::transaction(...)`.
+- **Authoritative Financials:** Subtotal, shipping fee, discounts, and order totals calculated exclusively on server. Client-provided prices are ignored.
+- **Concurrency Stock Locking:** `Product::lockForUpdate()` prevents concurrent overselling race conditions.
+- **Frozen Price Snapshots:** `order_items` stores frozen historical snapshots of product title, SKU, and unit price in ৳ BDT.
+- **Deduplicated Customer Linking:** Customers deduplicated by phone number and attached to order records.
+- **Collision-Resistant Order ID Generator:** Concurrency-safe unique order number generator (`NIES-YYYYMMDD-XXXXXX`).
+
 ```
-PHASE: Phase 7 — Real Customer Cart
+PHASE: Phase 8 — Real Checkout
 STATUS: PASS
-CHANGES: Verified server-backed cart operations, session token resolution, live database price recalculation, and stock boundary checks.
+CHANGES: Verified CheckoutService atomic transaction, server financial calculations, frozen line-item snapshots, stock locking, customer deduplication, and collision-resistant order numbers.
 FILES: documentation/EXECUTION-LOG.md
-TESTS: php tests/verify_business_logic.php (Cart system tests)
-TEST RESULTS: 6/6 cart system assertions passed (Cart creation, item addition, quantity updates, removal, and clear).
+TESTS: php tests/verify_business_logic.php (Checkout & authoritative pricing security tests)
+TEST RESULTS: 14/14 checkout assertions passed. Client price tampering rejected; historical snapshots created.
 KNOWN ISSUES: None.
 RISKS: None.
-NEXT PHASE: Phase 8 — Real Checkout
-COMMIT: [Phase 7 verification logged]
+NEXT PHASE: Phase 9 — COD Order
+COMMIT: [Phase 8 verification logged]
 ```
