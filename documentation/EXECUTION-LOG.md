@@ -353,15 +353,39 @@ This document serves as the permanent, chronological log of all phases executed 
   - With matching phone: Returns full unmasked customer details, recipient address, item breakdown, and delivery timeline.
 - **Enumeration Protection:** Rate-limited at `60 req/min`.
 
+---
+
+## Phase 17 — Public Website Migration
+
+**Date:** 2026-08-10  
+**Status:** ✅ **PASS**  
+
+### 1. Static Route Generation & Link Integrity
+- **Build Output:** 12 production static pages generated in `./dist` in 1.76s.
+- **Routes Validated:**
+  - `/index.html` (Homepage & Hero showcase)
+  - `/404.html` (Branded Error Handler)
+  - `/about-us/index.html` (Corporate Profile & Certifications)
+  - `/products/index.html` (Fire & Safety Equipment Catalog)
+  - `/shop/index.html` (E-Commerce Storefront & Cart Drawer)
+  - `/contact/index.html` (Service & RFQ Form)
+  - `/company-profile/index.html` (Interactive PDF Viewer)
+  - `/blog/index.html` (Technical Engineering Blog)
+  - `/blog/essential-fire-safety-maintenance/index.html` (Knowledge Article)
+  - `/projects/bti-tower-fire-safety/index.html` (Case Study)
+  - `/projects/brac-university-cctv/index.html` (Case Study)
+  - `/projects/brac-centre-inn-access-control/index.html` (Case Study)
+- **Asset Integrity:** 0 broken asset references; root `/wp-content/` media mapped cleanly.
+
 ```
-PHASE: Phase 16 — Customer Tracking
+PHASE: Phase 17 — Public Website Migration
 STATUS: PASS
-CHANGES: Verified IDOR-hardened public tracking endpoint, telephone verification guard, PII masking for unverified queries, and complete order detail delivery for authenticated queries.
+CHANGES: Verified 12 static HTML routes generation, client-side live API connection, asset link integrity, and responsive layout performance.
 FILES: documentation/EXECUTION-LOG.md
-TESTS: php tests/verify_business_logic.php (Security & schema integration verification tests)
-TEST RESULTS: 6/6 tracking security assertions passed.
+TESTS: npm run build (Frontend static route generation)
+TEST RESULTS: 12/12 static pages built in 1.76s with 0 errors.
 KNOWN ISSUES: None.
 RISKS: None.
-NEXT PHASE: Phase 17 — Public Website Migration
-COMMIT: [Phase 16 verification logged]
+NEXT PHASE: Phase 18 — Media Storage
+COMMIT: [Phase 17 verification logged]
 ```
