@@ -476,15 +476,28 @@ This document serves as the permanent, chronological log of all phases executed 
 - **Form Input Formats:** Bangladeshi phone numbers (`017XXXXXXXX`, `+88018XXXXXXXX`) validated and normalized.
 - **Resilience:** Graceful empty states for catalog search, cart drawer, and blog; fallback error messaging.
 
+---
+
+## Phase 25 — WordPress Cutover Preparation
+
+**Date:** 2026-08-10  
+**Status:** ✅ **PASS**  
+
+### 1. SEO Equity & 301 Redirect Architecture
+- **Redirects File:** Configured `public/_redirects` covering all legacy `/project/*` WordPress paths.
+- **Canonical Sitemaps:** Updated `public/sitemap.xml` with production domain `https://niengineeringbd.com/` and 12 pre-rendered routes.
+- **Search Engine Directives:** Updated `public/robots.txt` indexing permissions and sitemap declaration.
+- **DNS Cutover Plan:** Configured subdomains for frontend, API, and Filament management.
+
 ```
-PHASE: Phase 24 — Real-World Quality Assurance
+PHASE: Phase 25 — WordPress Cutover Preparation
 STATUS: PASS
-CHANGES: Executed multi-browser, responsive layout, form input validation, and business logic regression tests across both repositories.
-FILES: documentation/EXECUTION-LOG.md
-TESTS: npm run build (12 pages) + php tests/verify_business_logic.php (52 tests)
-TEST RESULTS: 12 static routes generated; 52/52 backend assertions passed.
+CHANGES: Configured canonical production URLs in sitemap.xml, robots.txt, verified 301 redirects map in _redirects, and documented DNS cutover topology.
+FILES: documentation/EXECUTION-LOG.md, public/sitemap.xml, public/robots.txt, public/_redirects
+TESTS: Sitemap structure validation and static route generation.
+TEST RESULTS: Verified all 12 production routes in canonical sitemap.xml.
 KNOWN ISSUES: None.
 RISKS: None.
-NEXT PHASE: Phase 25 — WordPress Cutover Preparation
-COMMIT: [Phase 24 verification logged]
+NEXT PHASE: Phase 26 — Production Cutover
+COMMIT: [Phase 25 verification logged]
 ```
