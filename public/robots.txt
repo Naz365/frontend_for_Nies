@@ -19,4 +19,4 @@ Allow: /
 User-agent: ClaudeBot
 Allow: /
 
-Sitemap: https://naz365.github.io/frontend_for_Nies/sitemap.xml
+Sitemap: https://niengineeringbd.com/sitemap.xml
