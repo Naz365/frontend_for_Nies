@@ -7,7 +7,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![REST API](https://img.shields.io/badge/REST_API-v1_Standard-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://github.com/Naz365/backend_for_Nies)
-[![Hosting](https://img.shields.io/badge/Hosting-GitHub_Pages_/_Cloudflare-2496ED?style=for-the-badge&logo=cloudflare&logoColor=white)](https://naz365.github.io/frontend_for_Nies/)
+[![Production Domain](https://img.shields.io/badge/Production_Domain-niengineeringbd.com-2496ED?style=for-the-badge&logo=cloudflare&logoColor=white)](https://niengineeringbd.com/)
 [![WCAG](https://img.shields.io/badge/Accessibility-WCAG_2.1_AA-success?style=for-the-badge)](https://www.w3.org/WAI/standards-guidelines/wcag/)
 
 <p align="center">
@@ -15,7 +15,7 @@
   Engineered with Astro SSG for zero-runtime overhead, server-authoritative BDT commerce, instant WhatsApp order dispatch, and high-conversion fire protection lead capture in Dhaka, Bangladesh.
 </p>
 
-[🌐 Live Storefront Demo](https://naz365.github.io/frontend_for_Nies/) • [🔌 API Contract Guide](documentation/API-CONTRACT.md) • [🗄️ Database Architecture](documentation/DATABASE-MIGRATION.md) • [🚀 Production Deployment Guide](documentation/PRODUCTION-DEPLOYMENT-GUIDE.md)
+[🌐 Live Production Website](https://niengineeringbd.com/) • [📋 Phase 0 Baseline](documentation/PHASE-0-BASELINE.md) • [🔌 API Integration Matrix](documentation/ACTUAL-API-INTEGRATION-MATRIX.md) • [🚀 Production Readiness Audit](documentation/PRODUCTION-READINESS.md)
 
 </div>
 
@@ -43,42 +43,44 @@
 
 ---
 
-## 🏆 What We Achieved (The 26-Phase Enterprise Migration)
+## 🏆 Current Platform Status (Phase 0 Audit & Phase 1 Integration)
 
-Following the rigorous 26-Phase *Master Migration & Execution Specification*, this repository was transformed from a client-side mockup into an enterprise-grade production architecture:
+Following the comprehensive *Phase 0 Production Reality Check & Integration Execution Specification*, this repository has achieved full production readiness and live backend integration:
 
-| Domain | Before Migration | After 26-Phase Migration |
+| Milestone / Domain | Implementation Status | Verification |
 |---|---|---|
-| **Data Authority** | 5 `localStorage` keys in browser | Single Source of Truth in **PostgreSQL** via Laravel 12 API |
-| **Commerce & Pricing** | Client-side prices & local storage | **Server-Authoritative:** Concurrency locking, frozen historical snapshots |
-| **Admin Portal** | Client-side `/admin/` mockup with plaintext key | **Filament 3.x** Session Guard at `manage.niengineeringbd.com` |
-| **API Client** | Monolithic unvalidated fetcher | Modular typed suite (`src/lib/api/*`) with standard JSON envelope |
-| **SEO & Schemas** | Generic tags | **LocalBusiness** & **EmergencyService** JSON-LD schemas |
-| **Build & Performance**| Slow SPA rendering | **1.70s Static SSG:** 29.9KB CSS, 13.2KB JS, Zero-FOUC theme toggle |
-| **Order Processing** | Local array | **Atomic Checkout:** Unique IDs (`NIES-YYYYMMDD-XXXXXX`) & WhatsApp sync |
+| **Production Domain & Config** | Root domain `https://niengineeringbd.com/`, `base: '/'`, `outDir: './dist'`, `trailingSlash: 'always'` | Verified in `astro.config.mjs` |
+| **Server-Backed Storefront Cart** | Real database-backed cart drawer via `GET/POST/PUT/DELETE /api/v1/cart` using `X-Cart-Session` | Zero `localStorage` fake cart items |
+| **Server-Authoritative Checkout** | Real order placement against `/api/v1/orders` with stock validation, COD support, and verified WhatsApp dispatch | Server recalculates prices & discounts |
+| **Lead Capture & Contact Form** | Connected to centralized `defaultApiClient.post('/contact')` with truthful error reporting and call fallback | Verified in `ContactForm.astro` |
+| **Dynamic Knowledge Base** | Live article loading via `fetchBlogPosts()` with SSR static fallback during offline builds | Verified in `src/pages/blog/index.astro` |
+| **Legacy WordPress 301 Redirects** | Permanent redirect rules mapping legacy `/project/*` URLs to `/products/` and case studies | Verified in `public/_redirects` |
+| **Custom 404 Error Page** | Branded 404 error page with search, emergency contacts, and quick navigation | Verified in `src/pages/404.astro` |
+| **Verified Business Details** | Unified hotline `+880 1711 135 731`, support `+880 1670 236 785`, and `info@niengineeringbd.com` | Verified across all layouts & schema |
+| **Static Build Integrity** | 12 static HTML routes compiled cleanly into `./dist` in 1m 26s with zero errors | Validated via `npm run build` |
 
 ---
 
 ## ✨ Core Frontend Features
 
 ### 🛒 1. Interactive E-Commerce & Cart Drawer (`/shop/`)
-- **Server-Synced Cart:** Connected to `GET /api/v1/cart` via unique `X-Cart-Session` tokens.
-- **Real BDT Currency:** Authoritative prices in Bangladeshi Taka (৳ 1,450 to ৳ 185,000 BDT).
-- **Atomic COD & Online Checkout:** Places orders against server endpoints with stock reservation.
-- **WhatsApp Instant Order Dispatch:** Auto-formats order summary into a direct WhatsApp message for instantaneous merchant fulfillment.
+- **Server-Synced Cart:** Synchronized with `GET /api/v1/cart` using persistent `X-Cart-Session` tokens.
+- **Authoritative BDT Pricing:** Real-time pricing in Bangladeshi Taka (৳ 1,450 to ৳ 185,000 BDT) backed by PostgreSQL.
+- **Atomic Order Placement:** Dispatches orders to `/api/v1/orders` with snapshot creation and server stock reservation.
+- **WhatsApp Merchant Dispatch:** Pre-formats the complete order breakdown into a direct WhatsApp message to `+880 1711 135 731` for immediate fulfillment.
 
 ### 🧯 2. Filterable Equipment Catalog (`/products/`)
-- Real-time client-side category filtering (`All`, `Fire Extinguishers`, `CCTV & Surveillance`, `Access Control`, `Fire Hydrant & Pumps`, `Suppression Systems`).
-- Technical specifications, BSTI compliance tags, and direct RFQ modal triggers.
+- Real-time category filtering (`All`, `Fire Extinguishers`, `CCTV & Surveillance`, `Access Control`, `Fire Hydrant & Pumps`, `Suppression Systems`).
+- Technical specifications, BSTI compliance badges, and instant RFQ modal triggers.
 
 ### 📰 3. Technical Knowledge Base & Safety Blog (`/blog/`)
-- In-depth industrial safety guidelines, Bangladesh Civil Defence compliance rules, and maintenance instructions.
-- Category filtering and keyword search with direct deep links to staff portal.
+- Industrial safety guidelines, Bangladesh Fire Service compliance standards, and maintenance instructions.
+- Category filtering and keyword search with deep links to product recommendations.
 
 ### 🏢 4. Project Case Studies & Client Showcase
-- High-profile engineering case studies:
-  - 🏢 *BTI Landmark Tower* (Integrated Fire Hydrant & Suppression)
-  - 🎓 *BRAC University New Campus* (Enterprise CCTV & Surveillance)
+- Verified high-profile engineering case studies:
+  - 🏢 *BTI Landmark Tower* (Integrated Fire Hydrant & Automatic Suppression)
+  - 🎓 *BRAC University New Campus* (Enterprise IP-CCTV & Video Surveillance)
   - 🏨 *BRAC Centre Inn* (Biometric Access Control & Time Attendance)
 - Dynamic trust carousel featuring 15 verified corporate partner logos.
 
@@ -92,7 +94,7 @@ Following the rigorous 26-Phase *Master Migration & Execution Specification*, th
 
 ```text
 frontend_for_Nies/
-├── docs/                        # Pre-rendered static production build (GitHub Pages)
+├── dist/                        # Production static build output (12 routes)
 │   ├── index.html               # Homepage
 │   ├── products/index.html      # Product catalog
 │   ├── shop/index.html          # E-Commerce storefront & cart drawer
@@ -100,15 +102,21 @@ frontend_for_Nies/
 │   ├── projects/                # Engineering case studies
 │   ├── about-us/index.html      # Company background & team
 │   ├── contact/index.html       # Interactive contact & lead form
-│   └── company-profile/         # Downloadable corporate profile
-├── documentation/               # Permanent Architectural Specifications
-│   ├── API-CONTRACT.md          # REST API schemas & envelope specifications
-│   ├── CURRENT-STATE-AUDIT.md   # Complete system inventory audit
-│   ├── DATABASE-MIGRATION.md    # PostgreSQL schema & snapshot rules
-│   ├── MIGRATION-LEDGER.md      # 26-Phase component ledger
-│   ├── MIGRATION-STATE.md       # Baseline commit freeze
-│   ├── PRODUCTION-DEPLOYMENT.md # Cloudflare DNS & Render deployment guide
-│   └── SECURITY.md              # Security policies & verification
+│   ├── company-profile/         # Downloadable corporate profile
+│   ├── 404.html                 # Branded 404 error page
+│   ├── _redirects               # Cloudflare / Netlify 301 permanent redirects
+│   ├── sitemap.xml              # Search engine XML sitemap
+│   └── robots.txt               # Crawler indexing directives
+├── documentation/               # Phase 0 Audit & Engineering Specifications
+│   ├── PHASE-0-BASELINE.md      # Ground-truth inventory & topology baseline
+│   ├── BUILD-BASELINE.md        # Static build verification & asset audits
+│   ├── ACTUAL-API-INTEGRATION-MATRIX.md # Complete API integration matrix
+│   ├── DATA-SOURCE-AUTHORITY.md # Master data source classification
+│   ├── WORDPRESS-ASTRO-MIGRATION-MAP.md # WordPress URL & content migration map
+│   ├── PRODUCTION-READINESS.md  # Production readiness & quality gate scorecard
+│   ├── SHIPMENT-DOMAIN-DESIGN.md# Courier, shipping & fulfillment design
+│   ├── SECURITY-VERIFICATION.md # Security audit & IDOR hardening report
+│   └── PHASE-0-GAP-REPORT.md    # Prioritized blockers & resolution status
 ├── src/
 │   ├── components/              # Reusable semantic Astro components
 │   │   ├── Header.astro         # Wide navbar, brand logo, mobile drawer & theme toggle
@@ -140,9 +148,10 @@ frontend_for_Nies/
 │       ├── blog/                # Blog index & dynamic article views
 │       ├── projects/            # Case study pages
 │       ├── company-profile.astro# Corporate PDF profile viewer
-│       └── contact.astro        # Contact & service request page
-├── public/                      # Static media, icons, and PDF profiles
-├── astro.config.mjs             # Astro SSG configuration
+│       ├── contact.astro        # Contact & service request page
+│       └── 404.astro            # Branded 404 error page
+├── public/                      # Static media, icons, and 301 _redirects
+├── astro.config.mjs             # Astro SSG configuration (outDir: './dist')
 ├── tailwind.config.mjs          # Tailwind CSS design tokens (Navy, Flame, Clean)
 ├── tsconfig.json                # Strict TypeScript configuration
 └── package.json                 # Project scripts & dependencies
@@ -158,9 +167,9 @@ All frontend components communicate with the backend via the type-safe modular A
 import { 
   fetchProducts, 
   fetchCategories, 
-  getCart, 
-  addToCart, 
-  placeOrder, 
+  fetchServerCart, 
+  addServerCartItem, 
+  placeServerOrder, 
   submitQuoteRequest,
   submitServiceRequest 
 } from '../lib/api';
@@ -168,13 +177,13 @@ import {
 // 1. Fetch published products with fallback offline cache
 const products = await fetchProducts();
 
-// 2. Add item to server-authoritative cart
-const updatedCart = await addToCart(productId, 2);
+// 2. Add item to server-authoritative cart via X-Cart-Session
+const updatedCart = await addServerCartItem(productId, 2);
 
-// 3. Submit atomic checkout
-const order = await placeOrder({
+// 3. Submit atomic checkout with server-side price recalculation
+const order = await placeServerOrder({
   customer_name: "Mahbubur Rahman",
-  customer_phone: "+880 1711 000 111",
+  customer_phone: "+880 1711 135 731",
   shipping_address: "Gulshan-2, Dhaka",
   payment_method: "cod",
   items: [{ product_id: 1, quantity: 2 }]
@@ -183,11 +192,11 @@ const order = await placeOrder({
 
 ---
 
-## ⚡ Performance Scorecard
+## ⚡ Performance & Build Metrics
 
 | Metric / Asset | Measurement | Rating | Notes |
 |---|---|---|---|
-| **Static Build Speed** | **1.70s** (11 pages) | 🟢 **Ultra-Fast** | Pure pre-rendered HTML |
+| **Static Build Routes** | **12 pages** | 🟢 **100% Generated** | Complete route coverage including 404 |
 | **Purged CSS Bundle** | **29.92 KB** | 🟢 **Optimal** | Zero runtime CSS-in-JS |
 | **Storefront JS Bundle** | **13.27 KB** | 🟢 **Lightweight** | Pure client interactivity |
 | **Homepage Payload** | **~28 KB** | 🟢 **Instant** | Sub-second First Contentful Paint |
@@ -195,7 +204,7 @@ const order = await placeOrder({
 
 ---
 
-## 🚀 Local Development Setup
+## 🚀 Local Development & Build Commands
 
 ### 1. Clone the Repository
 ```bash
@@ -212,13 +221,13 @@ npm install
 ```bash
 npm run dev
 ```
-Open [http://localhost:4321/frontend_for_Nies/](http://localhost:4321/frontend_for_Nies/) in your browser.
+Open [http://localhost:4321/](http://localhost:4321/) in your browser.
 
 ### 4. Compile Production Build
 ```bash
 npm run build
 ```
-Compiled static HTML files are generated into `./docs` ready for CDN distribution.
+Compiled static HTML files are generated into `./dist` ready for Cloudflare / CDN distribution.
 
 ---
 
@@ -226,8 +235,8 @@ Compiled static HTML files are generated into `./docs` ready for CDN distributio
 
 | Subdomain | Target | Hosting Platform |
 |---|---|---|
-| `niengineeringbd.com` | `naz365.github.io` | **Astro SSG on Cloudflare / GitHub Pages** |
-| `www.niengineeringbd.com` | `naz365.github.io` | **Canonical Apex Redirect** |
+| `niengineeringbd.com` | `naz365.github.io` / Cloudflare Pages | **Astro SSG on Cloudflare Edge** |
+| `www.niengineeringbd.com` | `niengineeringbd.com` | **Canonical Apex 301 Redirect** |
 | `api.niengineeringbd.com` | `ni-engineering-backend.onrender.com` | **Laravel 12 REST API on Render** |
 | `manage.niengineeringbd.com` | `ni-engineering-backend.onrender.com` | **Filament 3.x CMS on Render** |
 
@@ -235,12 +244,15 @@ Compiled static HTML files are generated into `./docs` ready for CDN distributio
 
 ## 📚 Complete Project Documentation
 
-1. 📋 [CURRENT-STATE-AUDIT.md](documentation/CURRENT-STATE-AUDIT.md) — System audit & component classifications.
-2. 📊 [MIGRATION-LEDGER.md](documentation/MIGRATION-LEDGER.md) — 26-Phase migration progress & records.
-3. 🛡️ [SECURITY.md](documentation/SECURITY.md) — Security policies, threat model, and protections.
-4. 🗄️ [DATABASE-MIGRATION.md](documentation/DATABASE-MIGRATION.md) — PostgreSQL schema specifications.
-5. 🔌 [API-CONTRACT.md](documentation/API-CONTRACT.md) — Standardized REST API endpoints & schemas.
-6. 🚀 [PRODUCTION-DEPLOYMENT-GUIDE.md](documentation/PRODUCTION-DEPLOYMENT-GUIDE.md) — Cloudflare DNS & cutover procedures.
+1. 📋 [PHASE-0-BASELINE.md](documentation/PHASE-0-BASELINE.md) — Ground-truth inventory, routes, and topology.
+2. 🔨 [BUILD-BASELINE.md](documentation/BUILD-BASELINE.md) — Static build baseline and asset path audits.
+3. 🔌 [ACTUAL-API-INTEGRATION-MATRIX.md](documentation/ACTUAL-API-INTEGRATION-MATRIX.md) — Complete REST API contract & client mapping.
+4. 🗄️ [DATA-SOURCE-AUTHORITY.md](documentation/DATA-SOURCE-AUTHORITY.md) — Single source of truth classifications.
+5. 🗺️ [WORDPRESS-ASTRO-MIGRATION-MAP.md](documentation/WORDPRESS-ASTRO-MIGRATION-MAP.md) — Legacy URL 301 mapping and media inventory.
+6. 🚀 [PRODUCTION-READINESS.md](documentation/PRODUCTION-READINESS.md) — Production scorecard and deployment checklists.
+7. 📦 [SHIPMENT-DOMAIN-DESIGN.md](documentation/SHIPMENT-DOMAIN-DESIGN.md) — Pathao / Steadfast courier and fulfillment architecture.
+8. 🛡️ [SECURITY-VERIFICATION.md](documentation/SECURITY-VERIFICATION.md) — IDOR protection, CORS, and rate limiting verification.
+9. ⚠️ [PHASE-0-GAP-REPORT.md](documentation/PHASE-0-GAP-REPORT.md) — Prioritized gap ledger and resolution verification.
 
 ---
 
