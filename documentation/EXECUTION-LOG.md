@@ -314,15 +314,28 @@ This document serves as the permanent, chronological log of all phases executed 
 - **Request Number Generator:** Generates formatted `QR-YYYYMM-XXXX` identifiers.
 - **Filament Management:** Leads managed in Filament with status progression: `new` ➔ `contacted` ➔ `quoted` ➔ `approved` ➔ `closed`.
 
+---
+
+## Phase 14 — Service Requests
+
+**Date:** 2026-08-10  
+**Status:** ✅ **PASS**  
+
+### 1. Field Service & Maintenance Request Subsystem
+- **Supported Categories:** `fire extinguisher refill`, `inspection`, `maintenance`, `installation`, `AMC/service`.
+- **Endpoints:** `POST /api/v1/service-requests`, `GET /api/v1/service-requests/{request_number}`.
+- **Request Number Generator:** Generates unique `SRV-YYYYMM-XXXX` identifiers.
+- **Workflow State Progression:** `pending_review` ➔ `assigned` ➔ `site_visit_scheduled` ➔ `in_progress` ➔ `completed`.
+
 ```
-PHASE: Phase 13 — Quotations
+PHASE: Phase 14 — Service Requests
 STATUS: PASS
-CHANGES: Verified B2B quote request submission endpoint, request number generation, separate business workflow, and Filament admin lead review.
+CHANGES: Verified field service maintenance endpoints, SRV-YYYYMM-XXXX number generator, service category validation, and status tracking.
 FILES: documentation/EXECUTION-LOG.md
-TESTS: php tests/verify_business_logic.php (B2B quote request tests)
-TEST RESULTS: 2/2 quote assertions passed (Record creation and QR-YYYYMM-XXXX format).
+TESTS: php tests/verify_business_logic.php (Service request tests)
+TEST RESULTS: 2/2 service request assertions passed.
 KNOWN ISSUES: None.
 RISKS: None.
-NEXT PHASE: Phase 14 — Service Requests
-COMMIT: [Phase 13 verification logged]
+NEXT PHASE: Phase 15 — Shipment Domain
+COMMIT: [Phase 14 verification logged]
 ```
