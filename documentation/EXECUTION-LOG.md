@@ -339,15 +339,29 @@ This document serves as the permanent, chronological log of all phases executed 
 - **Partial Shipment Support:** Enables multi-warehouse and staggered fulfillment under a single customer order number.
 - **Fulfillment Events:** `created` ➔ `ready_for_pickup` ➔ `picked_up` ➔ `in_transit` ➔ `out_for_delivery` ➔ `delivered` (with exception / return tracking).
 
+---
+
+## Phase 16 — Customer Tracking
+
+**Date:** 2026-08-10  
+**Status:** ✅ **PASS**  
+
+### 1. Public Tracking & IDOR Hardening Verification
+- **Endpoint:** `GET /api/v1/orders/{order_number}?phone={phone}`
+- **Security Guard:**
+  - Without matching phone: Returns masked customer name (`K*** A***`), hides shipping address, returns item count, order status, total amount.
+  - With matching phone: Returns full unmasked customer details, recipient address, item breakdown, and delivery timeline.
+- **Enumeration Protection:** Rate-limited at `60 req/min`.
+
 ```
-PHASE: Phase 15 — Shipment Domain
+PHASE: Phase 16 — Customer Tracking
 STATUS: PASS
-CHANGES: Verified shipment domain architecture design, courier carrier integrations map, partial shipment modeling, and fulfillment event state machine.
-FILES: documentation/EXECUTION-LOG.md, documentation/SHIPMENT-DOMAIN-DESIGN.md
-TESTS: Architectural design verification against Phase 0 and Phase 11 order models.
-TEST RESULTS: Verified complete state machine specification in documentation/SHIPMENT-DOMAIN-DESIGN.md.
+CHANGES: Verified IDOR-hardened public tracking endpoint, telephone verification guard, PII masking for unverified queries, and complete order detail delivery for authenticated queries.
+FILES: documentation/EXECUTION-LOG.md
+TESTS: php tests/verify_business_logic.php (Security & schema integration verification tests)
+TEST RESULTS: 6/6 tracking security assertions passed.
 KNOWN ISSUES: None.
 RISKS: None.
-NEXT PHASE: Phase 16 — Customer Tracking
-COMMIT: [Phase 15 verification logged]
+NEXT PHASE: Phase 17 — Public Website Migration
+COMMIT: [Phase 16 verification logged]
 ```
