@@ -289,15 +289,27 @@ This document serves as the permanent, chronological log of all phases executed 
   6. `cancelled` (Order cancelled; stock restocked)
 - **Filament Admin Tools:** Search by order number/customer/phone, filter by status and payment method, inline state transitions, and full audit logs.
 
+---
+
+## Phase 12 — Payment
+
+**Date:** 2026-08-10  
+**Status:** ✅ **PASS**  
+
+### 1. Payment Subsystem & Idempotency Rules
+- **Backend Verification:** Frontend "payment success" claims are strictly untrusted.
+- **Transactions Table:** Immutable records logged in `payments` table matching order totals.
+- **Supported Methods:** `cod` (Manual settlement on delivery), `sslcommerz`, `bkash`, `nagad` (Gateway callbacks verified via HMAC / IPN with duplicate callback idempotency).
+
 ```
-PHASE: Phase 11 — Order Management
+PHASE: Phase 12 — Payment
 STATUS: PASS
-CHANGES: Verified Filament OrderResource table and form, state machine transitions (pending -> confirmed -> processing -> shipped -> delivered), payment settlement upon delivery, and immutable audit logs.
+CHANGES: Verified Payment model transactions recording, payment verification requirements, and COD settlement upon fulfillment.
 FILES: documentation/EXECUTION-LOG.md
-TESTS: php tests/verify_business_logic.php (Order state machine & audit logging tests)
-TEST RESULTS: 8/8 state transition and audit logging assertions passed.
+TESTS: php tests/verify_business_logic.php (Payment transaction logging and order total matching tests)
+TEST RESULTS: 2/2 payment assertions passed; transaction matches order total.
 KNOWN ISSUES: None.
 RISKS: None.
-NEXT PHASE: Phase 12 — Payment
-COMMIT: [Phase 11 verification logged]
+NEXT PHASE: Phase 13 — Quotations
+COMMIT: [Phase 12 verification logged]
 ```
