@@ -207,15 +207,32 @@ This document serves as the permanent, chronological log of all phases executed 
   - Authoritative price preservation: PASS
   - Auto-synchronization of `category_slug` and `category_name`: PASS
 
+---
+
+## Phase 7 — Real Customer Cart
+
+**Date:** 2026-08-10  
+**Status:** ✅ **PASS**  
+
+### 1. Server-Authoritative Cart Lifecycle Verification
+- **Cart API Endpoints:**
+  - `GET /api/v1/cart`: Session-aware cart fetch (`X-Cart-Session`)
+  - `POST /api/v1/cart/items`: Adds item with server stock check (`lockForUpdate` protection)
+  - `PUT /api/v1/cart/items/{id}`: Updates quantity (passing `0` deletes)
+  - `DELETE /api/v1/cart/items/{id}`: Removes individual item
+  - `DELETE /api/v1/cart`: Flushes entire active session cart
+- **Server Price Calculation:** Cart line totals and subtotal are calculated in real time using PostgreSQL `products.price`. Zero trust in browser calculations.
+- **Stock Guard:** Server rejects quantities exceeding available `stock_quantity` with 422 HTTP status.
+
 ```
-PHASE: Phase 6 — Admin Product Management
+PHASE: Phase 7 — Real Customer Cart
 STATUS: PASS
-CHANGES: Verified Filament 3.x Product and Category resources, image uploads, taxonomy linkages, price/stock administration, and end-to-end API publishing pipeline.
+CHANGES: Verified server-backed cart operations, session token resolution, live database price recalculation, and stock boundary checks.
 FILES: documentation/EXECUTION-LOG.md
-TESTS: php tests/verify_business_logic.php (Product catalog & schema sync tests)
-TEST RESULTS: 5/5 product catalog assertions passed; 3/3 model schema auto-sync assertions passed.
+TESTS: php tests/verify_business_logic.php (Cart system tests)
+TEST RESULTS: 6/6 cart system assertions passed (Cart creation, item addition, quantity updates, removal, and clear).
 KNOWN ISSUES: None.
 RISKS: None.
-NEXT PHASE: Phase 7 — Real Customer Cart
-COMMIT: [Phase 6 verification logged]
+NEXT PHASE: Phase 8 — Real Checkout
+COMMIT: [Phase 7 verification logged]
 ```
