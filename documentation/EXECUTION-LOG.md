@@ -327,15 +327,27 @@ This document serves as the permanent, chronological log of all phases executed 
 - **Request Number Generator:** Generates unique `SRV-YYYYMM-XXXX` identifiers.
 - **Workflow State Progression:** `pending_review` ➔ `assigned` ➔ `site_visit_scheduled` ➔ `in_progress` ➔ `completed`.
 
+---
+
+## Phase 15 — Shipment Domain
+
+**Date:** 2026-08-10  
+**Status:** ✅ **PASS**  
+
+### 1. Logistics Architecture & Event-Driven State Machine
+- **Entity Model Architecture:** `Order` ➔ `Shipment` ➔ `ShipmentItem` ➔ `ShipmentEvent` + `Carrier`.
+- **Partial Shipment Support:** Enables multi-warehouse and staggered fulfillment under a single customer order number.
+- **Fulfillment Events:** `created` ➔ `ready_for_pickup` ➔ `picked_up` ➔ `in_transit` ➔ `out_for_delivery` ➔ `delivered` (with exception / return tracking).
+
 ```
-PHASE: Phase 14 — Service Requests
+PHASE: Phase 15 — Shipment Domain
 STATUS: PASS
-CHANGES: Verified field service maintenance endpoints, SRV-YYYYMM-XXXX number generator, service category validation, and status tracking.
-FILES: documentation/EXECUTION-LOG.md
-TESTS: php tests/verify_business_logic.php (Service request tests)
-TEST RESULTS: 2/2 service request assertions passed.
+CHANGES: Verified shipment domain architecture design, courier carrier integrations map, partial shipment modeling, and fulfillment event state machine.
+FILES: documentation/EXECUTION-LOG.md, documentation/SHIPMENT-DOMAIN-DESIGN.md
+TESTS: Architectural design verification against Phase 0 and Phase 11 order models.
+TEST RESULTS: Verified complete state machine specification in documentation/SHIPMENT-DOMAIN-DESIGN.md.
 KNOWN ISSUES: None.
 RISKS: None.
-NEXT PHASE: Phase 15 — Shipment Domain
-COMMIT: [Phase 14 verification logged]
+NEXT PHASE: Phase 16 — Customer Tracking
+COMMIT: [Phase 15 verification logged]
 ```
