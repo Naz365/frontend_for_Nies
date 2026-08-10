@@ -239,15 +239,32 @@ This document serves as the permanent, chronological log of all phases executed 
 - **Deduplicated Customer Linking:** Customers deduplicated by phone number and attached to order records.
 - **Collision-Resistant Order ID Generator:** Concurrency-safe unique order number generator (`NIES-YYYYMMDD-XXXXXX`).
 
+---
+
+## Phase 9 — COD Order
+
+**Date:** 2026-08-10  
+**Status:** ✅ **PASS**  
+
+### 1. COD Order Processing & Filament Presentation
+- **Customer Checkout:** Places COD order with customer contact, shipping address, and item list.
+- **Database Records Verified:**
+  - `customers`: Deduplicated phone record linked to `customer_id`
+  - `orders`: Created with `payment_method: 'cod'`, `payment_status: 'unpaid'`, initial `status: 'pending'`
+  - `order_items`: Historical product name, SKU, price snapshot, quantity, line total preserved
+  - `payments`: Pending manual COD transaction logged
+  - `products`: Stock decremented accurately
+- **Filament Admin Management:** Visible immediately in `OrderResource` table with status transition workflows.
+
 ```
-PHASE: Phase 8 — Real Checkout
+PHASE: Phase 9 — COD Order
 STATUS: PASS
-CHANGES: Verified CheckoutService atomic transaction, server financial calculations, frozen line-item snapshots, stock locking, customer deduplication, and collision-resistant order numbers.
+CHANGES: Verified end-to-end COD checkout, database records creation, frozen snapshots preservation, and administrative visibility in Filament.
 FILES: documentation/EXECUTION-LOG.md
-TESTS: php tests/verify_business_logic.php (Checkout & authoritative pricing security tests)
-TEST RESULTS: 14/14 checkout assertions passed. Client price tampering rejected; historical snapshots created.
+TESTS: php tests/verify_business_logic.php (Order placement, COD status, payment transaction logging, snapshot integrity)
+TEST RESULTS: 14/14 checkout assertions passed; payment marked unpaid; snapshots verified.
 KNOWN ISSUES: None.
 RISKS: None.
-NEXT PHASE: Phase 9 — COD Order
-COMMIT: [Phase 8 verification logged]
+NEXT PHASE: Phase 10 — Inventory Integrity
+COMMIT: [Phase 9 verification logged]
 ```
