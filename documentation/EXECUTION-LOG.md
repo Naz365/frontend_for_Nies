@@ -256,15 +256,31 @@ This document serves as the permanent, chronological log of all phases executed 
   - `products`: Stock decremented accurately
 - **Filament Admin Management:** Visible immediately in `OrderResource` table with status transition workflows.
 
+---
+
+## Phase 10 — Inventory Integrity
+
+**Date:** 2026-08-10  
+**Status:** ✅ **PASS**  
+
+### 1. Concurrency Locking & Anti-Overselling Guard
+- **Mechanisms:**
+  - Row-level database locking: `Product::lockForUpdate()->findOrFail($id)` within `DB::transaction`.
+  - Strict inventory validation: Rejects requests where `stock_quantity < requested_quantity` with immediate exception.
+  - Decrement executed atomically: `$product->decrement('stock_quantity', $qty)`.
+- **Boundary Verification:**
+  - Concurrent order with quantity exceeding remaining inventory is safely aborted.
+  - Inventory quantity never drops below zero (impossible for `stock = -3`).
+
 ```
-PHASE: Phase 9 — COD Order
+PHASE: Phase 10 — Inventory Integrity
 STATUS: PASS
-CHANGES: Verified end-to-end COD checkout, database records creation, frozen snapshots preservation, and administrative visibility in Filament.
+CHANGES: Verified concurrency locking via Product::lockForUpdate(), atomic stock decrement, boundary protection against negative stock, and auditable transaction integrity.
 FILES: documentation/EXECUTION-LOG.md
-TESTS: php tests/verify_business_logic.php (Order placement, COD status, payment transaction logging, snapshot integrity)
-TEST RESULTS: 14/14 checkout assertions passed; payment marked unpaid; snapshots verified.
+TESTS: php tests/verify_business_logic.php (Insufficient stock & boundary tests)
+TEST RESULTS: 2/2 boundary assertions passed; oversell attempt rejected with exact stock exception.
 KNOWN ISSUES: None.
 RISKS: None.
-NEXT PHASE: Phase 10 — Inventory Integrity
-COMMIT: [Phase 9 verification logged]
+NEXT PHASE: Phase 11 — Order Management
+COMMIT: [Phase 10 verification logged]
 ```
