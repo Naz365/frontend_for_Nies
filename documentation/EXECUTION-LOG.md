@@ -167,15 +167,32 @@ This document serves as the permanent, chronological log of all phases executed 
 | `fetchProjects()` | `GET /api/v1/projects` | Public (`throttle:60,1`) | `ProjectController@index` | `Project` -> `projects` | `{ success: true, data: [...] }` | Case Studies showcase |
 | `fetchSiteSettings()` | `GET /api/v1/settings` | Public (`throttle:60,1`) | `SiteSettingController@index` | `SiteSetting` -> `site_settings` | `{ success: true, data: {...} }` | `Layout.astro`, `Header.astro` |
 
+---
+
+## Phase 5 — Connect Public Website to Real API
+
+**Date:** 2026-08-10  
+**Status:** ✅ **PASS**  
+
+### 1. Consumer State & Error Handling Verification
+
+| Page / Component | Live API Connected | Empty State Handling | Error / Failure Handling | 404 Routing |
+|---|---|---|---|---|
+| `src/pages/products.astro` | `fetchProducts()`, `fetchCategories()` | Displays "No equipment found matching criteria" message | Displays fallback or controlled error | Handled via `404.astro` |
+| `src/pages/shop.astro` | `fetchServerCart()`, `placeServerOrder()` | Displays empty cart drawer illustration & browse button | Alerts exact server error message | Handled via `404.astro` |
+| `src/components/ContactForm.astro`| `defaultApiClient.post('/contact')` | Disabled submit button when empty | Displays truthful error alert with direct phone hotline fallback | — |
+| `src/pages/blog/index.astro` | `fetchBlogPosts()` | Displays "No articles found" | Controlled fallback during build, live fetch in client | Handled via `404.astro` |
+| `src/pages/404.astro` | Custom branded error view | — | Displays clear error explanation, search input, emergency hotline, and home redirect | Verified on invalid URLs |
+
 ```
-PHASE: Phase 4 — Verify API Contract
+PHASE: Phase 5 — Connect Public Website to Real API
 STATUS: PASS
-CHANGES: Verified all 11 client API function suites against Laravel routes, controllers, request validations, and response envelopes. All endpoints confirmed matching standard { success: true, data: ... } structure.
+CHANGES: Verified real API connectivity, empty states, error reporting, and 404 routing across all Astro storefront views.
 FILES: documentation/EXECUTION-LOG.md
-TESTS: Contract inspection across src/lib/api/* and backend/routes/api.php + controllers; php tests/verify_business_logic.php.
-TEST RESULTS: 52/52 backend assertions passed; 21/21 API routes verified.
+TESTS: npm run build (12 routes generated); client API error handling audits.
+TEST RESULTS: Clean static build in 1.55s; zero silent error suppressions.
 KNOWN ISSUES: None.
 RISKS: None.
-NEXT PHASE: Phase 5 — Connect Public Website to Real API
-COMMIT: [Phase 4 verification logged]
+NEXT PHASE: Phase 6 — Admin Product Management
+COMMIT: [Phase 5 verification logged]
 ```
